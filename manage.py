@@ -2,11 +2,19 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from decouple import config, Csv
 
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'auspicious.settings')
+    if config('IS_PRODUCTION', default=False, cast=bool) == True:
+        os.environ.setdefault(
+            'DJANGO_SETTINGS_MODULE', 'auspicious.settings.production'
+        )
+    else:
+        os.environ.setdefault(
+            'DJANGO_SETTINGS_MODULE', 'auspicious.settings.development'
+        )
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
