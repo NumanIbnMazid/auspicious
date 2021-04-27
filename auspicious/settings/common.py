@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,6 +14,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # *** Local Applications ***
+    'dashboard',
 ]
 
 
@@ -32,7 +35,7 @@ ROOT_URLCONF = 'auspicious.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,7 +70,6 @@ AUTH_PASSWORD_VALIDATORS = [
 WSGI_APPLICATION = 'auspicious.wsgi.application'
 
 # Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 # LANGUAGE_CODE = 'en-us'
 # TIME_ZONE = 'UTC'

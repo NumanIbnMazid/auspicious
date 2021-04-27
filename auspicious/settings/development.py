@@ -1,6 +1,5 @@
 from auspicious.settings.common import *
 from decouple import config, Csv
-import os
 
 
 SECRET_KEY = config('SECRET_KEY')
