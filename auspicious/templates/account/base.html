@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Auspicious">
+  <title>
+    {% block head_title %}Auspicious Dashboard{% endblock %} | Auspicious Dashboard
+  </title>
+  <!-- styles -->
+  {% include "dashboard/components/styles.html" %}
+  <link rel="stylesheet" href="{% static 'assets/css/pages/auth.css' %}">
+  {% block additional_css %}{% endblock %}
+</head>
+
+<body>
+
+
+  <!-- Main content -->
+  <div class="main-content" id="auth">
+    <!-- Header -->
+    <div class="header py-7 py-lg-8 pt-lg-5">
+      <div class="container">
+        <div class="header-body text-center mb-4">
+          <div class="row justify-content-center">
+            <div class="col-xl-5 col-lg-6 col-md-8 px-5">
+              <h1 class="text-white">
+                {% block page_title %}{% endblock %}
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container mt--8 pb-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+
+          <!-- messages -->
+          {% include 'snippets/messages.html' %}
+
+          <div class="card border-0 mb-0 p-4">
+            {% block content %}{% endblock %}
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  {% include "dashboard/components/scripts.html" %}
+  {% block additional_js %}{% endblock %}
+  
+</body>
+
+</html>

@@ -14,8 +14,27 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # *** Third Party Applications ***
+    # Django Allauth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    # Widget Tweaks
+    'widget_tweaks',
     # *** Local Applications ***
     'dashboard',
+    'accounts',
+    'util',
+]
+
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    # 'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 
@@ -86,3 +105,6 @@ USE_TZ = False
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+from auspicious.settings.third_party_configs import *
