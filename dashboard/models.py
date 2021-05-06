@@ -400,8 +400,11 @@ class Gallery(models.Model):
 
 
 class Contact(models.Model):
-    phone = models.CharField(
-        max_length=50, verbose_name="phone"
+    phone1 = models.CharField(
+        max_length=50, verbose_name="phone 1"
+    )
+    phone2 = models.CharField(
+        max_length=50, verbose_name="phone 2"
     )
     email = models.EmailField(
         verbose_name="email"
