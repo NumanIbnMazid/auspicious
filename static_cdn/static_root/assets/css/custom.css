@@ -4,6 +4,12 @@
 }
 
 
+/* Form Select Input Customisation */
+select.form-control[size],
+select.form-control[multiple] {
+    height: 300px !important;
+}
+
 /* *********************************** Custom Customization *********************************** */
 
 .non-bullet-list {

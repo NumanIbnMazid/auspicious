@@ -148,10 +148,10 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     try:
         request = RequestMiddleware(get_response=None)
         request = request.thread_local.current_request
-        gender = request.POST.get("gender")
-        if gender == None:
-            gender = "U"
         if created:
+            gender = request.POST.get("gender")
+            if gender == None:
+                gender = "U"
             Profile.objects.create(
                 user=instance, gender=gender, slug=slug_binding, created_by=request.user
             )

@@ -46,6 +46,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # ------- Custom Middlewares -------
+    # Request Middleware
+    'middlewares.middlewares.RequestMiddleware',
 ]
 
 ROOT_URLCONF = 'auspicious.urls'

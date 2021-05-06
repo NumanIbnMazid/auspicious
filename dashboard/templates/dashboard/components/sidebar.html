@@ -21,6 +21,28 @@
                     <span>Dashboard</span>
                 </a>
             </li>
+            
+            <!-- Group -->
+            {% if perms.auth.add_group %}
+            <li class="sidebar-item">
+                <a href="{% url 'create_group' %}" class='sidebar-link'>
+                    <i class="fa fa-layer-group"></i>
+                    <span>Manage User Group</span>
+                </a>
+            </li>
+            {% endif %}
+            
+            <!-- create admin user -->
+
+            {% if perms.auth.add_user %}
+            <li class="sidebar-item">
+                <a href="{% url 'create_user' %}" class="sidebar-link">
+                    <i class="fa fa-users-cog"></i>
+                    <span>Manage Admin User</span>
+                </a>
+            </li>
+            {% endif %}
+
         </ul>
     </div>
     <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>

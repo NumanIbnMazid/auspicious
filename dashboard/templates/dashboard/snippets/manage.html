@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'dashboard/base.html' %}
 
 {% load static %}
 
@@ -7,10 +7,10 @@
 <!-- extra styles -->
 {% block extra_css %}
 <!-- JQuery DataTable CSS -->
-<!-- <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/jquery-datatable/jquery.dataTables.min.css' %}" /> -->
-<link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/jquery-datatable/dataTables.bootstrap4.min.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/jquery-datatable/buttons.dataTables.min.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/jquery-datatable/datatable-custom.css' %}" />
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/jquery.dataTables.min.css' %}" /> -->
+<link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/dataTables.bootstrap4.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/buttons.dataTables.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/datatable-custom.css' %}" />
 {% endblock %}
 
 {% block head_title %}
@@ -35,17 +35,19 @@
     <div class="{% if fields_count > 7 %}col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12{% else %}col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12{% endif %} align-items-center">
         <!-- general form elements -->
         <div class="card card-primary">
+            {% comment %}
             <div class="card-header">
                 <h3 class="card-title">
                     {{ page_title }}
                 </h3>
             </div>
+            {% endcomment %}
             <!-- /.card-header -->
             <!-- form start -->
             <form role="form" method="POST" data-toggle="validator" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="card-body">
-                    {% include 'snippets/form.html' %}
+                    {% include 'dashboard/snippets/form.html' %}
                 </div>
                 <!-- /.card-body -->
 
@@ -66,12 +68,14 @@
     {% if not list_objects == None %}
     <div class="{% if fields_count > 7 %}col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12{% else %}col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12{% endif %} align-items-center">
         <div class="card card-primary">
+            {% comment %}
             <h4 class="card-title text-center mt-4 font-15 font-bold">
                 {{ namespace|title }} List
             </h4>
+            {% endcomment %}
             <div class="card-body">
                 {% if list_template == None %}
-                {% include 'snippets/datatable.html' %}
+                {% include 'dashboard/snippets/datatable.html' %}
                 {% else %}
                 {% include list_template %}
                 {% endif %}
@@ -88,7 +92,7 @@
 {% if can_delete == True %}
 
 {% if not delete_url == None %}
-{% include 'snippets/delete-modal.html' %}
+{% include 'dashboard/snippets/delete-modal.html' %}
 {% endif %}
 
 {% endif %}
@@ -100,19 +104,19 @@
 {% block extra_js %}
 
 <!-- Bootstrap Validator -->
-<script src="{% static 'assets/vendor/bootstrap-validator/validator.js' %}"></script>
+<script src="{% static 'assets/vendors/bootstrap-validator/validator.js' %}"></script>
 
 <!-- JQuery DataTable JS -->
-<script src="{% static 'assets/vendor/jquery-datatable/jquery.dataTables.min.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/dataTables.bootstrap4.min.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/dataTables.buttons.min.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/buttons.flash.min.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/jszip.min.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/pdfmake.min.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/vfs_fonts.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/buttons.html5.min.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/buttons.print.min.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/buttons.flash.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/jszip.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/pdfmake.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/vfs_fonts.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/buttons.html5.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/buttons.print.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/buttons.colVis.min.js' %}"></script>
 <script>
     $(document).ready(function () {
         $('#list-datatable').DataTable({

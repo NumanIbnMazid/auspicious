@@ -4,9 +4,13 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Import Views
+from .views import HomeView
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
+    path("", HomeView.as_view(), name="home"),
+    path("admin/", admin.site.urls),
+    path("account/", include("accounts.urls")),
     path("dashboard/", include(("dashboard.urls", "dashboard"), namespace="dashboard")),
 ]
 

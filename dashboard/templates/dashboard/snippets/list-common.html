@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'dashboard/base.html' %}
 
 {% load static %}
 
@@ -6,10 +6,10 @@
 
 {% block extra_css %}
 <!-- JQuery DataTable CSS -->
-<!-- <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/jquery-datatable/jquery.dataTables.min.css' %}" /> -->
-<link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/jquery-datatable/dataTables.bootstrap4.min.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/jquery-datatable/buttons.dataTables.min.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/jquery-datatable/datatable-custom.css' %}" />
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/jquery.dataTables.min.css' %}" /> -->
+<link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/dataTables.bootstrap4.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/buttons.dataTables.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/datatable-custom.css' %}" />
 {% endblock %}
 
 {% block head_title %}
@@ -140,16 +140,16 @@
     });
 </script>
 <!-- JQuery DataTable JS -->
-<script src="{% static 'assets/vendor/jquery-datatable/jquery.dataTables.min.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/dataTables.bootstrap4.min.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/dataTables.buttons.min.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/buttons.flash.min.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/jszip.min.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/pdfmake.min.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/vfs_fonts.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/buttons.html5.min.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/buttons.print.min.js' %}"></script>
-<script src="{% static 'assets/vendor/jquery-datatable/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/buttons.flash.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/jszip.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/pdfmake.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/vfs_fonts.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/buttons.html5.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/buttons.print.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/buttons.colVis.min.js' %}"></script>
 
 {% if not detail_url == None %}
 <script>
