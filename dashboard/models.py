@@ -46,7 +46,7 @@ class Project(models.Model):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return self.title
+        return self.name
 
     def get_fields(self):
         return [get_dynamic_fields(field, self) for field in self.__class__._meta.fields]
