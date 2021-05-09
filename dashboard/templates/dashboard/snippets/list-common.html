@@ -4,7 +4,7 @@
 
 {% load custom_tags %}
 
-{% block extra_css %}
+{% block additional_css %}
 <!-- JQuery DataTable CSS -->
 <!-- <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/jquery.dataTables.min.css' %}" /> -->
 <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/dataTables.bootstrap4.min.css' %}" />
@@ -124,7 +124,7 @@
 
 {% endblock %}
 
-{% block extra_js %}
+{% block additional_js %}
 <script>
     $(document).ready(function () {
         $('#list-datatable').DataTable({

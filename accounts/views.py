@@ -27,7 +27,7 @@ class GroupCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = UserGroupForm
 
-    def form_valid(self, form):
+    def form_valid(self, form, **kwargs):
         name = form.instance.name
         field_qs = Group.objects.filter(
             name__iexact=name
@@ -173,6 +173,7 @@ def create_user(request):
         'delete_url': "delete_user",
         'detail_url': "user_detail",
         'namespace': "admin-user",
+        'object': User.objects.filter(username=request.user.username).first().user_profile,
         'form': form,
         'can_add_change': True if request.user.has_perm('auth.add_user') and request.user.has_perm('auth.change_user') else False,
         'can_view': request.user.has_perm('auth.view_user'),
@@ -191,7 +192,6 @@ def create_user(request):
         # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirm_password"]
-
         if form.is_valid():
             user_groups = form.cleaned_data.get("user_group")
             try:
@@ -223,7 +223,6 @@ def create_user(request):
                 return redirect("create_user")
 
             except Exception as E:
-                print(f"Exception: {str(E)}")
                 messages.error(
                     request, 'Failed to create user!'
                 )

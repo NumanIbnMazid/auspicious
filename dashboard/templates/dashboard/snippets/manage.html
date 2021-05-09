@@ -5,7 +5,7 @@
 {% load custom_tags %}
 
 <!-- extra styles -->
-{% block extra_css %}
+{% block additional_css %}
 <!-- JQuery DataTable CSS -->
 <!-- <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/jquery.dataTables.min.css' %}" /> -->
 <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/dataTables.bootstrap4.min.css' %}" />
@@ -28,39 +28,37 @@
 <!-- main content -->
 {% block content %}
 
-<div class="row">
+<div>
+    {{request.path}}
+    <br>
+    {{ update_url }}
+    <hr>
+    Check base url path == update url path (from url name)
+    <br>
+    Check if update keyword in url , If exists then do not execute update url holder
+</div>
 
+<div class="row">
     {% if can_add_change == True %}
 
-    <div class="{% if fields_count > 7 %}col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12{% else %}col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12{% endif %} align-items-center">
-        <!-- general form elements -->
-        <div class="card card-primary">
-            {% comment %}
-            <div class="card-header">
-                <h3 class="card-title">
-                    {{ page_title }}
-                </h3>
-            </div>
-            {% endcomment %}
-            <!-- /.card-header -->
-            <!-- form start -->
-            <form role="form" method="POST" data-toggle="validator" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="card-body">
-                    {% include 'dashboard/snippets/form.html' %}
-                </div>
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">
-                        Submit
-                    </button>
-                </div>
-            </form>
-        </div>
-        <!-- /.card -->
+    
+    {% if not update_url == None and 'update' in request.path %}
+    {% if not object.slug == None %}
+    <!-- update url holder -->
+    <input type="hidden" name="updateURL" id="updateURL" value="{% url update_url slug=object.slug %}">
+    {% else %}
+    <input type="hidden" name="updateURL" id="updateURL" value="{% url update_url id=object.id %}">
+    {% endif %}
+    {% endif %}
+    
+    <div class="container text-center m-4">
+        <!-- Create Button trigger modal -->
+        <button type="button" class="btn btn-lg text-deco-none bg-c-green text-white m-1 js_create_{{namespace}}"
+            data-toggle="modal" data-target="#modal-create-{{namespace}}">
+            <i class="fas fa-plus-circle"></i>
+            {{ page_title }}
+        </button>
     </div>
-
     {% endif %}
 
     {% if can_view == True %}
@@ -89,6 +87,10 @@
 
 </div>
 
+{% if can_add_change == True %}
+{% include 'dashboard/snippets/create-modal.html' %}
+{% endif %}
+
 {% if can_delete == True %}
 
 {% if not delete_url == None %}
@@ -101,7 +103,7 @@
 
 
 <!-- extra scripts -->
-{% block extra_js %}
+{% block additional_js %}
 
 <!-- Bootstrap Validator -->
 <script src="{% static 'assets/vendors/bootstrap-validator/validator.js' %}"></script>
@@ -132,6 +134,17 @@
     });
 </script>
 
+<!-- Open Modal With Update URL -->
+<script>
+    $(document).ready(function () {
+        let urlPath = window.location.pathname
+        let updateURL = $("#updateURL").val()
+
+        if (urlPath == updateURL) {
+            $('#modal-create-{{namespace}}').modal('show')
+        }
+    });
+</script>
 
 {% comment %}
 {% if not detail_url == None %}

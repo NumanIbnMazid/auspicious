@@ -11,6 +11,7 @@
 
 {% for hidden_field in form.hidden_fields %}
 {% if hidden_field.errors %}
+{% include "dashboard/snippets/form-script-handler.html" %}
 <div class="alert alert-danger" role="alert">
     {% for error in hidden_field.errors %}
     <p class="text-danger font-italic">
@@ -23,6 +24,7 @@
 {% endfor %}
 
 {% if form.non_field_errors %}
+{% include "dashboard/snippets/form-script-handler.html" %}
 <div class="alert alert-danger" role="alert">
     {% for error in form.non_field_errors %}
     <p class="text-danger">
@@ -88,6 +90,7 @@
                 </div>
 
                 {% if field.errors %}
+                {% include "dashboard/snippets/form-script-handler.html" %}
                 {% for error in field.errors %}
                 <div class="row form-error-div">
                     <b class="col-md-12 text-danger">
@@ -111,7 +114,7 @@
 {% endfor %}
 
 
-{% block extra_js %}
+{% block additional_js %}
 
 <script>
     $('.select-all-btn').click(function(){

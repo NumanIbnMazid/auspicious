@@ -68,14 +68,14 @@
 
                                     {% if not object.user_profile.slug == None %}
                                     <a href="{% url detail_url slug=object.user_profile.slug %}"
-                                        class="btn btn-primary btn-sm text-deco-none">
+                                        class="btn btn-info btn-sm text-deco-none">
                                         <span class="">
                                             Detail
                                         </span>
                                     </a>
                                     {% else %}
                                     <a href="{% url detail_url id=object.user_profile.id %}"
-                                        class="btn btn-primary btn-sm text-deco-none">
+                                        class="btn btn-info btn-sm text-deco-none">
                                         <span class="">
                                             Detail
                                         </span>

@@ -52,14 +52,14 @@
                                 {% if not detail_url == None and can_view == True %}
                                 {% if not object.slug == None %}
                                 <a href="{% url detail_url slug=object.slug %}"
-                                    class="btn btn-primary btn-sm text-deco-none">
+                                    class="btn btn-info btn-sm text-deco-none">
                                     <span class="">
                                         View
                                     </span>
                                 </a>
                                 {% else %}
                                 <a href="{% url detail_url id=object.id %}"
-                                    class="btn btn-primary btn-sm text-deco-none">
+                                    class="btn btn-info btn-sm text-deco-none">
                                     <span class="">
                                         View
                                     </span>
