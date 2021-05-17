@@ -2,10 +2,12 @@ from django.db import models
 from django.conf import settings
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
-from util.utils import time_str_mix_slug
 from middlewares.middlewares import RequestMiddleware
 from util.helpers import get_dynamic_fields
-
+from util.utils import (
+    time_str_mix_slug, upload_project_image_path
+)
+from django.utils.text import slugify
 
 # # -------------------------------------------------------------------
 # #                           Project
@@ -28,7 +30,7 @@ class Project(models.Model):
         blank=True, null=True, verbose_name="development end year"
     )
     image = models.ImageField(
-        blank=True, null=True, verbose_name="image"
+        upload_to=upload_project_image_path, blank=True, null=True, verbose_name="image"
     )
     scope = models.TextField(
         blank=True, null=True, verbose_name="scope"
@@ -49,7 +51,7 @@ class Project(models.Model):
         return self.name
 
     def get_fields(self):
-        return [get_dynamic_fields(field, self) for field in self.__class__._meta.fields]
+        return [get_dynamic_fields(field=field, self=self) for field in self.__class__._meta.fields]
 
 
 # # -------------------------------------------------------------------
@@ -440,7 +442,7 @@ class Contact(models.Model):
 
 def project_slug_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
-        title = instance.name.lower()[:17]
+        title = slugify(instance.name.lower()[:17])
         slug_binding = title + '-' + time_str_mix_slug()
         instance.slug = slug_binding
 
@@ -451,7 +453,7 @@ pre_save.connect(project_slug_pre_save_receiver, sender=Project)
 
 def news_slug_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
-        title = instance.title.lower()[:17]
+        title = slugify(instance.title.lower()[:17])
         slug_binding = title + '-' + time_str_mix_slug()
         instance.slug = slug_binding
 
@@ -462,7 +464,7 @@ pre_save.connect(news_slug_pre_save_receiver, sender=News)
 
 def client_slug_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
-        title = instance.name.lower()[:17]
+        title = slugify(instance.name.lower()[:17])
         slug_binding = title + '-' + time_str_mix_slug()
         instance.slug = slug_binding
 
@@ -473,7 +475,7 @@ pre_save.connect(client_slug_pre_save_receiver, sender=News)
 
 def gallery_slug_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
-        title = instance.title.lower()[:17]
+        title = slugify(instance.title.lower()[:17])
         slug_binding = title + '-' + time_str_mix_slug()
         instance.slug = slug_binding
 

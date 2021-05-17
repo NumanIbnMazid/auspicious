@@ -11,19 +11,22 @@ from middlewares.middlewares import RequestMiddleware
 ************************ Get Dynamic Fields Helper Functions ************************
 """
 
-def get_dynamic_fields(field=None, self=None):
+
+def get_dynamic_fields(field=None, self=None, fk_node=None):
     """
-    get_dynamic_fields() => Helper function to get dynamic fields.
-    params => field (string), self (instance)
-    return => (field.name, value)
+    get_dynamic_fields() => Gets model fields dynamically.
+    params => field, self, fk_node
+    return => (field.name, value, field_type)
     """
-    if field.name == 'x':
-        return (field.name, self.x.title)
+    # Pass fk_node as => fk_node = self.field.title
+    if not fk_node == None:
+        return (field.name, fk_node)
     else:
         value = "-"
         if not field.value_from_object(self) == None and not field.value_from_object(self) == "":
             value = field.value_from_object(self)
-        return (field.name, value)
+        # print("***Fieldname***", field.name, "***FieldType***", field.get_internal_type())
+        return (field.name, value, field.get_internal_type())
 
 
 """
@@ -101,16 +104,13 @@ def delete_simple_object(request, key, model, redirect_url):
     return => HttpResponseRedirect(url)
     """
     url = reverse('home')
-    # user = request.user
     if request.method == "POST":
-        if key == 'id':
-            id = request.POST.get("id")
-            qs = model.objects.filter(id=id)
+        dynamic_identifier = request.POST.get("dynamic_identifier")
+        if key == 'slug':
+            qs = model.objects.filter(slug=dynamic_identifier)
         else:
-            slug = request.POST.get("slug")
-            qs = model.objects.filter(slug=slug)
+            qs = model.objects.filter(id=dynamic_identifier)
         if qs.exists():
-            # if qs.first().user == user.profile:
             qs.delete()
             messages.add_message(request, messages.SUCCESS,
                                  "Deleted successfully!")
@@ -206,25 +206,6 @@ def simple_form_widget(self=None, field=None, maxlength=50, step=None, pattern=N
     })
     if not pattern == None:
         self.fields[field].help_text = f"Only [{allowed_chars}] these characters are allowed."
-
-
-"""
-************************ Dynamic Field Helper Functions ************************
-"""
-
-def get_dynamic_fields(field=None, self=None):
-    """
-    get_dynamic_fields() => Gets model fields dynamically.
-    params => field, self
-    return => (field.name, value)
-    """
-    if field.name == 'x':
-        return (field.name, self.x.title)
-    else:
-        value = "-"
-        if not field.value_from_object(self) == None and not field.value_from_object(self) == "":
-            value = field.value_from_object(self)
-        return (field.name, value)
 
 
 """

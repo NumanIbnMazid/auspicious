@@ -11,6 +11,10 @@
 <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/dataTables.bootstrap4.min.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/buttons.dataTables.min.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/datatable-custom.css' %}" />
+<!-- CKEDITOR JS -->
+<script>
+    window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';
+</script>
 {% endblock %}
 
 {% block head_title %}
@@ -27,16 +31,6 @@
 
 <!-- main content -->
 {% block content %}
-
-<div>
-    {{request.path}}
-    <br>
-    {{ update_url }}
-    <hr>
-    Check base url path == update url path (from url name)
-    <br>
-    Check if update keyword in url , If exists then do not execute update url holder
-</div>
 
 <div class="row">
     {% if can_add_change == True %}
@@ -55,7 +49,6 @@
         <!-- Create Button trigger modal -->
         <button type="button" class="btn btn-lg text-deco-none bg-c-green text-white m-1 js_create_{{namespace}}"
             data-toggle="modal" data-target="#modal-create-{{namespace}}">
-            <i class="fas fa-plus-circle"></i>
             {{ page_title }}
         </button>
     </div>
@@ -91,13 +84,11 @@
 {% include 'dashboard/snippets/create-modal.html' %}
 {% endif %}
 
-{% if can_delete == True %}
 
-{% if not delete_url == None %}
+{% if not delete_url == None and can_delete == True %}
 {% include 'dashboard/snippets/delete-modal.html' %}
 {% endif %}
 
-{% endif %}
 
 {% endblock %}
 
@@ -107,6 +98,10 @@
 
 <!-- Bootstrap Validator -->
 <script src="{% static 'assets/vendors/bootstrap-validator/validator.js' %}"></script>
+
+<!-- CKeditor Plugin -->
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
 
 <!-- JQuery DataTable JS -->
 <script src="{% static 'assets/vendors/jquery-datatable/jquery.dataTables.min.js' %}"></script>

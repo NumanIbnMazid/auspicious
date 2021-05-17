@@ -11,7 +11,7 @@
             <div class="modal-body">
                 <form method="POST" action="{% url delete_url %}" id="{{namespace}}DeleteForm">
                     {% csrf_token %}
-                    <input type="hidden" id="{{namespace}}_id" name="id" value="0">
+                    <input type="hidden" id="{{namespace}}_keeper" name="dynamic_identifier" value="0">
                     <div class="text-center">
                         <p class="c-text-danger font-bold font-15">
                             You are going to delete this item permanently. Are you sure???
@@ -34,9 +34,9 @@
 <script>
     // delete dynamic item
     $(".js_delete_{{namespace}}").click(function () {
-        let dynamic_id = this.value;
-        $('#{{namespace}}_id').val(dynamic_id);
-        //console.log(dynamic_id);
+        let dynamic_identifier_value = this.value;
+        $('#{{namespace}}_keeper').val(dynamic_identifier_value);
+        //console.log(dynamic_identifier_value);
     });
     document.querySelector('#{{namespace}}DeleteForm').addEventListener('submit', function (e) {
         let form = this;

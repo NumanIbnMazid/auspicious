@@ -42,6 +42,17 @@
                 </a>
             </li>
             {% endif %}
+            
+            <!-- manage project -->
+
+            {% if perms.dashboard.add_project or perms.dashboard.view_project %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:create_project' %}" class="sidebar-link">
+                    <i class="fa fa-project-diagram"></i>
+                    <span>Manage Projects</span>
+                </a>
+            </li>
+            {% endif %}
 
         </ul>
     </div>

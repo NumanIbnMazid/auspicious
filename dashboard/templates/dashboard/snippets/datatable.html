@@ -12,14 +12,16 @@
             </div>
             <!-- Light table -->
             <div class="table-responsive">
-                <table id="list-datatable" class="display table table-striped table-bordered align-items-center table-flush
-                        table-hover cell-border" style="width:100%">
+                <table id="list-datatable" class="display table align-items-center table-flush table-hover"
+                    style="width:100%">
                     <thead class="thead-dark">
-                        <tr>
+                        <tr class="text-center">
                             <th>Action</th>
                             <th>#</th>
                             {% for key, value in fields.items %}
+                            {% if not key in fields_to_hide_in_table %}
                             <th>{{ value|remove_id|title }}</th>
+                            {% endif %}
                             {% endfor %}
                         </tr>
                     </thead>
@@ -28,7 +30,7 @@
 
                         <!-- table body -->
                         {% for object in list_objects %}
-                        <tr>
+                        <tr class="text-center">
 
                             <td style="width:14%">
                                 {% if not update_url == None and can_add_change == True %}
@@ -92,9 +94,11 @@
 
                             <th>{{ forloop.counter }}</th>
 
-                            {% for label, value in object.get_fields %}
+                            {% for label, value, field_type in object.get_fields %}
 
-                            {% if label in 'image, photo, picture' %}
+                            {% if not label in fields_to_hide_in_table %}
+
+                            {% if field_type in 'ImageField, FileField' %}
 
                             <td>
                                 {% if not value.url == None %}
@@ -106,13 +110,15 @@
                                 {% endif %}
                             </td>
 
-                            {% elif label in 'country' %}
+                            {% elif field_type in 'TextField' %}
                             <td>
-                                {{ value.name }}
+                                {{ value|truncate_word:30|remove_html_tags }}
                             </td>
 
                             {% else %}
                             <td>{{ value }}</td>
+                            {% endif %}
+
                             {% endif %}
 
                             {% endfor %}
@@ -131,11 +137,13 @@
                     </tbody>
 
                     <tfoot class="thead-dark">
-                        <tr>
+                        <tr class="text-center">
                             <th>Action</th>
                             <th>#</th>
                             {% for key, value in fields.items %}
+                            {% if not key in fields_to_hide_in_table %}
                             <th>{{ value|remove_id|upper }}</th>
+                            {% endif %}
                             {% endfor %}
                         </tr>
                     </tfoot>

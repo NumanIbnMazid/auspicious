@@ -77,8 +77,8 @@
 
             <div class="col-12">
                 <div class="table-responsive">
-                    <table id="list-datatable" class="display table-striped table-bordered align-items-center table-flush
-                        table-hover cell-border" style="width:100%">
+                    <table id="list-datatable" class="display table-striped align-items-center table-flush
+                        table-hover" style="width:100%">
                         <tr>
                             <th>
                                 <div class="row m-3">
@@ -95,7 +95,7 @@
                                 </div>
                             </th>
                         </tr>
-                        {% for label, value in object.get_fields %}
+                        {% for label, value, field_type in object.get_fields %}
                         <tr>
                             <th>
                                 <div class="row m-3">
@@ -107,7 +107,22 @@
                                             {% if value == None %}
                                             --
                                             {% else %}
+
+                                            {% if field_type in 'ImageField, FileField' %}
+                                            {% if not value.url == None %}
+                                            <img class="img-thumbnail ez-view m-2" src="{{ value.url }}"
+                                                alt="{{ value }}"
+                                                style="height:100px;width:100px;">
+                                            {% else %}
+                                            ---
+                                            {% endif %}
+
+                                            {% elif field_type in 'TextField' %}
+                                            {{ value|safe|linebreaks }}
+
+                                            {% else %}
                                             {{ value }}
+                                            {% endif %}
                                             {% endif %}
                                         </span>
                                     </div>
@@ -126,12 +141,16 @@
 {% endif %}
 
 
-{% if can_delete == True %}
-
-{% if not delete_url == None %}
-{% include 'snippets/delete-modal.html' %}
+{% if not delete_url == None and can_delete == True %}
+{% include 'dashboard/snippets/delete-modal.html' %}
 {% endif %}
 
-{% endif %}
+{% endblock %}
+
+{% block additional_js %}
+<!-- EZ View JS -->
+<script src="{% static 'assets/vendors/ez-view/EZView.js' %}"></script>
+<script src="{% static 'assets/vendors/ez-view/draggable.js' %}"></script>
+<script src="{% static 'assets/vendors/ez-view/ez-conf.js' %}"></script>
 
 {% endblock %}

@@ -21,6 +21,9 @@ INSTALLED_APPS = [
     'allauth.account',
     # Widget Tweaks
     'widget_tweaks',
+    # Django Ck Editor
+    'ckeditor',
+    'ckeditor_uploader',
     # *** Local Applications ***
     'dashboard',
     'accounts',

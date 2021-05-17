@@ -1,10 +1,20 @@
 from django.urls import path
 from .views import (
-    DashboardView
+    DashboardView,
+    ProjectCreateView, ProjectUpdateView, ProjectDetailView, delete_project
 )
 
 urlpatterns = [
     path('', DashboardView.as_view(), name="dashboard"),
-    path('create/news-category/', DashboardView.as_view(),
-         name="create_news_category"),
+    # # -------------------------------------------------------------------
+    # #                              Project
+    # # -------------------------------------------------------------------
+    path("create/project/", ProjectCreateView.as_view(),
+         name="create_project"),
+    path("update/project/<slug>/",
+         ProjectUpdateView.as_view(), name="update_project"),
+    path("project/<slug>/detail/",
+         ProjectDetailView.as_view(), name="project_detail"),
+    path("delete/project/", delete_project,
+         name="delete_project"),
 ]

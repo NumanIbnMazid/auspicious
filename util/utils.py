@@ -11,15 +11,15 @@ def get_filename_ext(filepath):
     return name, ext
 
 
-def upload_package_image_path(instance, filename):
+def upload_project_image_path(instance, filename):
     new_filename = "{datetime}".format(
         datetime=time.strftime("%Y%m%d-%H%M%S")
     )
     name, ext = get_filename_ext(filename)
     final_filename = '{new_filename}{ext}'.format(
         new_filename=new_filename, ext=ext)
-    return "Packages/{package}/Image/{final_filename}".format(
-        package=slugify(instance.package_name[:50]),
+    return "Projects/{project}/Image/{final_filename}".format(
+        project=slugify(instance.name[:50]),
         final_filename=final_filename
     )
 

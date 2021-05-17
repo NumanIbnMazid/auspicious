@@ -43,12 +43,12 @@ def get_fields(self):
                                   for elem in self.permissions.all()])
             else:
                 value = self.permissions.name
-            return (field.name, value)
+            return (field.name, value, field.get_internal_type())
         else:
             value = "-"
             if not field.value_from_object(self) == None and not field.value_from_object(self) == "":
                 value = field.value_from_object(self)
-            return (field.name, value)
+            return (field.name, value, field.get_internal_type())
     return [get_dynamic_fields(field) for field in (self.__class__._meta.fields + self.__class__._meta.many_to_many)]
 
 
@@ -87,12 +87,12 @@ class Profile(models.Model):
         ordering = ["-user__date_joined"]
 
     def get_fields(self):
-        def get_dynamic_fields(field):
-            if field.name == 'user':
-                return (field.name, self.user.username)
-            else:
-                return (field.name, field.value_from_object(self))
-        return [get_dynamic_fields(field) for field in self.__class__._meta.fields]
+        # def get_dynamic_fields(field):
+        #     if field.name == 'user':
+        #         return (field.name, self.user.username)
+        #     else:
+        #         return (field.name, field.value_from_object(self))
+        return [get_dynamic_fields(field, self, self.user.username) for field in self.__class__._meta.fields]
 
     def username(self):
         return self.user.username
