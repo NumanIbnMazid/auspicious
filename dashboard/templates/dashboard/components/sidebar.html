@@ -54,6 +54,19 @@
             </li>
             {% endif %}
 
+            <!-- manage News Category -->
+
+            {% if perms.dashboard.add_project or perms.dashboard.view_project %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:create_news_category' %}" class="sidebar-link">
+                    <i class="fa fa-newspaper" aria-hidden="true"></i>
+                    <span> News Category</span>
+                </a>
+            </li>
+            {% endif %}
+
+
+
         </ul>
     </div>
     <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>

@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from .models import (
-    Project,
+    Project, NewsCategory
 )
 from .forms import (
-    ProjectManageForm,
+    ProjectManageForm, NewsCategoryManageForm
 )
+
 from util.helpers import (
     validate_normal_form, get_simple_context_data, get_simple_object, delete_simple_object, user_has_permission
 )
@@ -72,6 +73,7 @@ class ProjectCreateView(CreateView):
         return context
 
 
+
 class ProjectDetailView(DetailView):
     template_name = "dashboard/snippets/detail-common.html"
 
@@ -134,3 +136,113 @@ class ProjectUpdateView(UpdateView):
 @csrf_exempt
 def delete_project(request):
     return delete_simple_object(request=request, key='slug', model=Project, redirect_url="dashboard:create_project")
+
+
+
+
+
+# # -------------------------------------------------------------------
+# #                               News Category
+# # -------------------------------------------------------------------
+
+
+def get_news_category_common_contexts(request):
+    common_contexts = get_simple_context_data(
+        request=request, app_namespace="dashboard", model_namespace="news_category", model=NewsCategory, list_template=None, fields_to_hide_in_table=[]
+    )
+    return common_contexts
+
+class NewsCategoryCreateView(CreateView):
+    template_name = "dashboard/snippets/manage.html"
+    form_class = NewsCategoryManageForm
+
+    def form_valid(self, form, **kwargs):
+        title = form.instance.title
+        field_qs = NewsCategory.objects.filter(
+            title__iexact=title
+        )
+        result = validate_normal_form(
+            field='title', field_qs=field_qs,
+            form=form, request=self.request
+        )
+        if result == 1:
+            return super().form_valid(form)
+        else:
+            return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_news_category')
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            NewsCategoryCreateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = 'Create News Category'
+        context['page_short_title'] = 'Create News Category'
+        for key, value in get_news_category_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+class NewsCategoryDetailView(DetailView):
+    template_name = "dashboard/snippets/detail-common.html"
+
+    def get_object(self):
+        return get_simple_object(key='id', model=NewsCategory, self=self)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            NewsCategoryDetailView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'NewsCategory - {self.get_object().title} Detail'
+        context['page_short_title'] = f'NewsCategory - {self.get_object().title} Detail'
+        for key, value in get_news_category_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+class NewsCategoryUpdateView(UpdateView):
+    template_name = 'dashboard/snippets/manage.html'
+    form_class = NewsCategoryManageForm
+
+    def get_object(self):
+        return get_simple_object(key="id", model=NewsCategory, self=self)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_news_category')
+
+    def form_valid(self, form):
+        self.object = self.get_object()
+        title = form.instance.title
+        if not self.object.title == title:
+            field_qs = NewsCategory.objects.filter(
+                title__iexact=title
+            )
+            result = validate_normal_form(
+                field='title', field_qs=field_qs,
+                form=form, request=self.request
+            )
+            if result == 1:
+                return super().form_valid(form)
+            else:
+                return super().form_invalid(form)
+
+        messages.add_message(
+            self.request, messages.SUCCESS, "Updated Successfully!"
+        )
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            NewsCategoryUpdateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'Update News Category "{self.get_object().title}"'
+        context['page_short_title'] = f'Update News Category "{self.get_object().title}"'
+        for key, value in get_news_category_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+@csrf_exempt
+def delete_news_category(request):
+    return delete_simple_object(request=request, key='id', model=NewsCategory, redirect_url="dashboard:create_news_category")
