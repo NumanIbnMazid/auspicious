@@ -98,7 +98,7 @@
 
                             {% if not label in fields_to_hide_in_table %}
 
-                            {% if field_type in 'ImageField, FileField' %}
+                            {% if field_type in 'ImageField, FileField' and not value == None and value != "" %}
 
                             <td>
                                 {% if not value.url == None %}
