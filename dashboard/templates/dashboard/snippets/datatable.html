@@ -98,10 +98,10 @@
 
                             {% if not label in fields_to_hide_in_table %}
 
-                            {% if field_type in 'ImageField, FileField' and not value == None and value != "" %}
+                            {% if field_type in 'ImageField, FileField' %}
 
                             <td>
-                                {% if not value.url == None %}
+                                {% if not value.url == None and not value == None and value != "" %}
 
                                 <img src="{{ value.url }}" alt="{{ value }}" style="height:100px;width:100px;">
 
