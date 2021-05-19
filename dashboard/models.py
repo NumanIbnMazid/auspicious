@@ -378,7 +378,7 @@ class Gallery(models.Model):
         unique=True, verbose_name='slug'
     )
     image = models.ImageField(
-        blank=True, null=True, verbose_name="image"
+        verbose_name="image"
     )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name='created at'
@@ -472,7 +472,7 @@ def client_slug_pre_save_receiver(sender, instance, *args, **kwargs):
         instance.slug = slug_binding
 
 
-pre_save.connect(client_slug_pre_save_receiver, sender=News)
+pre_save.connect(client_slug_pre_save_receiver, sender=Client)
 
 # # Gallery
 
@@ -483,4 +483,4 @@ def gallery_slug_pre_save_receiver(sender, instance, *args, **kwargs):
         instance.slug = slug_binding
 
 
-pre_save.connect(gallery_slug_pre_save_receiver, sender=News)
+pre_save.connect(gallery_slug_pre_save_receiver, sender=Gallery)
