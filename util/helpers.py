@@ -12,21 +12,17 @@ from middlewares.middlewares import RequestMiddleware
 """
 
 
-def get_dynamic_fields(field=None, self=None, fk_node=None):
+def get_dynamic_fields(field=None, self=None):
     """
     get_dynamic_fields() => Gets model fields dynamically.
     params => field, self, fk_node
     return => (field.name, value, field_type)
     """
-    # Pass fk_node as => fk_node = self.field.title
-    if not fk_node == None:
-        return (field.name, fk_node)
-    else:
-        value = "-"
-        if not field.value_from_object(self) == None and not field.value_from_object(self) == "":
-            value = field.value_from_object(self)
-        # print("***Fieldname***", field.name, "***FieldType***", field.get_internal_type())
-        return (field.name, value, field.get_internal_type())
+    value = "-"
+    if not field.value_from_object(self) == None and not field.value_from_object(self) == "":
+        value = field.value_from_object(self)
+    # print("***Fieldname***", field.name, "***FieldType***", field.get_internal_type())
+    return (field.name, value, field.get_internal_type())
 
 
 """

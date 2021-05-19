@@ -121,11 +121,14 @@ class News(models.Model):
         return self.title
 
     def get_fields(self):
+        return [get_dynamic_fields(field=field, self=self) for field in self.__class__._meta.fields]
+
+    def get_fields(self):
         def get_dynamic_fields(field):
             if field.name == 'category':
-                return (field.name, self.category.title)
+                return (field.name, self.category.title, field.get_internal_type())
             else:
-                return (field.name, field.value_from_object(self))
+                return (field.name, field.value_from_object(self), field.get_internal_type())
         return [get_dynamic_fields(field) for field in self.__class__._meta.fields]
 
 # # -------------------------------------------------------------------
@@ -162,9 +165,9 @@ class Comment(models.Model):
             if field.name == 'news':
                 return (field.name, self.news.title)
             elif field.name == 'commented_by':
-                return (field.name, self.commented_by.username)
+                return (field.name, self.commented_by.username, field.get_internal_type())
             else:
-                return (field.name, field.value_from_object(self))
+                return (field.name, field.value_from_object(self), field.get_internal_type())
         return [get_dynamic_fields(field) for field in self.__class__._meta.fields]
 
 
@@ -200,11 +203,11 @@ class CommentReply(models.Model):
     def get_fields(self):
         def get_dynamic_fields(field):
             if field.name == 'news':
-                return (field.name, self.news.title)
+                return (field.name, self.news.title, field.get_internal_type())
             elif field.name == 'replied_by':
-                return (field.name, self.replied_by.username)
+                return (field.name, self.replied_by.username, field.get_internal_type())
             else:
-                return (field.name, field.value_from_object(self))
+                return (field.name, field.value_from_object(self), field.get_internal_type())
         return [get_dynamic_fields(field) for field in self.__class__._meta.fields]
 
 
@@ -354,11 +357,11 @@ class Career(models.Model):
     def get_fields(self):
         def get_dynamic_fields(field):
             if field.name == 'user':
-                return (field.name, self.user.username)
+                return (field.name, self.user.username, field.get_internal_type())
             elif field.name == 'job_position':
-                return (field.name, self.job_position.title)
+                return (field.name, self.job_position.title, field.get_internal_type())
             else:
-                return (field.name, field.value_from_object(self))
+                return (field.name, field.value_from_object(self), field.get_internal_type())
         return [get_dynamic_fields(field) for field in self.__class__._meta.fields]
 
 
