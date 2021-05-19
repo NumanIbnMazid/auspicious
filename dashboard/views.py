@@ -7,7 +7,7 @@ from .forms import (
     ProjectManageForm,
 )
 from util.helpers import (
-    validate_normal_form, simple_context_data, get_simple_object, delete_simple_object, user_has_permission
+    validate_normal_form, get_simple_context_data, get_simple_object, delete_simple_object, user_has_permission
 )
 from django.urls import reverse
 from django.shortcuts import render, redirect
@@ -32,6 +32,13 @@ class DashboardView(TemplateView):
 # # -------------------------------------------------------------------
 # #                               Project
 # # -------------------------------------------------------------------
+
+def get_project_common_contexts(request):
+    common_contexts = get_simple_context_data(
+        request=request, app_namespace="dashboard", model_namespace="project", model=Project, list_template=None, fields_to_hide_in_table=["slug"]
+    )
+    return common_contexts
+
 
 class ProjectCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
@@ -60,22 +67,8 @@ class ProjectCreateView(CreateView):
         ).get_context_data(**kwargs)
         context['page_title'] = 'Create Project'
         context['page_short_title'] = 'Create Project'
-        context['list_objects'] = Project.objects.all().order_by('-id')
-        context['list_template'] = None
-        context['fields_count'] = len(Project._meta.get_fields()) + 1
-        context['fields'] = dict([(f.name, f.verbose_name)
-                                  for f in Project._meta.fields + Project._meta.many_to_many])
-        context['fields_to_hide_in_table'] = ["slug"]
-        context["update_url"] = "dashboard:update_project"
-        context["delete_url"] = "dashboard:delete_project"
-        context["detail_url"] = "dashboard:project_detail"
-        context['namespace'] = 'project'
-        context['can_add_change'] = True if self.request.user.has_perm(
-            'dashboard.add_project') and self.request.user.has_perm('dashboard.change_project') else False
-        context['can_view'] = self.request.user.has_perm(
-            'dashboard.view_project')
-        context['can_delete'] = self.request.user.has_perm(
-            'dashboard.delete_project')
+        for key, value in get_project_common_contexts(request=self.request).items():
+            context[key] = value
         return context
 
 
@@ -91,16 +84,8 @@ class ProjectDetailView(DetailView):
         ).get_context_data(**kwargs)
         context['page_title'] = f'Project - {self.get_object().name} Detail'
         context['page_short_title'] = f'Project - {self.get_object().name} Detail'
-        context["create_url"] = "dashboard:create_project"
-        context["update_url"] = "dashboard:update_project"
-        context["delete_url"] = "dashboard:delete_project"
-        context["list_url"] = "dashboard:create_project"
-        context['can_add_change'] = True if self.request.user.has_perm(
-            'dashboard.add_project') and self.request.user.has_perm('dashboard.change_project') else False
-        context['can_view'] = self.request.user.has_perm(
-            'dashboard.view_project')
-        context['can_delete'] = self.request.user.has_perm(
-            'dashboard.delete_project')
+        for key, value in get_project_common_contexts(request=self.request).items():
+            context[key] = value
         return context
 
 
@@ -141,22 +126,8 @@ class ProjectUpdateView(UpdateView):
         ).get_context_data(**kwargs)
         context['page_title'] = f'Update Project "{self.get_object().name}"'
         context['page_short_title'] = f'Update Project "{self.get_object().name}"'
-        context['list_objects'] = Project.objects.all().order_by('-id')
-        context['list_template'] = None
-        context['fields_count'] = len(Project._meta.get_fields()) + 1
-        context['fields'] = dict([(f.name, f.verbose_name)
-                                  for f in Project._meta.fields + Project._meta.many_to_many])
-        context['fields_to_hide_in_table'] = ["slug"]
-        context["update_url"] = "dashboard:update_project"
-        context["delete_url"] = "dashboard:delete_project"
-        context["detail_url"] = "dashboard:project_detail"
-        context['namespace'] = 'project'
-        context['can_add_change'] = True if self.request.user.has_perm(
-            'dashboard.add_project') and self.request.user.has_perm('dashboard.change_project') else False
-        context['can_view'] = self.request.user.has_perm(
-            'dashboard.view_project')
-        context['can_delete'] = self.request.user.has_perm(
-            'dashboard.delete_project')
+        for key, value in get_project_common_contexts(request=self.request).items():
+            context[key] = value
         return context
 
 

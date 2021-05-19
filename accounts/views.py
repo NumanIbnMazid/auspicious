@@ -7,7 +7,7 @@ from django.template import Context
 from django.contrib import messages
 from django import forms
 from util.helpers import (
-    validate_normal_form, simple_context_data, get_simple_object, delete_simple_object, user_has_permission
+    validate_normal_form, get_simple_context_data, get_simple_object, delete_simple_object, user_has_permission
 )
 from .models import Profile
 from django.conf import settings

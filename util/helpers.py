@@ -128,23 +128,100 @@ def delete_simple_object(request, key, model, redirect_url):
 ************************ Context Data Helper Functions ************************
 """
 
-def simple_context_data(context, model, page_title=None, update_url=None, delete_url=None, namespace=None, list_template=None):
+def get_simple_context_data(request=None, app_namespace=None, model_namespace=None, model=None, list_template=None, fields_to_hide_in_table=[], **kwargs):
     """
-    simple_context_data() => Generates context data.
-    params => context, model, page_title, update_url, delete_url, namespace, list_template
-    return => context
-    """
-    context['page_title'] = page_title
-    context['list_objects'] = model.objects.all()
-    context['list_template'] = list_template
-    context['fields_count'] = len(model._meta.get_fields()) - 1
-    context['fields'] = dict([(f.name, f.verbose_name)
-                              for f in model._meta.fields + model._meta.many_to_many])
-    context['update_url'] = update_url
-    context['delete_url'] = delete_url
-    context['namespace'] = namespace
-    return context
+    params: request, app_namespace (string), model_namespace (string), model (class), fields_to_hide_in_table (list), **kwargs
 
+    return: object {
+        "create_url": "example_app:create_example",
+        "update_url": "example_app:update_example",
+        "detail_url": "example_app:example_detail",
+        "delete_url": "example_app:delete_example",
+        "list_url": "example_app:create_example",
+        "can_add_change": True,
+        "can_add": True,
+        "can_change": True,
+        "can_view": True,
+        "can_delete": True,
+        "namespace": 'example',
+        "list_objects": [],
+        "list_template": "example.html",
+        "fields_count": 7,
+        "fields": {"field_name": "field_verbose_name"},
+        "fields_to_hide_in_table": ["slug"],
+        "kwargs_key": "kwargs_value"
+    }
+
+    Formats:
+        URL Formats Required:
+            => Create URL: "{app_namespace}:create_{model_namespace}",
+            => Update URL: "{app_namespace}:update_{model_namespace}",
+            => Detail URL: "{app_namespace}:{model_namespace}_detail",
+            => Delete URL: "{app_namespace}:delete_{model_namespace}",
+            => List URL: "{app_namespace}:create_{model_namespace}"
+        Model Namespace:
+            => ExampleModel -> example_model
+        App Namespace:
+            => example_app_name
+        Fields To Hide in Table:
+            => ["slug", "id"]
+    """
+    if request == None or model_namespace == None or model == None:
+        raise ValueError(
+            "request, model_namespace and model cannot be null! Please pass these arguments properly."
+        )
+    common_contexts = {}
+    if not app_namespace == None:
+        # URL Binding
+        common_contexts["create_url"] = f"{app_namespace}:create_{model_namespace}"
+        common_contexts["update_url"] = f"{app_namespace}:update_{model_namespace}"
+        common_contexts["detail_url"] = f"{app_namespace}:{model_namespace}_detail"
+        common_contexts["delete_url"] = f"{app_namespace}:delete_{model_namespace}"
+        common_contexts["list_url"] = f"{app_namespace}:create_{model_namespace}"
+        # Permission Binding
+        common_contexts["can_add_change"] = True if request.user.has_perm(
+            f'{app_namespace}.add_{model_namespace}') and request.user.has_perm(f'{app_namespace}.change_{model_namespace}') else False
+        common_contexts["can_add"] = request.user.has_perm(
+            f'{app_namespace}.add_{model_namespace}')
+        common_contexts["can_change"] = request.user.has_perm(
+            f'{app_namespace}.change_{model_namespace}')
+        common_contexts["can_view"] = request.user.has_perm(
+            f'{app_namespace}.view_{model_namespace}')
+        common_contexts["can_delete"] = request.user.has_perm(
+            f'{app_namespace}.delete_{model_namespace}')
+    else:
+        # URL Binding
+        common_contexts["create_url"] = f"create_{model_namespace}"
+        common_contexts["update_url"] = f"update_{model_namespace}"
+        common_contexts["detail_url"] = f"{model_namespace}_detail"
+        common_contexts["delete_url"] = f"delete_{model_namespace}"
+        common_contexts["list_url"] = f"create_{model_namespace}"
+        # Permission Binding
+        common_contexts["can_add_change"] = True if request.user.has_perm(
+            'add_{model_namespace}') and request.user.has_perm('change_{model_namespace}') else False
+        common_contexts["can_add"] = request.user.has_perm(
+            'add_{model_namespace}')
+        common_contexts["can_change"] = request.user.has_perm(
+            'change_{model_namespace}')
+        common_contexts["can_view"] = request.user.has_perm(
+            'view_{model_namespace}')
+        common_contexts["can_delete"] = request.user.has_perm(
+            'delete_{model_namespace}')
+
+    common_contexts["namespace"] = model_namespace
+    common_contexts["list_objects"] = model.objects.all().order_by('-id')
+    if not list_template == None:
+        common_contexts["list_template"] = list_template
+    common_contexts["fields_count"] = len(model._meta.get_fields()) + 1
+    common_contexts["fields"] = dict([(f.name, f.verbose_name)
+                                      for f in model._meta.fields + model._meta.many_to_many])
+    if not fields_to_hide_in_table == None:
+        common_contexts["fields_to_hide_in_table"] = fields_to_hide_in_table
+    
+    for key, value in kwargs.items():
+        common_contexts[key] = value
+
+    return common_contexts
 
 """
 ************************ Character Validate Helper Functions ************************
