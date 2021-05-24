@@ -238,3 +238,134 @@ class GalleryManageForm(forms.ModelForm):
                     filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(image.size)))
             return image
         return None
+
+
+# # -------------------------------------------------------------------
+# #                               Client
+# # -------------------------------------------------------------------
+
+
+class ClientManageForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(ClientManageForm, self).__init__(*args, **kwargs)
+
+        self.fields['name'].widget.attrs.update({
+            'placeholder': 'Enter News Client Name...',
+            'maxlength': 100
+        })
+
+
+    class Meta:
+        model = Client
+        fields = [
+            "name", "category",  "logo"
+        ]
+
+
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if image and isinstance(image, UploadedFile):
+            file_extension = os.path.splitext(image.name)[1]
+            allowed_image_types = settings.ALLOWED_IMAGE_TYPES
+            content_type = image.content_type.split('/')[0]
+            if not file_extension in allowed_image_types:
+                raise forms.ValidationError("Only %s file formats are supported! Current image format is %s" % (
+                    allowed_image_types, file_extension))
+            if image.size > settings.MAX_UPLOAD_SIZE:
+                raise forms.ValidationError("Please keep filesize under %s. Current filesize %s" % (
+                    filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(image.size)))
+            return image
+        return None
+
+    # # -------------------------------------------------------------------
+    # #                               Social Account
+    # # -------------------------------------------------------------------
+
+class SocialAccountManageForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(SocialAccountManageForm, self).__init__(*args, **kwargs)
+
+        self.fields['title'].widget.attrs.update({
+            'placeholder': 'Enter Social Account Title...',
+            'maxlength': 100
+        })
+
+    class Meta:
+        model = SocialAccount
+        fields = [
+            "title", "logo", "url"
+        ]
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if image and isinstance(image, UploadedFile):
+            file_extension = os.path.splitext(image.name)[1]
+            allowed_image_types = settings.ALLOWED_IMAGE_TYPES
+            content_type = image.content_type.split('/')[0]
+            if not file_extension in allowed_image_types:
+                raise forms.ValidationError("Only %s file formats are supported! Current image format is %s" % (
+                    allowed_image_types, file_extension))
+            if image.size > settings.MAX_UPLOAD_SIZE:
+                raise forms.ValidationError("Please keep filesize under %s. Current filesize %s" % (
+                    filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(image.size)))
+            return image
+        return None
+
+
+
+# # -------------------------------------------------------------------
+# #                               Job Position
+# # -------------------------------------------------------------------
+
+class JobPositionManageForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(JobPositionManageForm, self).__init__(*args, **kwargs)
+
+        self.fields['title'].widget.attrs.update({
+            'placeholder': 'Enter Job Position Title...',
+            'maxlength': 100
+        })
+
+    class Meta:
+        model = JobPosition
+        fields = [
+            "title"
+        ]
+
+
+
+# # -------------------------------------------------------------------
+# #                               Contact
+# # -------------------------------------------------------------------
+
+class ContactManageForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(ContactManageForm, self).__init__(*args, **kwargs)
+
+        self.fields['phone1'].widget.attrs.update({
+            'placeholder': 'Enter 1st Phone Number...',
+            'maxlength': 50
+        })
+        self.fields['phone2'].widget.attrs.update({
+            'placeholder': 'Enter 2nd Phone Number...',
+            'maxlength': 50
+        })
+        self.fields['email'].widget.attrs.update({
+            'placeholder': 'Enter Email Address...',
+            'maxlength': 100
+        })
+        self.fields['address'].widget.attrs.update({
+            'placeholder': 'Enter Address...',
+
+        })
+
+    class Meta:
+        model = Contact
+        fields = [
+            "phone1","phone2","email","address"
+        ]

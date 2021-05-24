@@ -3,9 +3,11 @@ from .views import (
     DashboardView,
     ProjectCreateView, ProjectUpdateView, ProjectDetailView, delete_project, NewsCategoryCreateView,
     delete_news_category, NewsCategoryUpdateView, NewsCategoryDetailView, NewsCreateView, NewsDetailView,
-    NewsUpdateView, delete_news, GalleryCreateView, GalleryDetailView, GalleryUpdateView, delete_gallery
+    NewsUpdateView, delete_news, GalleryCreateView, GalleryDetailView, GalleryUpdateView, delete_gallery,
+    ClientCreateView, ClientUpdateView, ClientDetailView, delete_client, SocialAccountCreateView,
+    SocialAccountUpdateView, SocialAccountDetailView, delete_social_account, delete_job_position, JobPositionCreateView,
+    JobPositionUpdateView, JobPositionDetailView
 )
-
 
 
 
@@ -56,4 +58,41 @@ urlpatterns = [
          GalleryDetailView.as_view(), name="gallery_detail"),
     path("news/gallery/", delete_gallery,
          name="delete_gallery"),
+
+    # # -------------------------------------------------------------------
+    # #                              Client
+    # # -------------------------------------------------------------------
+    path("create/client/", ClientCreateView.as_view(),
+         name="create_client"),
+    path("update/client/<slug>/",
+         ClientUpdateView.as_view(), name="update_client"),
+    path("client/<slug>/detail/",
+         ClientDetailView.as_view(), name="client_detail"),
+    path("news/client/", delete_client,
+         name="delete_client"),
+
+    # # -------------------------------------------------------------------
+    # #                              Social Account
+    # # -------------------------------------------------------------------
+    path("create/social_account/", SocialAccountCreateView.as_view(),
+         name="create_social_account"),
+    path("update/social_account/<id>/",
+         SocialAccountUpdateView.as_view(), name="update_social_account"),
+    path("social_account/<id>/detail/",
+         SocialAccountDetailView.as_view(), name="social_account_detail"),
+    path("news/social_account/", delete_social_account,
+         name="delete_social_account"),
+
+    # # -------------------------------------------------------------------
+    # #                              Job Position
+    # # -------------------------------------------------------------------
+    path("create/job_position/", JobPositionCreateView.as_view(),
+         name="create_job_position"),
+    path("update/job_position/<id>/",
+         JobPositionUpdateView.as_view(), name="update_job_position"),
+    path("job_position/<id>/detail/",
+         JobPositionDetailView.as_view(), name="job_position_detail"),
+    path("news/job_position/", delete_job_position,
+         name="delete_job_position"),
 ]
+

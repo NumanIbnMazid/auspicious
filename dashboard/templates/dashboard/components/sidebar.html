@@ -88,6 +88,42 @@
             {% endif %}
 
 
+            <!-- Client -->
+
+            {% if perms.dashboard.add_project or perms.dashboard.view_client %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:create_client' %}" class="sidebar-link">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <span> Client</span>
+                </a>
+            </li>
+            {% endif %}
+
+            <!-- Social Account -->
+
+            {% if perms.dashboard.add_project or perms.dashboard.view_social_account %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:create_social_account' %}" class="sidebar-link">
+                    <i class="fas fa-people-arrows" aria-hidden="true"></i>
+                    <span> Social Account </span>
+                </a>
+            </li>
+
+            {% endif %}
+
+                        <!-- Social Account -->
+
+            {% if perms.dashboard.add_project or perms.dashboard.view_social_account %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:create_job_position' %}" class="sidebar-link">
+                    <i class="fas fa-user-md" aria-hidden="true"></i>
+                    <span> Job Position</span>
+                </a>
+            </li>
+
+            {% endif %}
+
+
 
 
         </ul>

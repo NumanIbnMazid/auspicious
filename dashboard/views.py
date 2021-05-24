@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from .models import (
-    Project, NewsCategory, News, Gallery
+    Project, NewsCategory, News, Gallery, Client, SocialAccount,
+    JobPosition,Contact
 )
 from .forms import (
-    ProjectManageForm, NewsCategoryManageForm,NewsManageForm, GalleryManageForm
+    ProjectManageForm, NewsCategoryManageForm,NewsManageForm, GalleryManageForm, ClientManageForm, SocialAccountManageForm,
+    JobPositionManageForm, ContactManageForm
 )
 
 from util.helpers import (
@@ -462,4 +464,442 @@ class GalleryUpdateView(UpdateView):
 @csrf_exempt
 def delete_gallery(request):
     return delete_simple_object(request=request, key='slug', model=Gallery, redirect_url="dashboard:create_gallery")
+
+
+
+# # -------------------------------------------------------------------
+# #                               Client
+# # -------------------------------------------------------------------
+
+def get_client_common_contexts(request):
+    common_contexts = get_simple_context_data(
+        request=request, app_namespace="dashboard", model_namespace="client", model=Client, list_template=None, fields_to_hide_in_table=["slug"]
+    )
+    return common_contexts
+
+
+class ClientCreateView(CreateView):
+    template_name = "dashboard/snippets/manage.html"
+    form_class = ClientManageForm
+
+    def form_valid(self, form, **kwargs):
+        name = form.instance.name
+        field_qs = Client.objects.filter(
+            name__iexact=name
+        )
+        result = validate_normal_form(
+            field='client', field_qs=field_qs,
+            form=form, request=self.request
+        )
+        if result == 1:
+            return super().form_valid(form)
+        else:
+            return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_client')
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            ClientCreateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = 'Create Client'
+        context['page_short_title'] = 'Create Client'
+        for key, value in get_client_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+
+class ClientDetailView(DetailView):
+    template_name = "dashboard/snippets/detail-common.html"
+
+    def get_object(self):
+        return get_simple_object(key='slug', model=Client, self=self)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            ClientDetailView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'Client - {self.get_object().name} Detail'
+        context['page_short_title'] = f'Client - {self.get_object().name} Detail'
+        for key, value in get_gallery_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+class ClientUpdateView(UpdateView):
+    template_name = 'dashboard/snippets/manage.html'
+    form_class = ClientManageForm
+
+    def get_object(self):
+        return get_simple_object(key="slug", model=Client, self=self)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_client')
+
+    def form_valid(self, form):
+        self.object = self.get_object()
+        name = form.instance.name
+        if not self.object.name == name:
+            field_qs = Client.objects.filter(
+                name__iexact=name
+            )
+            result = validate_normal_form(
+                field='name', field_qs=field_qs,
+                form=form, request=self.request
+            )
+            if result == 1:
+                return super().form_valid(form)
+            else:
+                return super().form_invalid(form)
+
+        messages.add_message(
+            self.request, messages.SUCCESS, "Updated Successfully!"
+        )
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            ClientUpdateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'Update Client "{self.get_object().name}"'
+        context['page_short_title'] = f'Update Gallery "{self.get_object().name}"'
+        for key, value in get_client_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+@csrf_exempt
+def delete_client(request):
+    return delete_simple_object(request=request, key='slug', model=Client, redirect_url="dashboard:create_client")
+
+
+
+
+# # -------------------------------------------------------------------
+# #                               Social Account
+# # -------------------------------------------------------------------
+
+def get_social_account_common_contexts(request):
+    common_contexts = get_simple_context_data(
+        request=request, app_namespace="dashboard", model_namespace="social_account", model=SocialAccount, list_template=None, fields_to_hide_in_table=[""]
+    )
+    return common_contexts
+
+
+class SocialAccountCreateView(CreateView):
+    template_name = "dashboard/snippets/manage.html"
+    form_class = SocialAccountManageForm
+
+    def form_valid(self, form, **kwargs):
+        title = form.instance.title
+        field_qs = SocialAccount.objects.filter(
+            title__iexact=title
+        )
+        result = validate_normal_form(
+            field='social_account', field_qs=field_qs,
+            form=form, request=self.request
+        )
+        if result == 1:
+            return super().form_valid(form)
+        else:
+            return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_social_account')
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            SocialAccountCreateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = 'Create Social Account'
+        context['page_short_title'] = 'Create Social Account'
+        for key, value in get_social_account_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+
+class SocialAccountDetailView(DetailView):
+    template_name = "dashboard/snippets/detail-common.html"
+
+    def get_object(self):
+        return get_simple_object(key='id', model=SocialAccount, self=self)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            SocialAccountDetailView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'SocialAccount - {self.get_object().title} Detail'
+        context['page_short_title'] = f'SocialAccount - {self.get_object().title} Detail'
+        for key, value in get_social_account_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+class SocialAccountUpdateView(UpdateView):
+    template_name = 'dashboard/snippets/manage.html'
+    form_class = SocialAccountManageForm
+
+    def get_object(self):
+        return get_simple_object(key="id", model=SocialAccount, self=self)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_social_account')
+
+    def form_valid(self, form):
+        self.object = self.get_object()
+        title = form.instance.title
+        if not self.object.title == title:
+            field_qs = SocialAccount.objects.filter(
+                title__iexact=title
+            )
+            result = validate_normal_form(
+                field='title', field_qs=field_qs,
+                form=form, request=self.request
+            )
+            if result == 1:
+                return super().form_valid(form)
+            else:
+                return super().form_invalid(form)
+
+        messages.add_message(
+            self.request, messages.SUCCESS, "Updated Successfully!"
+        )
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            SocialAccountUpdateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'Update Social Account "{self.get_object().title}"'
+        context['page_short_title'] = f'Update Social Account "{self.get_object().title}"'
+        for key, value in get_social_account_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+@csrf_exempt
+def delete_social_account(request):
+    return delete_simple_object(request=request, key='id', model=SocialAccount, redirect_url="dashboard:create_social_account")
+
+
+
+# # -------------------------------------------------------------------
+# #                               Contact
+# # -------------------------------------------------------------------
+
+def get_contact_common_contexts(request):
+    common_contexts = get_simple_context_data(
+        request=request, app_namespace="dashboard", model_namespace="contact", model=Contact, list_template=None, fields_to_hide_in_table=[""]
+    )
+    return common_contexts
+
+
+class JobPositionCreateView(CreateView):
+    template_name = "dashboard/snippets/manage.html"
+    form_class = JobPositionManageForm
+
+    def form_valid(self, form, **kwargs):
+        title = form.instance.title
+        field_qs = JobPosition.objects.filter(
+            title__iexact=title
+        )
+        result = validate_normal_form(
+            field='job_position', field_qs=field_qs,
+            form=form, request=self.request
+        )
+        if result == 1:
+            return super().form_valid(form)
+        else:
+            return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_job_position')
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            JobPositionCreateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = 'Create Job Position'
+        context['page_short_title'] = 'Create Job Position'
+        for key, value in get_job_position_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+
+class JobPositionDetailView(DetailView):
+    template_name = "dashboard/snippets/detail-common.html"
+
+    def get_object(self):
+        return get_simple_object(key='id', model=JobPosition, self=self)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            JobPositionDetailView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'JobPosition - {self.get_object().title} Detail'
+        context['page_short_title'] = f'JobPosition - {self.get_object().title} Detail'
+        for key, value in get_job_position_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+class JobPositionUpdateView(UpdateView):
+    template_name = 'dashboard/snippets/manage.html'
+    form_class = JobPositionManageForm
+
+    def get_object(self):
+        return get_simple_object(key="id", model=JobPosition, self=self)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_job_position')
+
+    def form_valid(self, form):
+        self.object = self.get_object()
+        title = form.instance.title
+        if not self.object.title == title:
+            field_qs = JobPosition.objects.filter(
+                title__iexact=title
+            )
+            result = validate_normal_form(
+                field='title', field_qs=field_qs,
+                form=form, request=self.request
+            )
+            if result == 1:
+                return super().form_valid(form)
+            else:
+                return super().form_invalid(form)
+
+        messages.add_message(
+            self.request, messages.SUCCESS, "Updated Successfully!"
+        )
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            JobPositionUpdateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'Update Job Position "{self.get_object().title}"'
+        context['page_short_title'] = f'Update Job Position "{self.get_object().title}"'
+        for key, value in get_job_position_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+@csrf_exempt
+def delete_job_position(request):
+    return delete_simple_object(request=request, key='id', model=JobPosition, redirect_url="dashboard:create_job_position")
+
+
+
+
+# # -------------------------------------------------------------------
+# #                               Job Position
+# # -------------------------------------------------------------------
+
+def get_job_position_common_contexts(request):
+    common_contexts = get_simple_context_data(
+        request=request, app_namespace="dashboard", model_namespace="job_position", model=JobPosition, list_template=None, fields_to_hide_in_table=[""]
+    )
+    return common_contexts
+
+
+class JobPositionCreateView(CreateView):
+    template_name = "dashboard/snippets/manage.html"
+    form_class = JobPositionManageForm
+
+    def form_valid(self, form, **kwargs):
+        title = form.instance.title
+        field_qs = JobPosition.objects.filter(
+            title__iexact=title
+        )
+        result = validate_normal_form(
+            field='job_position', field_qs=field_qs,
+            form=form, request=self.request
+        )
+        if result == 1:
+            return super().form_valid(form)
+        else:
+            return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_job_position')
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            JobPositionCreateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = 'Create Job Position'
+        context['page_short_title'] = 'Create Job Position'
+        for key, value in get_job_position_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+
+class JobPositionDetailView(DetailView):
+    template_name = "dashboard/snippets/detail-common.html"
+
+    def get_object(self):
+        return get_simple_object(key='id', model=JobPosition, self=self)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            JobPositionDetailView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'JobPosition - {self.get_object().title} Detail'
+        context['page_short_title'] = f'JobPosition - {self.get_object().title} Detail'
+        for key, value in get_job_position_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+class JobPositionUpdateView(UpdateView):
+    template_name = 'dashboard/snippets/manage.html'
+    form_class = JobPositionManageForm
+
+    def get_object(self):
+        return get_simple_object(key="id", model=JobPosition, self=self)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_job_position')
+
+    def form_valid(self, form):
+        self.object = self.get_object()
+        title = form.instance.title
+        if not self.object.title == title:
+            field_qs = JobPosition.objects.filter(
+                title__iexact=title
+            )
+            result = validate_normal_form(
+                field='title', field_qs=field_qs,
+                form=form, request=self.request
+            )
+            if result == 1:
+                return super().form_valid(form)
+            else:
+                return super().form_invalid(form)
+
+        messages.add_message(
+            self.request, messages.SUCCESS, "Updated Successfully!"
+        )
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            JobPositionUpdateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'Update Job Position "{self.get_object().title}"'
+        context['page_short_title'] = f'Update Job Position "{self.get_object().title}"'
+        for key, value in get_job_position_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+@csrf_exempt
+def delete_job_position(request):
+    return delete_simple_object(request=request, key='id', model=JobPosition, redirect_url="dashboard:create_job_position")
 
