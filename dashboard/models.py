@@ -352,7 +352,7 @@ class Career(models.Model):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return self.title
+        return self.user.username
 
     def get_fields(self):
         def get_dynamic_fields(field):
@@ -412,10 +412,10 @@ class Contact(models.Model):
         max_length=50, blank=True, null=True, verbose_name="phone 2"
     )
     email = models.EmailField(
-        verbose_name="email"
+        blank=True, null=True, verbose_name="email"
     )
     address = models.CharField(
-        max_length=255, verbose_name="address"
+        blank=True, null=True, max_length=255, verbose_name="address"
     )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name='created at'
@@ -430,7 +430,7 @@ class Contact(models.Model):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return self.title
+        return self.phone1
 
     def get_fields(self):
         return [get_dynamic_fields(field, self) for field in self.__class__._meta.fields]

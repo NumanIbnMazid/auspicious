@@ -120,3 +120,121 @@ class NewsCategoryManageForm(forms.ModelForm):
                     filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(image.size)))
             return image
         return None
+
+
+# # -------------------------------------------------------------------
+# #                               News
+# # -------------------------------------------------------------------
+
+class NewsManageForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(NewsManageForm, self).__init__(*args, **kwargs)
+
+        self.fields['title'].widget.attrs.update({
+            'placeholder': 'Enter News Title...',
+            'maxlength': 100
+        })
+
+
+    class Meta:
+        model = News
+        fields = [
+            "title",  "image", "category", "description"
+        ]
+
+
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if image and isinstance(image, UploadedFile):
+            file_extension = os.path.splitext(image.name)[1]
+            allowed_image_types = settings.ALLOWED_IMAGE_TYPES
+            content_type = image.content_type.split('/')[0]
+            if not file_extension in allowed_image_types:
+                raise forms.ValidationError("Only %s file formats are supported! Current image format is %s" % (
+                    allowed_image_types, file_extension))
+            if image.size > settings.MAX_UPLOAD_SIZE:
+                raise forms.ValidationError("Please keep filesize under %s. Current filesize %s" % (
+                    filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(image.size)))
+            return image
+        return None
+
+
+# # -------------------------------------------------------------------
+# #                               Gallery
+# # -------------------------------------------------------------------
+
+class GalleryManageForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(GalleryManageForm, self).__init__(*args, **kwargs)
+
+        self.fields['title'].widget.attrs.update({
+            'placeholder': 'Enter News Category Title...',
+            'maxlength': 100
+        })
+
+
+    class Meta:
+        model = Gallery
+        fields = [
+            "title",  "image"
+        ]
+
+
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if image and isinstance(image, UploadedFile):
+            file_extension = os.path.splitext(image.name)[1]
+            allowed_image_types = settings.ALLOWED_IMAGE_TYPES
+            content_type = image.content_type.split('/')[0]
+            if not file_extension in allowed_image_types:
+                raise forms.ValidationError("Only %s file formats are supported! Current image format is %s" % (
+                    allowed_image_types, file_extension))
+            if image.size > settings.MAX_UPLOAD_SIZE:
+                raise forms.ValidationError("Please keep filesize under %s. Current filesize %s" % (
+                    filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(image.size)))
+            return image
+        return None
+
+
+
+# # -------------------------------------------------------------------
+# #                               Gallery
+# # -------------------------------------------------------------------
+
+class GalleryManageForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(GalleryManageForm, self).__init__(*args, **kwargs)
+
+        self.fields['title'].widget.attrs.update({
+            'placeholder': 'Enter News Category Title...',
+            'maxlength': 100
+        })
+
+
+    class Meta:
+        model = Gallery
+        fields = [
+            "title",  "image"
+        ]
+
+
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if image and isinstance(image, UploadedFile):
+            file_extension = os.path.splitext(image.name)[1]
+            allowed_image_types = settings.ALLOWED_IMAGE_TYPES
+            content_type = image.content_type.split('/')[0]
+            if not file_extension in allowed_image_types:
+                raise forms.ValidationError("Only %s file formats are supported! Current image format is %s" % (
+                    allowed_image_types, file_extension))
+            if image.size > settings.MAX_UPLOAD_SIZE:
+                raise forms.ValidationError("Please keep filesize under %s. Current filesize %s" % (
+                    filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(image.size)))
+            return image
+        return None

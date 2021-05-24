@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from .models import (
-    Project, NewsCategory
+    Project, NewsCategory, News, Gallery
 )
 from .forms import (
-    ProjectManageForm, NewsCategoryManageForm
+    ProjectManageForm, NewsCategoryManageForm,NewsManageForm, GalleryManageForm
 )
 
 from util.helpers import (
@@ -246,3 +246,220 @@ class NewsCategoryUpdateView(UpdateView):
 @csrf_exempt
 def delete_news_category(request):
     return delete_simple_object(request=request, key='id', model=NewsCategory, redirect_url="dashboard:create_news_category")
+
+
+# # -------------------------------------------------------------------
+# #                               News
+# # -------------------------------------------------------------------
+
+
+def get_news_common_contexts(request):
+    common_contexts = get_simple_context_data(
+        request=request, app_namespace="dashboard", model_namespace="news", model=News, list_template=None, fields_to_hide_in_table=['slug']
+    )
+    return common_contexts
+
+class NewsCreateView(CreateView):
+    template_name = "dashboard/snippets/manage.html"
+    form_class = NewsManageForm
+
+    def form_valid(self, form, **kwargs):
+        title = form.instance.title
+        field_qs = News.objects.filter(
+            title__iexact=title
+        )
+        result = validate_normal_form(
+            field='title', field_qs=field_qs,
+            form=form, request=self.request
+        )
+        if result == 1:
+            return super().form_valid(form)
+        else:
+            return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_news')
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            NewsCreateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = 'Create News'
+        context['page_short_title'] = 'Create News'
+        for key, value in get_news_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+class NewsDetailView(DetailView):
+    template_name = "dashboard/snippets/detail-common.html"
+
+    def get_object(self):
+        return get_simple_object(key='slug', model=News, self=self)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            NewsDetailView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'News- {self.get_object().title} Detail'
+        context['page_short_title'] = f'News - {self.get_object().title} Detail'
+        for key, value in get_news_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+class NewsUpdateView(UpdateView):
+    template_name = 'dashboard/snippets/manage.html'
+    form_class = NewsManageForm
+
+    def get_object(self):
+        return get_simple_object(key="slug", model=News, self=self)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_news')
+
+    def form_valid(self, form):
+        self.object = self.get_object()
+        title = form.instance.title
+        if not self.object.title == title:
+            field_qs = News.objects.filter(
+                title__iexact=title
+            )
+            result = validate_normal_form(
+                field='title', field_qs=field_qs,
+                form=form, request=self.request
+            )
+            if result == 1:
+                return super().form_valid(form)
+            else:
+                return super().form_invalid(form)
+
+        messages.add_message(
+            self.request, messages.SUCCESS, "Updated Successfully!"
+        )
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            NewsUpdateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'Update News Category "{self.get_object().title}"'
+        context['page_short_title'] = f'Update News Category "{self.get_object().title}"'
+        for key, value in get_news_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+@csrf_exempt
+def delete_news(request):
+    return delete_simple_object(request=request, key='slug', model=News, redirect_url="dashboard:create_news")
+
+
+
+# # -------------------------------------------------------------------
+# #                               Gallery
+# # -------------------------------------------------------------------
+
+def get_gallery_common_contexts(request):
+    common_contexts = get_simple_context_data(
+        request=request, app_namespace="dashboard", model_namespace="gallery", model=Gallery, list_template=None, fields_to_hide_in_table=["slug"]
+    )
+    return common_contexts
+
+
+class GalleryCreateView(CreateView):
+    template_name = "dashboard/snippets/manage.html"
+    form_class = GalleryManageForm
+
+    def form_valid(self, form, **kwargs):
+        title = form.instance.title
+        field_qs = Gallery.objects.filter(
+            title__iexact=title
+        )
+        result = validate_normal_form(
+            field='gallery', field_qs=field_qs,
+            form=form, request=self.request
+        )
+        if result == 1:
+            return super().form_valid(form)
+        else:
+            return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_gallery')
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            GalleryCreateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = 'Create Gallery'
+        context['page_short_title'] = 'Create Gallery'
+        for key, value in get_gallery_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+
+class GalleryDetailView(DetailView):
+    template_name = "dashboard/snippets/detail-common.html"
+
+    def get_object(self):
+        return get_simple_object(key='slug', model=Gallery, self=self)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            GalleryDetailView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'Gallery - {self.get_object().title} Detail'
+        context['page_short_title'] = f'Gallery - {self.get_object().title} Detail'
+        for key, value in get_gallery_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+class GalleryUpdateView(UpdateView):
+    template_name = 'dashboard/snippets/manage.html'
+    form_class = GalleryManageForm
+
+    def get_object(self):
+        return get_simple_object(key="slug", model=Gallery, self=self)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_gallery')
+
+    def form_valid(self, form):
+        self.object = self.get_object()
+        title = form.instance.title
+        if not self.object.title == title:
+            field_qs = Gallery.objects.filter(
+                title__iexact=title
+            )
+            result = validate_normal_form(
+                field='name', field_qs=field_qs,
+                form=form, request=self.request
+            )
+            if result == 1:
+                return super().form_valid(form)
+            else:
+                return super().form_invalid(form)
+
+        messages.add_message(
+            self.request, messages.SUCCESS, "Updated Successfully!"
+        )
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            GalleryUpdateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'Update Gallery "{self.get_object().title}"'
+        context['page_short_title'] = f'Update Gallery "{self.get_object().title}"'
+        for key, value in get_gallery_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+@csrf_exempt
+def delete_gallery(request):
+    return delete_simple_object(request=request, key='slug', model=Gallery, redirect_url="dashboard:create_gallery")
+
