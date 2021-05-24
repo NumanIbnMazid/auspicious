@@ -135,6 +135,12 @@ class NewsManageForm(forms.ModelForm):
             'placeholder': 'Enter News Title...',
             'maxlength': 100
         })
+        self.fields['description'].widget.attrs.update({
+            'id': 'news_description_input',
+            'placeholder': 'Enter News Description...',
+            'rows': 10,
+            'cols': 5,
+        })
 
 
     class Meta:
@@ -142,6 +148,9 @@ class NewsManageForm(forms.ModelForm):
         fields = [
             "title",  "image", "category", "description"
         ]
+        widgets = {
+            'description': CKEditorWidget(),
+        }
 
 
 
