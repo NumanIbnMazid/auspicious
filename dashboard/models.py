@@ -409,7 +409,7 @@ class Contact(models.Model):
         max_length=50, verbose_name="phone 1"
     )
     phone2 = models.CharField(
-        max_length=50, verbose_name="phone 2"
+        max_length=50, blank=True, null=True, verbose_name="phone 2"
     )
     email = models.EmailField(
         verbose_name="email"
