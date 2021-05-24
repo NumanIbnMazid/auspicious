@@ -142,7 +142,7 @@
                             <th>#</th>
                             {% for key, value in fields.items %}
                             {% if not key in fields_to_hide_in_table %}
-                            <th>{{ value|remove_id|upper }}</th>
+                            <th>{{ value|remove_id|title }}</th>
                             {% endif %}
                             {% endfor %}
                         </tr>

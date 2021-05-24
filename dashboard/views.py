@@ -808,17 +808,17 @@ def get_contact_common_contexts(request):
     return common_contexts
 
 
-class JobPositionCreateView(CreateView):
+class ContactCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
-    form_class = JobPositionManageForm
+    form_class = ContactManageForm
 
     def form_valid(self, form, **kwargs):
-        title = form.instance.title
-        field_qs = JobPosition.objects.filter(
-            title__iexact=title
+        phone1 = form.instance.phone1
+        field_qs = Contact.objects.filter(
+            phone1__iexact=phone1
         )
         result = validate_normal_form(
-            field='job_position', field_qs=field_qs,
+            field='contact', field_qs=field_qs,
             form=form, request=self.request
         )
         if result == 1:
@@ -827,56 +827,56 @@ class JobPositionCreateView(CreateView):
             return super().form_invalid(form)
 
     def get_success_url(self):
-        return reverse('dashboard:create_job_position')
+        return reverse('dashboard:create_contact')
 
     def get_context_data(self, **kwargs):
         context = super(
-            JobPositionCreateView, self
+            ContactCreateView, self
         ).get_context_data(**kwargs)
-        context['page_title'] = 'Create Job Position'
-        context['page_short_title'] = 'Create Job Position'
-        for key, value in get_job_position_common_contexts(request=self.request).items():
+        context['page_title'] = 'Create Contact'
+        context['page_short_title'] = 'Create Contact'
+        for key, value in get_contact_common_contexts(request=self.request).items():
             context[key] = value
         return context
 
 
 
-class JobPositionDetailView(DetailView):
+class ContactDetailView(DetailView):
     template_name = "dashboard/snippets/detail-common.html"
 
     def get_object(self):
-        return get_simple_object(key='id', model=JobPosition, self=self)
+        return get_simple_object(key='id', model=Contact, self=self)
 
     def get_context_data(self, **kwargs):
         context = super(
-            JobPositionDetailView, self
+            ContactDetailView, self
         ).get_context_data(**kwargs)
-        context['page_title'] = f'JobPosition - {self.get_object().title} Detail'
-        context['page_short_title'] = f'JobPosition - {self.get_object().title} Detail'
-        for key, value in get_job_position_common_contexts(request=self.request).items():
+        context['page_title'] = f'Contact - {self.get_object().phone1} Detail'
+        context['page_short_title'] = f'Contact - {self.get_object().phone1} Detail'
+        for key, value in get_contact_common_contexts(request=self.request).items():
             context[key] = value
         return context
 
 
-class JobPositionUpdateView(UpdateView):
+class ContactUpdateView(UpdateView):
     template_name = 'dashboard/snippets/manage.html'
-    form_class = JobPositionManageForm
+    form_class = ContactManageForm
 
     def get_object(self):
-        return get_simple_object(key="id", model=JobPosition, self=self)
+        return get_simple_object(key="id", model=Contact, self=self)
 
     def get_success_url(self):
-        return reverse('dashboard:create_job_position')
+        return reverse('dashboard:create_contact')
 
     def form_valid(self, form):
         self.object = self.get_object()
-        title = form.instance.title
-        if not self.object.title == title:
-            field_qs = JobPosition.objects.filter(
-                title__iexact=title
+        phone1 = form.instance.phone1
+        if not self.object.phone1 == phone1:
+            field_qs = Contact.objects.filter(
+                phone1__iexact=phone1
             )
             result = validate_normal_form(
-                field='title', field_qs=field_qs,
+                field='phone1', field_qs=field_qs,
                 form=form, request=self.request
             )
             if result == 1:
@@ -891,17 +891,17 @@ class JobPositionUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(
-            JobPositionUpdateView, self
+            ContactUpdateView, self
         ).get_context_data(**kwargs)
-        context['page_title'] = f'Update Job Position "{self.get_object().title}"'
-        context['page_short_title'] = f'Update Job Position "{self.get_object().title}"'
-        for key, value in get_job_position_common_contexts(request=self.request).items():
+        context['page_title'] = f'Update Contact"{self.get_object().phone1}"'
+        context['page_short_title'] = f'Update Contact "{self.get_object().phone1}"'
+        for key, value in get_contact_common_contexts(request=self.request).items():
             context[key] = value
         return context
 
 
 @csrf_exempt
-def delete_job_position(request):
-    return delete_simple_object(request=request, key='id', model=JobPosition, redirect_url="dashboard:create_job_position")
+def delete_contact(request):
+    return delete_simple_object(request=request, key='id', model=Contact, redirect_url="dashboard:create_contact")
 
 
