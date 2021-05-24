@@ -2,11 +2,11 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from .models import (
     Project, NewsCategory, News, Gallery, Client, SocialAccount,
-    JobPosition,Contact
+    JobPosition,Contact, ProjectCategory
 )
 from .forms import (
     ProjectManageForm, NewsCategoryManageForm,NewsManageForm, GalleryManageForm, ClientManageForm, SocialAccountManageForm,
-    JobPositionManageForm, ContactManageForm
+    JobPositionManageForm, ContactManageForm, ProjectCategoryManageForm
 )
 
 from util.helpers import (
@@ -30,6 +30,119 @@ from django.views.generic import CreateView, UpdateView, TemplateView, DetailVie
 # # -------------------------------------------------------------------
 class DashboardView(TemplateView):
     template_name = 'dashboard/base.html'
+
+
+
+
+# # -------------------------------------------------------------------
+# #                               Project Category
+# # -------------------------------------------------------------------
+
+def get_project_category_common_contexts(request):
+    common_contexts = get_simple_context_data(
+        request=request, app_namespace="dashboard", model_namespace="project_category", model=ProjectCategory, list_template=None, fields_to_hide_in_table=[""]
+    )
+    return common_contexts
+
+
+class ProjectCategoryCreateView(CreateView):
+    template_name = "dashboard/snippets/manage.html"
+    form_class = ProjectCategoryManageForm
+
+    def form_valid(self, form, **kwargs):
+        title = form.instance.title
+        field_qs = ProjectCategory.objects.filter(
+            title__iexact=title
+        )
+        result = validate_normal_form(
+            field='title', field_qs=field_qs,
+            form=form, request=self.request
+        )
+        if result == 1:
+            return super().form_valid(form)
+        else:
+            return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_project_category')
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            ProjectCategoryCreateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = 'Create Project Category'
+        context['page_short_title'] = 'Create Project Category'
+        for key, value in get_project_category_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+
+class ProjectCategoryDetailView(DetailView):
+    template_name = "dashboard/snippets/detail-common.html"
+
+    def get_object(self):
+        return get_simple_object(key='id', model=ProjectCategory, self=self)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            ProjectCategoryDetailView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'ProjectCategory - {self.get_object().title} Detail'
+        context['page_short_title'] = f'ProjectCategory - {self.get_object().title} Detail'
+        for key, value in get_project_category_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+class ProjectCategoryUpdateView(UpdateView):
+    template_name = 'dashboard/snippets/manage.html'
+    form_class = ProjectCategoryManageForm
+
+    def get_object(self):
+        return get_simple_object(key="id", model=ProjectCategory, self=self)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_project_category')
+
+    def form_valid(self, form):
+        self.object = self.get_object()
+        title = form.instance.title
+        if not self.object.title == title:
+            field_qs = ProjectCategory.objects.filter(
+                title__iexact=title
+            )
+            result = validate_normal_form(
+                field='title', field_qs=field_qs,
+                form=form, request=self.request
+            )
+            if result == 1:
+                return super().form_valid(form)
+            else:
+                return super().form_invalid(form)
+
+        messages.add_message(
+            self.request, messages.SUCCESS, "Updated Successfully!"
+        )
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            ProjectCategoryUpdateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'Update Project Category"{self.get_object().title}"'
+        context['page_short_title'] = f'Update Project Category"{self.get_object().title}"'
+        for key, value in get_project_category_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+@csrf_exempt
+def delete_project_category(request):
+    return delete_simple_object(request=request, key='id', model=ProjectCategory, redirect_url="dashboard:create_project_category")
+
+
+
 
 
 # # -------------------------------------------------------------------

@@ -9,6 +9,30 @@ from util.utils import (
 )
 from django.utils.text import slugify
 
+
+class ProjectCategory(models.Model):
+    title = models.CharField(
+        max_length=100, verbose_name="title"
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name='created at'
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True, verbose_name='updated at'
+    )
+
+    class Meta:
+        verbose_name = ("Project Category")
+        verbose_name_plural = ("Project Categories")
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return self.title
+
+    def get_fields(self):
+        return [get_dynamic_fields(field, self) for field in self.__class__._meta.fields]
+
+
 # # -------------------------------------------------------------------
 # #                           Project
 # # -------------------------------------------------------------------
@@ -19,6 +43,9 @@ class Project(models.Model):
     )
     slug = models.SlugField(
         unique=True, verbose_name='slug'
+    )
+    category = models.ForeignKey(
+        ProjectCategory, on_delete=models.CASCADE, related_name="project_category", verbose_name="project category"
     )
     client_name = models.CharField(
         max_length=100, verbose_name="client name"

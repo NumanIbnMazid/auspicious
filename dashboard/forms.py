@@ -13,6 +13,27 @@ import os
 
 
 # # -------------------------------------------------------------------
+# #                              Project Category
+# # -------------------------------------------------------------------
+
+class ProjectCategoryManageForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(ProjectCategoryManageForm, self).__init__(*args, **kwargs)
+
+        self.fields['title'].widget.attrs.update({
+            'placeholder': 'Enter Project Category Title...',
+            'maxlength': 100
+        })
+
+
+    class Meta:
+        model = ProjectCategory
+        fields = [
+            "title"
+        ]
+
+# # -------------------------------------------------------------------
 # #                               Project
 # # -------------------------------------------------------------------
 
@@ -29,6 +50,9 @@ class ProjectManageForm(forms.ModelForm):
         self.fields['client_name'].widget.attrs.update({
             'placeholder': 'Enter client name...',
             'maxlength': 100
+        })
+        self.fields['category'].widget.attrs.update({
+            'placeholder': 'Enter developemnt start year...'
         })
 
         self.fields['developement_start_year'].widget.attrs.update({
@@ -50,7 +74,7 @@ class ProjectManageForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = [
-            "name", "client_name", "developement_start_year", "developement_end_year", "image", "scope"
+            "name", "client_name","category", "developement_start_year", "developement_end_year", "image", "scope"
         ]
         widgets = {
             'scope': CKEditorWidget(),
@@ -180,7 +204,7 @@ class GalleryManageForm(forms.ModelForm):
         super(GalleryManageForm, self).__init__(*args, **kwargs)
 
         self.fields['title'].widget.attrs.update({
-            'placeholder': 'Enter News Category Title...',
+            'placeholder': 'Enter Image Title...',
             'maxlength': 100
         })
 

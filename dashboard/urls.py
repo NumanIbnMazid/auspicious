@@ -1,19 +1,32 @@
 from django.urls import path
 from .views import (
     DashboardView,
-    ProjectCreateView, ProjectUpdateView, ProjectDetailView, delete_project, NewsCategoryCreateView,
+    ProjectCategoryDetailView,ProjectCreateView, ProjectUpdateView, ProjectDetailView, delete_project, NewsCategoryCreateView,
     delete_news_category, NewsCategoryUpdateView, NewsCategoryDetailView, NewsCreateView, NewsDetailView,
     NewsUpdateView, delete_news, GalleryCreateView, GalleryDetailView, GalleryUpdateView, delete_gallery,
     ClientCreateView, ClientUpdateView, ClientDetailView, delete_client, SocialAccountCreateView,
     SocialAccountUpdateView, SocialAccountDetailView, delete_social_account, delete_job_position, JobPositionCreateView,
     JobPositionUpdateView, JobPositionDetailView, ContactCreateView, ContactUpdateView, ContactDetailView,
-    delete_contact
+    delete_contact, ProjectCategoryCreateView, ProjectCategoryUpdateView, delete_project_category
 )
 
 
 
 urlpatterns = [
     path('', DashboardView.as_view(), name="dashboard"),
+
+    # # -------------------------------------------------------------------
+    # #                              Project Category
+    # # -------------------------------------------------------------------
+    path("create/project_category/", ProjectCategoryCreateView.as_view(),
+         name="create_project_category"),
+    path("update/project_category/<id>/",
+         ProjectCategoryUpdateView.as_view(), name="update_project_category"),
+    path("project_category/<id>/detail/",
+         ProjectCategoryDetailView.as_view(), name="project_category_detail"),
+    path("delete/project_category/", delete_project_category,
+         name="delete_project_category"),
+
     # # -------------------------------------------------------------------
     # #                              Project
     # # -------------------------------------------------------------------

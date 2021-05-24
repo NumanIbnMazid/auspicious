@@ -1,10 +1,10 @@
 from django.contrib import admin
 from util.mixings import CustomModelAdminMixin
 from .models import (
-    Project, NewsCategory, News, Comment, CommentReply, Client, SocialAccount, JobPosition, Career, Gallery, Contact
+    ProjectCategory, Project, NewsCategory, News, Comment, CommentReply, Client, SocialAccount, JobPosition, Career, Gallery, Contact
 )
 
-
+admin.site.register(ProjectCategory)
 class ProjectAdmin(CustomModelAdminMixin, admin.ModelAdmin):
     pass
 
