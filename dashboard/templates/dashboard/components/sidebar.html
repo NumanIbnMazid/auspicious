@@ -56,7 +56,7 @@
 
             <!-- manage News Category -->
 
-            {% if perms.dashboard.add_project or perms.dashboard.view_project %}
+            {% if perms.dashboard.add_project or perms.dashboard.view_news_category %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:create_news_category' %}" class="sidebar-link">
                     <i class="fa fa-newspaper" aria-hidden="true"></i>
@@ -64,6 +64,29 @@
                 </a>
             </li>
             {% endif %}
+
+                        <!-- manage News  -->
+
+            {% if perms.dashboard.add_project or perms.dashboard.view_news %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:create_news' %}" class="sidebar-link">
+                    <i class="fa fa-newspaper" aria-hidden="true"></i>
+                    <span> News</span>
+                </a>
+            </li>
+            {% endif %}
+
+            <!-- manage Gallery  -->
+
+            {% if perms.dashboard.add_project or perms.dashboard.view_gallery %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:create_gallery' %}" class="sidebar-link">
+                    <i class="fa fa-file-image" aria-hidden="true"></i>
+                    <span> Gallery</span>
+                </a>
+            </li>
+            {% endif %}
+
 
 
 
