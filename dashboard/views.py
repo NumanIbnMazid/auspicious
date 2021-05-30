@@ -636,7 +636,7 @@ class ClientDetailView(DetailView):
         ).get_context_data(**kwargs)
         context['page_title'] = f'Client - {self.get_object().name} Detail'
         context['page_short_title'] = f'Client - {self.get_object().name} Detail'
-        for key, value in get_gallery_common_contexts(request=self.request).items():
+        for key, value in get_client_common_contexts(request=self.request).items():
             context[key] = value
         return context
 
