@@ -43,6 +43,8 @@ else:
         }
     }
 
+
+
 # ======= MYSQL =======
 # DATABASES = {
 #     'default': {
