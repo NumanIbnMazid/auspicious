@@ -1,5 +1,14 @@
 from auspicious.settings.common import *
 from decouple import config, Csv
+#........env file add.......
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+import environ
+env = environ.Env()
+env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
+
+
+#............end.......
 
 
 SECRET_KEY = config('SECRET_KEY')
@@ -22,12 +31,17 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=False, cast=bool)
 # Database
 
 # ======= SQLITE3 =======
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if env.str('DATABASE_URL', default=''):
+    DATABASES = {
+        'default': env.db(),
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # ======= MYSQL =======
 # DATABASES = {
