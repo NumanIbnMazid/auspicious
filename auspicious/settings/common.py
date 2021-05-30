@@ -1,8 +1,14 @@
+import environ
 from pathlib import Path
 import os
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+PROJECT_BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+env = environ.Env()
+env.read_env(env_file=os.path.join(PROJECT_BASE_DIR, '.env'))
 
 
 # Application definition
