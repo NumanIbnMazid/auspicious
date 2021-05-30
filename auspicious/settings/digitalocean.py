@@ -21,17 +21,13 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=False, cast=bool)
 
 # Database
 
-if env.str('DATABASE_URL', default=''):
-    DATABASES = {
-        'default': env.db(),
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+# ======= SQLITE3 =======
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # ======= MYSQL =======
 # DATABASES = {
@@ -53,24 +49,24 @@ else:
 # }
 
 # ======= POSTGRESQL =======
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': config('RDS_DB_NAME'),
-#         'USER': config('RDS_USERNAME'),
-#         'PASSWORD': config('RDS_PASSWORD'),
-#         'HOST': config('RDS_HOSTNAME'),
-#         'PORT': config('RDS_PORT'),
-#         # 'OPTIONS': {
-#         #     'charset': 'utf8mb4',
-#         #     'autocommit': True,
-#         #     'use_unicode': True,
-#         #     'init_command': 'SET storage_engine=INNODB,character_set_connection=utf8mb4,collation_connection=utf8mb4_unicode_ci',
-#         #     'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-#         # },
-#     }
-# }
+DATABASES = {
+    'default': {
+        # 'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config('RDS_DB_NAME'),
+        'USER': config('RDS_USERNAME'),
+        'PASSWORD': config('RDS_PASSWORD'),
+        'HOST': config('RDS_HOSTNAME'),
+        'PORT': config('RDS_PORT'),
+        # 'OPTIONS': {
+        #     'charset': 'utf8mb4',
+        #     'autocommit': True,
+        #     'use_unicode': True,
+        #     'init_command': 'SET storage_engine=INNODB,character_set_connection=utf8mb4,collation_connection=utf8mb4_unicode_ci',
+        #     'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        # },
+    }
+}
 
 
 # Static Configuration
