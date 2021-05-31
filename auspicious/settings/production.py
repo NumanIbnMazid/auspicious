@@ -80,8 +80,10 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = [
     os.path.join(os.path.dirname(BASE_DIR), 'static'),
 ]
-STATIC_ROOT = os.path.join('static_cdn', 'static_root')
-MEDIA_ROOT = os.path.join('static_cdn', 'media_root')
+# STATIC_ROOT = os.path.join('static_cdn', 'static_root')
+# MEDIA_ROOT = os.path.join('static_cdn', 'media_root')
+STATIC_ROOT = '/home/auspicious/Auspicious/static_cdn/static_root'
+MEDIA_ROOT = '/home/auspicious/Auspicious/static_cdn/media_root'
 
 
 # ==================== Security Modules ===================
@@ -96,4 +98,3 @@ MEDIA_ROOT = os.path.join('static_cdn', 'media_root')
 #SECURE_HSTS_SECONDS = 300  # 1000000
 #SECURE_FRAME_DENY = True
 #ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
-
