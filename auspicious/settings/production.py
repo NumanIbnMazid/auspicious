@@ -80,19 +80,21 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = [
     os.path.join(os.path.dirname(BASE_DIR), 'static'),
 ]
-STATIC_ROOT = os.path.join('static_cdn', 'static_root')
-MEDIA_ROOT = os.path.join('static_cdn', 'media_root')
+# STATIC_ROOT = os.path.join('static_cdn', 'static_root')
+# MEDIA_ROOT = os.path.join('static_cdn', 'media_root')
+STATIC_ROOT = '/home/auspicious/Auspicious/static_cdn/static_root'
+MEDIA_ROOT = '/home/auspicious/Auspicious/static_cdn/media_root'
 
 
 # ==================== Security Modules ===================
 
-CORS_REPLACE_HTTPS_REFERER = True
-HOST_SCHEME = "https://"
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_SECONDS = 300  # 1000000
-SECURE_FRAME_DENY = True
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+# CORS_REPLACE_HTTPS_REFERER = True
+# HOST_SCHEME = "https://"
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_SECONDS = 300  # 1000000
+# SECURE_FRAME_DENY = True
+# ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
