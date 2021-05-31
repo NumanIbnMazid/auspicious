@@ -98,7 +98,3 @@ MEDIA_ROOT = '/home/auspicious/Auspicious/static_cdn/media_root'
 #SECURE_HSTS_SECONDS = 300  # 1000000
 #SECURE_FRAME_DENY = True
 #ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
-<<<<<<< HEAD
-=======
-
->>>>>>> 241e459cc9858986655f6471992fa8d21402da4a
