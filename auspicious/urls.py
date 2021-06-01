@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 # Import Views
-from .views import HomeView,AboutView, CivilProjectView, TelecomProjectView, \
+from .views import HomeView, AboutView, CivilProjectView, TelecomProjectView, \
     CivilServicesView, TelecomServicesView, CareerView, ClientView, NewsView,\
     ContactView, NewsDetailsView
 
