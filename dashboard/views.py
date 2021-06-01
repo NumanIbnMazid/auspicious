@@ -1019,6 +1019,3 @@ def delete_contact(request):
 
 
 
-def test_function(request):
-    a = 'Test'
-    return HttpResponse(a)
