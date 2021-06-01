@@ -2,119 +2,19 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- favicon -->
-    <link rel="apple-touch-icon" href="{% static 'assets/landing/assets/img/favicons/apple-touch-icon.png' %}">
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/landing/assets/img/favicons/favicon.ico' %}">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
-
-    <!-- Fort Awesome CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'assets/landing/assets/css/bootstrap.min.css' %}">
-    <!-- Animate CSS -->
-    <link rel="stylesheet" href="{% static 'assets/landing/assets/css/animate.css' %}">
-    <!-- Owl Carousel CSS -->
-    <link href="{% static 'assets/landing/assets/css/owl.carousel.min.css' %}" rel="stylesheet"/>
-    <link href="{% static 'assets/landing/assets/css/owl.theme.default.min.css' %}" rel="stylesheet"/>
-    <!-- Slick CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/landing/assets/plugins/slick/slick.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/landing/assets/plugins/slick/slick-theme.css' %}">
-    <!-- Magnific Popup CSS -->
-    <link href="{% static 'assets/landing/assets/css/magnific-popup.css' %}" rel="stylesheet"/>
-    <!-- Style CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/landing/assets/css/style.min.css' %}">
-    <!-- Responsive CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/landing/assets/css/responsive.min.css' %}">
-
-    <title>Auspicious</title>
+<head>
+{% include "components/styles.html" %}
 </head>
 <body>
-    <!-- Loader -->
-    <div id="preloader">
-        <div id="status">
-            <div class="spinner">Loading...</div>
-        </div>
-    </div>
-    <!-- End Loader -->
 
-    <!-- Topbar -->
-    <div class="topbar">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 col-12">
-                    <div class="topbar-address">
-                        <ul>
-                            <li><a href="tel:+0123456789"><i class="fa fa-phone"></i><span>Phone:</span> +0123456789</a></li>
-                            <li><a href="mailto:info@example.com"><i class="fa fa-envelope"></i><span>Email:</span> info@example.com</a></li>
-                            <li><a href="#"><i class="fa fa-map-marker"></i><span>Location:</span> 28/A Street, The king city, USA </a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Topbar -->
 
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="{% static './assets/landing/assets/img/logo.png' %}" alt="Logo">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.html">About Us</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="projectDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Projects
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="projectDropdown">
-                            <li><a class="dropdown-item" href="civil-project.html">Civil</a></li>
-                            <li><a class="dropdown-item" href="telecom-project.html">Telecom</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="serviceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Services
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="serviceDropdown">
-                            <li><a class="dropdown-item" href="civil-service.html">Civil</a></li>
-                            <li><a class="dropdown-item" href="telecom-service.html">Telecom</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="career.html">Career</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="client.html">Sister & Client Concern</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="news.html">News</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!-- Navbar End -->
+{% include "components/loader.html" %}
+{% include "components/header.html" %}
+{% block additional_css %}{% endblock %}
+
+
+<body>
+
 
     <!-- Banner Start -->
     <div class="banner-area" style="background-image: url({% static "assets/landing/assets/img/banner-bg.png" %})">
@@ -550,70 +450,9 @@
     </div>
     <!-- Map End -->
 
-    <!-- Footer Top Start -->
-    <div class="footer-top">
-        <div class="container">
-            <div class="row justify-content-md-between">
-                <div class="col-md-3 col-6 mb-4 mb-md-0">
-                    <div class="title">About Us</div>
-                    <ul class="list-unstyled">
-                        <li><a href="">Overview</a></li>
-                        <li><a href="">Mission & Vision</a></li>
-                        <li><a href="">Organization Profile</a></li>
-                        <li><a href="">Top Management</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="title">Project & Services</div>
-                    <ul class="list-unstyled">
-                        <li><a href="">Completed Project</a></li>
-                        <li><a href="">Ongoing Project</a></li>
-                        <li><a href="">Civil Services</a></li>
-                        <li><a href="">Telecom Project</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="title">Stay With Us</div>
-                    <ul class="list-unstyled">
-                        <li><a href="">Login</a></li>
-                        <li><a href="">Career</a></li>
-                        <li><a href="">Contact Us</a></li>
-                        <li><a href="">Feedback</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Footer Top End -->
+    {% include "components/footer.html" %}
+    {% include "components/scripts.html" %}
+    {% block additional_js %}{% endblock %}
 
-    <!-- Footer Start -->
-    <footer class="footer-area">
-        <div class="container">
-            <p>© Copyright 2021 I All Rights Reserved by <a href="">AUSPICIOUSBD</a></p>
-        </div>
-    </footer>
-    <!-- Footer End -->
-
-    <!-- ScrollUp -->
-    <a id="scrollUp" href="#top"><i class="fa fa-angle-up"></i></a>
-
-    <!-- modernizr js -->
-    <script src="{% static 'assets/landing/assets/js/modernizr-2.8.3.min.js' %}"></script>
-    <!-- jquery latest version -->
-    <script src="{% static 'assets/landing/assets/js/jquery.min.js' %}"></script>
-    <!-- Bootstrap JS -->
-    <script src="{% static 'assets/landing/assets/js/bootstrap.bundle.min.js' %}"></script>
-    <!-- wow js -->
-    <script src="{% static 'assets/landing/assets/js/wow.min.js' %}"></script>
-    <!-- owl.carousel js -->
-    <script src="{% static 'assets/landing/assets/js/owl.carousel.min.js' %}"></script>
-    <!-- Slick js -->
-    <script src="{% static 'assets/landing/assets/plugins/slick/slick.min.js' %}"></script>
-    <!-- Magnific popup js -->
-    <script src="{% static 'assets/landing/assets/js/jquery.magnific-popup.min.js' %}"></script>
-    <!-- Isotope js -->
-    <script src="{% static 'assets/landing/assets/js/isotope.pkgd.min.js' %}"></script>
-    <!-- main js -->
-    <script src="{% static 'assets/landing/assets/js/main.js' %}"></script>
 </body>
 </html>

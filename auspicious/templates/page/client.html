@@ -1,0 +1,145 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    {% include "components/styles.html" %}
+</head>
+<body>
+
+
+    {% include "components/loader.html" %}
+    {% include "components/header.html" %}
+
+
+    <!-- Breadcrumbs -->
+    <section class="breadcrumbs" style="background-image:url('{% static 'assets/landing/assets/img/breadcrumbs-bg.jpg' %}')">
+        <div class="container">
+            <div class="row">
+                <!-- Breadcrumbs-Content -->
+                <div class="col-lg-7 col-md-7 col-12">
+                    <div class="breadcrumbs-content">
+                        <h2>Sister & Client Concern</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </div>
+                <!-- Breadcrumbs-Menu -->
+                <div class="col-lg-5 col-md-5 col-12">
+                    <div class="breadcrumbs-menu">
+                        <ul>
+                            <li><a href="index.html">Home</a><i class="fa fa-angle-double-right"></i></li>
+                            <li class="active"><a href="client.html">Sister & Client Concern</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Breadcrumbs -->
+
+    <!-- Sister & Client Start -->
+    <div class="sister-client pt-100 pb-100 section-title-2">
+        <div class="container">
+            <h3 class="text-center text-uppercase fw-bold mb-4">Sister Concern <span>of Auspicious</span></h3>
+            <div class="row">
+                <div class="col-md-3 col-6">
+                    <div class="sister-item">
+                        <img src="{% static 'assets/landing/assets/img/clients/1.png' %}" class="img-fluid" alt="">
+                        <p>Lorem ipsum dolor</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="sister-item">
+                        <img src="{% static 'assets/landing/assets/img/clients/2.png' %}" class="img-fluid" alt="">
+                        <p>Lorem ipsum dolor</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="sister-item">
+                        <img src="{% static 'assets/landing/assets/img/clients/3.png' %}" class="img-fluid" alt="">
+                        <p>Lorem ipsum dolor</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="sister-item">
+                        <img src="{% static 'assets/landing/assets/img/clients/4.png' %}" class="img-fluid" alt="">
+                        <p>Lorem ipsum dolor</p>
+                    </div>
+                </div>
+            </div>
+            <h3 class="text-center text-uppercase fw-bold py-4"><span>Auspicious</span> Enlistment at</h3>
+            <div class="row">
+                <div class="col-md-4 col-6">
+                    <div class="sister-item">
+                        <img src="{% static 'assets/landing/assets/img/clients/1.png' %}" class="img-fluid" alt="">
+                        <p>Lorem ipsum dolor</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-6">
+                    <div class="sister-item">
+                        <img src="{% static 'assets/landing/assets/img/clients/2.png' %}" class="img-fluid" alt="">
+                        <p>Lorem ipsum dolor</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-6">
+                    <div class="sister-item">
+                        <img src="{% static 'assets/landing/assets/img/clients/3.png' %}" class="img-fluid" alt="">
+                        <p>Lorem ipsum dolor</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-6">
+                    <div class="sister-item">
+                        <img src="{% static 'assets/landing/assets/img/clients/4.png' %}" class="img-fluid" alt="">
+                        <p>Lorem ipsum dolor</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-6">
+                    <div class="sister-item">
+                        <img src="{% static 'assets/landing/assets/img/clients/5.png' %}" class="img-fluid" alt="">
+                        <p>Lorem ipsum dolor</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-6">
+                    <div class="sister-item">
+                        <img src="{% static 'assets/landing/assets/img/clients/6.png' %}" class="img-fluid" alt="">
+                        <p>Lorem ipsum dolor</p>
+                    </div>
+                </div>
+            </div>
+            <h3 class="text-center text-uppercase fw-bold py-4">We are <span>Local Representative</span> of</h3>
+            <div class="row">
+                <div class="col-md-3 col-6">
+                    <div class="sister-item">
+                        <img src="{% static 'assets/landing/assets/img/clients/1.png' %}" class="img-fluid" alt="">
+                        <p>Lorem ipsum dolor</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="sister-item">
+                        <img src="{% static 'assets/landing/assets/img/clients/2.png' %}" class="img-fluid" alt="">
+                        <p>Lorem ipsum dolor</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="sister-item">
+                        <img src="{% static 'assets/landing/assets/img/clients/3.png' %}" class="img-fluid" alt="">
+                        <p>Lorem ipsum dolor</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="sister-item">
+                        <img src="{% static 'assets/landing/assets/img/clients/4.png' %}" class="img-fluid" alt="">
+                        <p>Lorem ipsum dolor</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Sister & Client End -->
+
+
+    {% include "components/footer.html" %}
+    {% include "components/scripts.html" %}
+    {% block additional_js %}{% endblock %}
+
+</body>
+</html>

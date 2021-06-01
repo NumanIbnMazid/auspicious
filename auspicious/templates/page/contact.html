@@ -1,0 +1,133 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    {% include "components/styles.html" %}
+</head>
+<body>
+
+    {% include "components/loader.html" %}
+    {% include "components/header.html" %}
+
+
+
+
+    <!-- Breadcrumbs -->
+    <section class="breadcrumbs" style="background-image:url('{% static 'assets/landing/assets/img/breadcrumbs-bg.jpg' %}')">
+        <div class="container">
+            <div class="row">
+                <!-- Breadcrumbs-Content -->
+                <div class="col-lg-7 col-md-7 col-12">
+                    <div class="breadcrumbs-content">
+                        <h2>Contact</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </div>
+                <!-- Breadcrumbs-Menu -->
+                <div class="col-lg-5 col-md-5 col-12">
+                    <div class="breadcrumbs-menu">
+                        <ul>
+                            <li><a href="index.html">Home</a><i class="fa fa-angle-double-right"></i></li>
+                            <li class="active"><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Breadcrumbs -->
+
+    <!-- Contact Area -->
+    <section class="contact-area">
+        <div class="content-area">
+            <div class="left-col" style="background-image:url({% static 'assets/landing/assets/img/contact-bg.jpg' %});"></div>
+            <!-- Contact Right -->
+            <div class="right-col">
+                <div class="row">
+                    <div class="col-lg-6 offset-lg-6 col-md-6 offset-md-6 col-12 wow fadeInRight" data-wow-duration="1s" style="visibility: visible; animation-duration: 1s; animation-name: fadeInRight;">
+                        <div class="contact-right">
+                            <div class="top-content">
+                                <h3><span>Contact</span>Request A Free Consulting</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit Aenean commo doligula eget dolor. Aenean massa. Cum sociis natoque penatibus</p>
+                            </div>
+                            <form action="#" method="post">
+                                <div class="contact-form">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-12 col-12">
+                                            <div class="form-group">
+                                                <input type="text" name="name" placeholder="Full Name *" required="required">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12 col-12">
+                                            <div class="form-group">
+                                                <input type="email" name="email" placeholder="Email *" required="required">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-12">
+                                            <div class="form-group">
+                                                <input type="text" name="subject" placeholder="Subject *" required="required">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-12">
+                                            <div class="form-group">
+                                                <textarea name="message" placeholder="Your Message *" required="required"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group contact-button">
+                                                <button type="submit" class="theme-btn">submit now</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Contact Right -->
+        </div>
+    </section>
+    <!-- End Contact Area -->
+
+    <!-- Map Start -->
+    <div class="map-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3650.359517254525!2d90.4169200143495!3d23.8058114925755!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8ad13495713%3A0x58c57f0efbc32a55!2sRapples%20Entertainment%20Ltd.!5e0!3m2!1sen!2sbd!4v1619614768394!5m2!1sen!2sbd" style="border:0;" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-md-between">
+                <div class="col-md-4 col-12">
+                    <div class="icon-text">
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                        <a href="tel:+8809611699580">+8809611699580</a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="icon-text">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        <a href="mailto:info@auspiciousbd.com">info@auspiciousbd.com</a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <ul class="social-icons">
+                        <li><a href=""><i class="fa fa-facebook"></i></a></li>
+                        <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                        <li><a href=""><i class="fa fa-instagram"></i></a></li>
+                        <li><a href=""><i class="fa fa-youtube-play"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Map End -->
+    {% include "components/footer.html" %}
+    {% include "components/scripts.html" %}
+    {% block additional_js %}{% endblock %}
+
+</body>
+</html>

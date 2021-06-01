@@ -1,0 +1,144 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+{% include "components/styles.html" %}
+</head>
+<body>
+
+
+{% include "components/loader.html" %}
+{% include "components/header.html" %}
+
+
+    <!-- Breadcrumbs -->
+    <section class="breadcrumbs" style="background-image:url({% static 'assets/landing/assets/img/breadcrumbs-bg.jpg' %})">
+        <div class="container">
+            <div class="row">
+                <!-- Breadcrumbs-Content -->
+                <div class="col-lg-7 col-md-7 col-12">
+                    <div class="breadcrumbs-content">
+                        <h2>About Us</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </div>
+                <!-- Breadcrumbs-Menu -->
+                <div class="col-lg-5 col-md-5 col-12">
+                    <div class="breadcrumbs-menu">
+                        <ul>
+                            <li><a href="{% url 'home' %}">Home</a><i class="fa fa-angle-double-right"></i></li>
+                            <li class="active"><a href="{% url 'about' %}">About Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Breadcrumbs -->
+
+    <!-- About Start -->
+    <div class="about-area py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="top-content">
+                        <h3><span>History</span>Overview</h3>
+                        <p><span class="fw-bold">AUSPICIOUS</span> is a fast growing firm bearing motto in mind “Think for the best”. It is configured by some dynamic and potential engineers having good academic background, high quality performance, vast experience & strong ability of liaison.</p>
+                        <p>The firm is configured by some experienced and potential engineers & management persons having high quality performance, good reputation and strong ability of liaison. Since inception our dedication and attribution is to achieve and demonstrate whole hearted effort through hard work and relentless pursuit in view to propelling ‘Auspicious’ to make its dream to reality.</p>
+                        <p>Capability to understand Customer’s requirement, professionalism, commitment, team work and punctuality are our main strength. We believe in quality and it’s our 1st priority. Our participatory behavior contributed a lot for our achievement.</p>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <img src="{% static 'assets/landing/assets/img/contact-bg.jpg' %}" alt="" class="d-block w-100">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+    <!-- Journey Start -->
+    <div class="journey-area py-5 bg-gray section-title-2">
+        <div class="container">
+            <h3 class="text-center text-uppercase fw-bold"><span>auspicious</span> journey</h3>
+            <div class="text-center">
+                <img src="{% static 'assets/landing/assets/img/journey.png' %}" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div>
+    <!-- Journey End -->
+
+    <!-- Mission Vision Start -->
+    <div class="mission-vision py-5 section-title-2">
+        <div class="container">
+            <h3 class="text-center text-uppercase fw-bold mb-4"><span>Mission</span> & Vision</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <ol>
+                        <li>Adopt innovative practices to ensure quality without compromising the time frame & budget.</li>
+                        <li>To offer value added in cost effective service to improve our partner-client performance, thus to turn clients dreams into reality.</li>
+                        <li>Provide a safe working environment by promoting health & safety in all areas.</li>
+                        <li>Respect nature & the environment & work together towards a sustainable green future for the benefit for all.</li>
+                        <li>Recognize employee potential for career development and provide the necessary training and environment to realize their potential.</li>
+                    </ol>
+                </div>
+                <div class="col-md-6">
+                    <div>We devoted to become on of the leading services providing (consultant) company in construction section. We are focusing on real state , telecom sector & other construction sector in Bangladesh by providing services in a safe, timely & quality-oriented manner, thus emerging as the most preferred engineering solution’s provider for our clients & also provided service as requirements.</div>
+                    <p class="fw-bold text-center">&#8221;Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, tempora quo consequatur pariatur aspernatur commodi harum facilis&#8221;</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Mission Vision End -->
+
+    <!-- Organization Profile Start -->
+    <div class="org-profile py-4 section-title-2">
+        <div class="container">
+            <h3 class="text-center text-uppercase fw-bold mb-3"><span>organization</span> profile</h3>
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <table class="table text-white">
+                        <tr>
+                            <td class="text-uppercase">organization name</td>
+                            <td>Auspicious</td>
+                        </tr>
+                        <tr>
+                            <td class="text-uppercase">Registration Date</td>
+                            <td>25 September 2008</td>
+                        </tr>
+                        <tr>
+                            <td class="text-uppercase">Chief Executive Officer</td>
+                            <td>Md. Shoyeb Islam</td>
+                        </tr>
+                        <tr>
+                            <td class="text-uppercase">Email Address</td>
+                            <td>info@auspiciousbd.com</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Organization Profile End -->
+
+    <!-- Opening Strength -->
+    <div class="opening-strength py-5 section-title-2">
+        <div class="container">
+            <h3 class="text-center text-uppercase fw-bold mb-4"><span>auspicious</span> Opening & Strength</h3>
+            <div class="row text-center">
+                <div class="col-6">
+                    <img src="{% static 'assets/landing/assets/img/1.png' %}" alt="" class="img-fluid">
+                </div>
+                <div class="col-6">
+                    <img src="{% static 'assets/landing/assets/img/2.png' %}" alt="" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Opening Strength -->
+
+    {% include "components/footer.html" %}
+    {% include "components/scripts.html" %}
+    {% block additional_js %}{% endblock %}
+
+</body>
+</html>

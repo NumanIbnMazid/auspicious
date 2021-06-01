@@ -1,0 +1,28 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    {% include "components/styles.html" %}
+</head>
+<body>
+
+
+    {% include "components/loader.html" %}
+    {% include "components/header.html" %}
+
+
+
+
+    {% include "components/footer.html" %}
+    {% include "components/scripts.html" %}
+    {% block additional_js %}{% endblock %}
+
+</body>
+</html>
+
+
+{% static '
+
+landing/assets/
+
+' %}

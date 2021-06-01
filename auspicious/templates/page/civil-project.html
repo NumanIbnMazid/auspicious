@@ -1,0 +1,174 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    {% include "components/styles.html" %}
+</head>
+<body>
+
+
+    {% include "components/loader.html" %}
+    {% include "components/header.html" %}
+
+
+
+ <!-- Breadcrumbs -->
+    <section class="breadcrumbs" style="background-image:url({% static "assets/landing/assets/img/breadcrumbs-bg.jpg" %})">
+        <div class="container">
+            <div class="row">
+                <!-- Breadcrumbs-Content -->
+                <div class="col-lg-7 col-md-7 col-12">
+                    <div class="breadcrumbs-content">
+                        <h2>Civil Project</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </div>
+                <!-- Breadcrumbs-Menu -->
+                <div class="col-lg-5 col-md-5 col-12">
+                    <div class="breadcrumbs-menu">
+                        <ul>
+                            <li><a href="index.html">Home</a><i class="fa fa-angle-double-right"></i></li>
+                            <li class="active"><a href="civil-project.html">Civil Project</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Breadcrumbs -->
+
+    <!-- Project Start -->
+    <div class="our-project py-5">
+        <div class="container">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Civil Completed Project</button>
+                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Civil Ongoing Project</button>
+                </div>
+            </nav>
+            <div class="tab-content fw-light" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="p-2 pb-3 border-lbr">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <td>Sl</td>
+                                    <td>Client Name</td>
+                                    <td>Development</td>
+                                    <td>Scope</td>
+                                </tr>
+                                <tr>
+                                    <td>01</td>
+                                    <td>Tajin Leather industries Ltd.</td>
+                                    <td>Leather industries</td>
+                                    <td>Architectural, Structural, Electrical, Fire & Plumbing Design</td>
+                                </tr>
+                                <tr>
+                                    <td>02</td>
+                                    <td>Mukta Leather industries Ltd.</td>
+                                    <td>Leather industries</td>
+                                    <td>Architectural, Structural, Electrical, Fire & Plumbing Design</td>
+                                </tr>
+                                <tr>
+                                    <td>03</td>
+                                    <td>Deepoon Group</td>
+                                    <td>100MW power plant</td>
+                                    <td>Structuraal Design</td>
+                                </tr>
+                                <tr>
+                                    <td>04</td>
+                                    <td>Taher Apparels Ltd</td>
+                                    <td>Taher Apparels Ltd</td>
+                                    <td>Taher Apparels Ltd</td>
+                                </tr>
+                                <tr>
+                                    <td>05</td>
+                                    <td>A&M Group</td>
+                                    <td>Gulmohur Denim Industries</td>
+                                    <td>Architectural, Structural, Electrical, Fire & Plumbing Design</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="p-2 pb-3 border-lbr">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <td>Sl</td>
+                                    <td>Client Name</td>
+                                    <td>Development</td>
+                                    <td>Scope</td>
+                                </tr>
+                                <tr>
+                                    <td>01</td>
+                                    <td>Tajin Leather industries Ltd.</td>
+                                    <td>Leather industries</td>
+                                    <td>Architectural, Structural, Electrical, Fire & Plumbing Design</td>
+                                </tr>
+                                <tr>
+                                    <td>02</td>
+                                    <td>Mukta Leather industries Ltd.</td>
+                                    <td>Leather industries</td>
+                                    <td>Architectural, Structural, Electrical, Fire & Plumbing Design</td>
+                                </tr>
+                                <tr>
+                                    <td>03</td>
+                                    <td>Deepoon Group</td>
+                                    <td>100MW power plant</td>
+                                    <td>Structuraal Design</td>
+                                </tr>
+                                <tr>
+                                    <td>04</td>
+                                    <td>Taher Apparels Ltd</td>
+                                    <td>Taher Apparels Ltd</td>
+                                    <td>Taher Apparels Ltd</td>
+                                </tr>
+                                <tr>
+                                    <td>05</td>
+                                    <td>A&M Group</td>
+                                    <td>Gulmohur Denim Industries</td>
+                                    <td>Architectural, Structural, Electrical, Fire & Plumbing Design</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Project End -->
+    {% include "components/footer.html" %}
+    {% include "components/scripts.html" %}
+    {% block additional_js %}{% endblock %}
+
+</body>
+</html>
