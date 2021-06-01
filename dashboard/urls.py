@@ -7,7 +7,7 @@ from .views import (
     ClientCreateView, ClientUpdateView, ClientDetailView, delete_client, SocialAccountCreateView,
     SocialAccountUpdateView, SocialAccountDetailView, delete_social_account, delete_job_position, JobPositionCreateView,
     JobPositionUpdateView, JobPositionDetailView, ContactCreateView, ContactUpdateView, ContactDetailView,
-    delete_contact, ProjectCategoryCreateView, ProjectCategoryUpdateView, delete_project_category
+    delete_contact, ProjectCategoryCreateView, ProjectCategoryUpdateView, delete_project_category,test_function
 )
 
 
@@ -120,5 +120,9 @@ urlpatterns = [
          ContactDetailView.as_view(), name="contact_detail"),
     path("news/contact/", delete_contact,
          name="delete_contact"),
+
+    path('test',test_function,name="test")
+
+
 ]
 

@@ -23,7 +23,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, UpdateView, TemplateView, DetailView
-
+from django.http import HttpResponse
 
 # # -------------------------------------------------------------------
 # #                             Dashboard
@@ -1018,3 +1018,7 @@ def delete_contact(request):
     return delete_simple_object(request=request, key='id', model=Contact, redirect_url="dashboard:create_contact")
 
 
+
+def test_function(request):
+    a = 'Test'
+    return HttpResponse(a)
