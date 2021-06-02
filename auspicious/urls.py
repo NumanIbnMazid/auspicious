@@ -1,16 +1,17 @@
-
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from . import views
 
 # Import Views
-from .views import HomeView, AboutView, CivilProjectView, TelecomProjectView, \
+from .views import  AboutView, CivilProjectView, TelecomProjectView, \
     CivilServicesView, TelecomServicesView, CareerView, ClientView, NewsView,\
     ContactView, NewsDetailsView
 
 urlpatterns = [
-    path("", HomeView.as_view(), name="home"),
+    # path("", HomeView.as_view(), name="home"),
+    path("", views.home, name="home"),
     path("about/", AboutView.as_view(), name="about"),
     path("civil-project/", CivilProjectView.as_view(), name="civil_project"),
     path("telecom-project/", TelecomProjectView.as_view(), name="telecom_project"),
