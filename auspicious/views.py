@@ -43,8 +43,18 @@ def home(request):
 class AboutView(TemplateView):
     template_name = 'page/about.html'
 
-class CivilProjectView(TemplateView):
-    template_name = 'page/civil-project.html'
+# class CivilProjectView(TemplateView):
+#     template_name = 'page/civil-project.html'
+
+def civilproject(request):
+    today = timezone.datetime.now()
+    datetime_today = datetime.strptime(
+        str(today.date()) + " 00:00:00", '%Y-%m-%d %H:%M:%S'
+    )
+    ongoing_project_lists = Project.objects.filter(developement_end_year=None, category__title__icontains = 'Civil' ).order_by('id')
+    completed_project_lists = Project.objects.filter(developement_end_year__lte = datetime_today.year, category__title__icontains = 'Civil' ).order_by('id')
+    context ={'ongoing_project_lists':ongoing_project_lists,'completed_project_lists':completed_project_lists}
+    return render(request, 'page/civil-project.html', context)
 
 class TelecomProjectView(TemplateView):
     template_name = 'page/telecom-project.html'
