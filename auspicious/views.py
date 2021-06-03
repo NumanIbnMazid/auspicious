@@ -22,10 +22,9 @@ def home(request):
     )
     project_category_qs = ProjectCategory.objects.all()
     project_lists = Project.objects.all()
-    print(project_lists.count())
     ongoing_project_lists = Project.objects.filter(developement_start_year__lte = datetime_today.year,developement_end_year = None)
     completed_project_lists = Project.objects.filter(developement_start_year__lte = datetime_today.year,developement_end_year__lte = datetime_today.year)
-    latest_project_lists = Project.objects.filter(developement_start_year__lte = datetime_today.year, created_at__lte = today.date())
+    latest_project_lists = Project.objects.filter(developement_end_year__lte = datetime_today.year, created_at__lte = today.date())[:4]
     latest_news_category_lists = NewsCategory.objects.all()
     latest_news_lists = News.objects.all()
     image_lists = Gallery.objects.all().order_by('?')
