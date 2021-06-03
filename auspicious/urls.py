@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from . import views
 
 # Import Views
-from .views import  AboutView, CivilProjectView, TelecomProjectView, \
+from .views import  AboutView, \
     CivilServicesView, TelecomServicesView, CareerView, ClientView, NewsView,\
     ContactView, NewsDetailsView
 
@@ -13,8 +13,8 @@ urlpatterns = [
     # path("", HomeView.as_view(), name="home"),
     path("", views.home, name="home"),
     path("about/", AboutView.as_view(), name="about"),
-    path("civil-project/", CivilProjectView.as_view(), name="civil_project"),
-    path("telecom-project/", TelecomProjectView.as_view(), name="telecom_project"),
+    path("civil-project/", views.civilproject, name="civil_project"),
+    path("telecom-project/", views.telecomproject, name="telecom_project"),
     path("civil-service/", CivilServicesView.as_view(), name="civil_service"),
     path("telecom-service/", TelecomServicesView.as_view(), name="telecom_service"),
     path("career/", CareerView.as_view(), name="career"),
