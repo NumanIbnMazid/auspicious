@@ -1,373 +1,397 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
+
 <head>
-<head>
-{% include "components/styles.html" %}
-</head>
-<body>
 
-
-{% include "components/loader.html" %}
-{% include "components/header.html" %}
-{% block additional_css %}{% endblock %}
-
+    <head>
+        {% include "components/styles.html" %}
+    </head>
 
 <body>
 
 
-    <!-- Banner Start -->
-    <div class="banner-area" style="background-image: url({% static "assets/landing/assets/img/banner-bg.png" %})">
-        <div class="banner-title">
-            <h2>think for the best</h2>
-        </div>
-        <div class="banner-bottom">
-            <div class="container">
-                <div class="row">
-                    <div class="col-4 col-md-3">
-                        <div class="banner-item">
-                            <img src="{% static './assets/landing/assets/img/civil-eng.png' %}" alt="">
-                            <div class="title">
-                                <span>CIVIL</span>
-                                <p>ENGENEERING</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4 col-md-3">
-                        <div class="banner-item">
-                            <img src="{% static './assets/landing/assets/img/radio-tower.png' %}" alt="">
-                            <div class="title">
-                                <span>TELE</span>
-                                <p>COMMUNICATION</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4 col-md-3 offset-md-3">
-                        <div class="logo">
-                            <img src="{% static './assets/landing/assets/img/logo-2.png' %}" alt="Logo">
-                        </div>
-                    </div>
-                </div>
+    {% include "components/loader.html" %}
+    {% include "components/header.html" %}
+    {% block additional_css %}{% endblock %}
+
+
+    <body>
+
+
+        <!-- Banner Start -->
+        <div class="banner-area" style="background-image: url({% static "assets/landing/assets/img/banner-bg.png"  %})">
+            <div class="banner-title">
+                <h2>think for the best</h2>
             </div>
-        </div>
-    </div>
-    <!-- Banner End -->
-
-    <!-- Service Start -->
-    <div class="service-area">
-        <div class="container">
-            <div class="section-title">
-                <h4>Services</h4>
-            </div>
-            <div class="row">
-                <div class="col-md-6 wow fadeInUp" data-wow-duration="2s">
-                    <div class="service-item mb-5 mb-md-0">
-                        <a href="{% url 'civil_service' %}">
-                            <img src="{% static './assets/landing/assets/img/service/1.jpg' %}" alt="">
-                            <div class="title">
-                                <p>CIVIL SERVICES</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-6 wow fadeInUp" data-wow-duration="2s">
-                    <div class="service-item">
-                        <a href="{% url 'telecom_service' %}">
-                            <img src="{% static './assets/landing/assets/img/service/2.jpg' %}" alt="">
-                            <div class="title">
-                                <p>Telecom SERVICES</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Service End -->
-
-    <!-- Project Start -->
-    <div class="our-projects">
-        <div class="container">
-            <div class="section-title">
-                <h4>OUR PROJECTS</h4>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="item-menu">
-                        <ul>
-                            <li data-filter=".all" class="active">All</li>
-                            <li data-filter=".ongoing">Ongoing</li>
-                            <li data-filter=".latest">Latest</li>
-                            <li data-filter=".completed">Completed</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="project-items">
-
+            <div class="banner-bottom">
+                <div class="container">
                     <div class="row">
-                         {% for project in project_lists %}
-                        <div class="col-md-3 col-sm-6 item all">
-                            <div class="product-item">
-                                <img src="{{ project.image.url }}" alt="" class="img-fluid">
-                                <div class="overlay">
-                                    <p>{{ project.name }}</p>
-                                </div>
-                                <div class="explore">
-                                    <a href="">Explore</a>
+                        <div class="col-4 col-md-3">
+                            <div class="banner-item">
+                                <img src="{% static './assets/landing/assets/img/civil-eng.png' %}" alt="">
+                                <div class="title">
+                                    <span>CIVIL</span>
+                                    <p>ENGENEERING</p>
                                 </div>
                             </div>
-
                         </div>
-                        {% endfor %}
-
-                        {% for project in ongoing_project_lists %}
-                        <div class="col-md-3 col-sm-6 item ongoing">
-                            <div class="product-item">
-                                <img src="{{ project.image.url }}" alt="" class="img-fluid">
-                                <div class="overlay">
-                                    <p>{{ project.name }}</p>
-                                </div>
-                                <div class="explore">
-                                    <a href="">Explore</a>
+                        <div class="col-4 col-md-3">
+                            <div class="banner-item">
+                                <img src="{% static './assets/landing/assets/img/radio-tower.png' %}" alt="">
+                                <div class="title">
+                                    <span>TELE</span>
+                                    <p>COMMUNICATION</p>
                                 </div>
                             </div>
-
                         </div>
-                        {% endfor %}
-
-                        {% for project in latest_project_lists %}
-                        <div class="col-md-3 col-sm-6 item latest">
-                            <div class="product-item">
-                                <img src="{{ project.image.url }}" alt="" class="img-fluid">
-                                <div class="overlay">
-                                    <p>{{ project.name }}</p>
-                                </div>
-                                <div class="explore">
-                                    <a href="">Explore</a>
-                                </div>
+                        <div class="col-4 col-md-3 offset-md-3">
+                            <div class="logo">
+                                <img src="{% static './assets/landing/assets/img/logo-2.png' %}" alt="Logo">
                             </div>
-
                         </div>
-                        {% endfor %}
-
-                        {% for project in completed_project_lists %}
-                        <div class="col-md-3 col-sm-6 item completed">
-                            <div class="product-item">
-                                <img src="{{ project.image.url }}" alt="" class="img-fluid">
-                                <div class="overlay">
-                                    <p>{{ project.name }}</p>
-                                </div>
-                                <div class="explore">
-                                    <a href="">Explore</a>
-                                </div>
-                            </div>
-
-                        </div>
-                        {% endfor %}
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- Project End -->
-
-    <!-- News Start -->
-    <div class="news-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-4">
-                    <div class="title">
-                        <h2>Latest</h2>
-                        <h1>News!</h1>
-                        <a href="">Explore More</a>
                     </div>
-                </div>
-                <div class="col-md-8 col-8">
-
-                    <div class="news">
-                        {% for news in latest_news_lists %}
-
-                        <div class="item">
-                            <img src="{{ news.image.url }}" alt="">
-                            <div class="overlay">
-                                <p>{{news.description|safe|truncatechars_html:10 }}</p>
-                                <h4>{{ news.title }}</h4>
-                            </div>
-                        </div>
-                        {% endfor %}
-
-                    </div>
-
                 </div>
             </div>
         </div>
-    </div>
-    <!-- News End -->
+        <!-- Banner End -->
 
-    <!-- Gallery Start -->
-    <div class="gallery-area">
-        <div class="container">
-            <div class="section-title">
+        <!-- Service Start -->
+        <div class="service-area">
+            <div class="container">
+                <div class="section-title">
+                    <h4>Services</h4>
+                </div>
                 <div class="row">
-                    <div class="col-8">
-                        <h4>Gallery</h4>
+                    <div class="col-md-6 wow fadeInUp" data-wow-duration="2s">
+                        <div class="service-item mb-5 mb-md-0">
+                            <a href="{% url 'civil_service' %}">
+                                <img src="{% static './assets/landing/assets/img/service/1.jpg' %}" alt="">
+                                <div class="title">
+                                    <p>CIVIL SERVICES</p>
+                                </div>
+                            </a>
+                        </div>
                     </div>
-                    <div class="col-4 text-end">
-                        <a href="" class="">View all</a>
+                    <div class="col-md-6 wow fadeInUp" data-wow-duration="2s">
+                        <div class="service-item">
+                            <a href="{% url 'telecom_service' %}">
+                                <img src="{% static './assets/landing/assets/img/service/2.jpg' %}" alt="">
+                                <div class="title">
+                                    <p>Telecom SERVICES</p>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="wrapper">
-        <div class="gallery">
-            <div class="gallery__item gallery__item--1">
-                <a href="{% static 'assets/landing/assets/img/gallery/5.png' %}" class="gallery__link">
-                    <img src="{% static 'assets/landing/assets/img/gallery/5.png' %}" class="gallery__image" alt=""/>
-                    <div class="gallery__overlay">
-                        <span>Lorem ipsum dolor.</span>
-                    </div>
-                </a>
-            </div>
-            <div class="gallery__item gallery__item--2">
-                <a href="{% static 'assets/landing/assets/img/gallery/2.png' %}" class="gallery__link">
-                    <img src="{% static 'assets/landing/assets/img/gallery/2.png' %}" class="gallery__image" alt=""/>
-                    <div class="{% static 'gallery__overlay' %}">
-                        <span>Lorem ipsum dolor.</span>
-                    </div>
-                </a>
-            </div>
-            <div class="gallery__item gallery__item--3">
-                <a href="{% static 'assets/landing/assets/img/gallery/3.png' %}" class="gallery__link">
-                    <img src="{% static 'assets/landing/assets/img/gallery/3.png' %}" class="gallery__image" alt=""/>
-                    <div class="gallery__overlay">
-                        <span>Lorem ipsum dolor.</span>
-                    </div>
-                </a>
-            </div>
-            <div class="gallery__item gallery__item--4">
-                <a href="{% static 'assets/landing/assets/img/gallery/1.png' %}" class="gallery__link">
-                    <img src="{% static 'assets/landing/assets/img/gallery/1.png' %}" class="gallery__image" alt=""/>
-                    <div class="gallery__overlay">
-                        <span>Lorem ipsum dolor.</span>
-                    </div>
-                </a>
-            </div>
-            <div class="gallery__item gallery__item--5">
-                <a href="{% static 'assets/landing/assets/img/gallery/4.png' %}" class="gallery__link">
-                    <img src="{% static 'assets/landing/assets/img/gallery/4.png' %}" class="gallery__image" alt=""/>
-                    <div class="gallery__overlay">
-                        <span>Lorem ipsum dolor.</span>
-                    </div>
-                </a>
-            </div>
-            <div class="gallery__item gallery__item--6">
-                <a href="{% static 'assets/landing/assets/img/gallery/6.png' %}" class="gallery__link">
-                    <img src="{% static 'assets/img/gallery/6.png' %}" class="gallery__image" alt=""/>
-                    <div class="gallery__overlay">
-                        <span>Lorem ipsum dolor.</span>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-    <!-- Gallery End -->
+        <!-- Service End -->
 
-    <!-- Clients Start -->
-    <div class="clients-area">
-        <div class="container">
-            <div class="section-title">
+        <!-- Project Start -->
+        <div class="our-projects">
+            <div class="container">
+                <div class="section-title">
+                    <h4>OUR PROJECTS</h4>
+                </div>
+
                 <div class="row">
-                    <div class="col-8">
-                        <h4>Clients & Sister Concern</h4>
-                    </div>
-                    <div class="col-4 text-end">
-                        <a href="client.html" class="">View all</a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="clients-items owl-carousel owl-theme text-center">
-                        <div class="single-item">
-                            <a href="#"><img src="{% static 'assets/landing/assets/img/clients/1.png' %}" alt="Clients"></a>
-                        </div>
-                        <div class="single-item">
-                            <a href="#"><img src="{% static 'assets/landing/assets/img/clients/2.png' %}" alt="Clients"></a>
-                        </div>
-                        <div class="single-item">
-                            <a href="#"><img src="{% static 'assets/landing/assets/img/clients/3.png' %}" alt="Clients"></a>
-                        </div>
-                        <div class="single-item">
-                            <a href="#"><img src="{% static 'assets/landing/assets/img/clients/4.png' %}" alt="Clients"></a>
-                        </div>
-                        <div class="single-item">
-                            <a href="#"><img src="{% static 'assets/landing/assets/img/clients/5.png' %}" alt="Clients"></a>
-                        </div>
-                        <div class="single-item">
-                            <a href="#"><img src="{% static 'assets/landing/assets/img/clients/6.png' %}" alt="Clients"></a>
-                        </div>
-                        <div class="single-item">
-                            <a href="#"><img src="{% static 'assets/landing/assets/img/clients/1.png' %}" alt="Clients"></a>
-                        </div>
-                        <div class="single-item">
-                            <a href="#"><img src="{% static 'assets/landing/assets/img/clients/2.png" alt="Clients"></a>
-                        </div>
-                        <div class="single-item">
-                            <a href="#"><img src="{% static 'assets/landing/assets/img/clients/3.png' %}" alt="Clients"></a>
-                        </div>
-                        <div class="single-item">
-                            <a href="#"><img src="{% static 'assets/landing/assets/img/clients/4.png' %}" alt="Clients"></a>
+                    <div class="col-md-12">
+                        <div class="item-menu">
+                            <ul>
+                                <li data-filter=".all" class="active">All</li>
+                                <li data-filter=".ongoing">Ongoing</li>
+                                <li data-filter=".latest">Latest</li>
+                                <li data-filter=".completed">Completed</li>
+                            </ul>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Clients End -->
 
-    <!-- Map Start -->
-    <div class="map-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="map">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3650.359517254525!2d90.4169200143495!3d23.8058114925755!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8ad13495713%3A0x58c57f0efbc32a55!2sRapples%20Entertainment%20Ltd.!5e0!3m2!1sen!2sbd!4v1619614768394!5m2!1sen!2sbd" style="border:0;" loading="lazy"></iframe>
+                    <div class="project-items">
+
+                        <div class="row">
+                            {% for project in project_lists %}
+                            <div class="col-md-3 col-sm-6 item all">
+                                <div class="product-item">
+                                    <img src="{{ project.image.url }}" alt="" class="img-fluid" height="150px">
+                                    <div class="overlay">
+                                        <p>{{ project.name }}</p>
+                                    </div>
+                                    <div class="explore">
+                                        <a href="">Explore</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            {% endfor %}
+
+                            {% for project in ongoing_project_lists %}
+                            <div class="col-md-3 col-sm-6 item ongoing">
+                                <div class="product-item">
+                                    <img src="{{ project.image.url }}" alt="" class="img-fluid">
+                                    <div class="overlay">
+                                        <p>{{ project.name }}</p>
+                                    </div>
+                                    <div class="explore">
+                                        <a href="">Explore</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            {% endfor %}
+
+                            {% for project in latest_project_lists %}
+                            <div class="col-md-3 col-sm-6 item latest">
+                                <div class="product-item">
+                                    <img src="{{ project.image.url }}" alt="" class="img-fluid">
+                                    <div class="overlay">
+                                        <p>{{ project.name }}</p>
+                                    </div>
+                                    <div class="explore">
+                                        <a href="">Explore</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            {% endfor %}
+
+                            {% for project in completed_project_lists %}
+                            <div class="col-md-3 col-sm-6 item completed">
+                                <div class="product-item">
+                                    <img src="{{ project.image.url }}" alt="" class="img-fluid">
+                                    <div class="overlay">
+                                        <p>{{ project.name }}</p>
+                                    </div>
+                                    <div class="explore">
+                                        <a href="">Explore</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            {% endfor %}
+
+                        </div>
+
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-md-between">
-                <div class="col-md-4 col-12">
-                    <div class="icon-text">
-                        <i class="fa fa-phone" aria-hidden="true"></i>
-                        <a href="tel:+8809611699580">+8809611699580</a>
+            <!-- Project End -->
+
+            <!-- News Start -->
+            <div class="news-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 col-4">
+                            <div class="title">
+                                <h2>Latest</h2>
+                                <h1>News!</h1>
+                                <a href="">Explore More</a>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-8">
+
+                            <div class="news">
+                                {% for news in latest_news_lists %}
+
+                                <div class="item">
+                                    <img src="{{ news.image.url }}" alt="">
+                                    <div class="overlay">
+                                        <p>{{news.description|safe|truncatechars_html:10 }}</p>
+                                        <h4>{{ news.title }}</h4>
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4 col-12">
-                    <div class="icon-text">
-                        <i class="fa fa-envelope" aria-hidden="true"></i>
-                        <a href="mailto:info@auspiciousbd.com">info@auspiciousbd.com</a>
-                    </div>
-                </div>
-                <div class="col-md-4 col-12">
-                    <ul class="social-icons">
-                        <li><a href=""><i class="fa fa-facebook"></i></a></li>
-                        <li><a href=""><i class="fa fa-twitter"></i></a></li>
-                        <li><a href=""><i class="fa fa-instagram"></i></a></li>
-                        <li><a href=""><i class="fa fa-youtube-play"></i></a></li>
-                    </ul>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- Map End -->
+            <!-- News End -->
 
-    {% include "components/footer.html" %}
-    {% include "components/scripts.html" %}
-    {% block additional_js %}{% endblock %}
+            <!-- swipper gallery example start -->
 
-</body>
+            <!--Carousel Gallery-->
+            <div class="gallery-area">
+                <div class="container">
+                    <div class="section-title">
+                        <div class="row">
+                            <div class="col-8">
+                                <h4>Gallery</h4>
+                            </div>
+                            <div class="col-4 text-end">
+                                <a href="" class="">View all</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper">
+                <div class="carousel-gallery">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            {% for image in image_lists %}
+                            <div class="swiper-slide">
+                                <a href="{{ image.image.url }}"
+                                    data-fancybox="gallery">
+                                    <div class="image"
+                                        style="background-image: url({{ image.image.url }})">
+                                        <div class="overlay">
+                                            <em class="mdi mdi-magnify-plus"></em>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!--#Carousel Gallery-->
+
+            <!-- swiper gallery example end -->
+
+            <!-- Gallery Start -->
+            <!-- <div class="gallery-area">
+                <div class="container">
+                    <div class="section-title">
+                        <div class="row">
+                            <div class="col-8">
+                                <h4>Gallery</h4>
+                            </div>
+                            <div class="col-4 text-end">
+                                <a href="" class="">View all</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper">
+                <div class="gallery">
+                    {% for image in image_lists %}
+                    <div class="gallery__item gallery__item--1">
+                        <a href="{{ image.image.url }}" class="gallery__link">
+                            <img src="{{ image.image.url }}" class="gallery__image" alt="" />
+                            <div class="gallery__overlay">
+                                <span>Lorem ipsum dolor.</span>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div> -->
+            <!-- Gallery End -->
+
+            <!-- Clients Start -->
+            <div class="clients-area">
+                <div class="container">
+                    <div class="section-title">
+                        <div class="row">
+                            <div class="col-8">
+                                <h4>Clients & Sister Concern</h4>
+                            </div>
+                            <div class="col-4 text-end">
+                                <a href="client.html" class="">View all</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="clients-items owl-carousel owl-theme text-center">
+                                <div class="single-item">
+                                    <a href="#"><img src="{% static 'assets/landing/assets/img/clients/1.png' %}"
+                                            alt="Clients"></a>
+                                </div>
+                                <div class="single-item">
+                                    <a href="#"><img src="{% static 'assets/landing/assets/img/clients/2.png' %}"
+                                            alt="Clients"></a>
+                                </div>
+                                <div class="single-item">
+                                    <a href="#"><img src="{% static 'assets/landing/assets/img/clients/3.png' %}"
+                                            alt="Clients"></a>
+                                </div>
+                                <div class="single-item">
+                                    <a href="#"><img src="{% static 'assets/landing/assets/img/clients/4.png' %}"
+                                            alt="Clients"></a>
+                                </div>
+                                <div class="single-item">
+                                    <a href="#"><img src="{% static 'assets/landing/assets/img/clients/5.png' %}"
+                                            alt="Clients"></a>
+                                </div>
+                                <div class="single-item">
+                                    <a href="#"><img src="{% static 'assets/landing/assets/img/clients/6.png' %}"
+                                            alt="Clients"></a>
+                                </div>
+                                <div class="single-item">
+                                    <a href="#"><img src="{% static 'assets/landing/assets/img/clients/1.png' %}"
+                                            alt="Clients"></a>
+                                </div>
+                                <div class="single-item">
+                                    <a href="#"><img src="{% static 'assets/landing/assets/img/clients/2.png"
+                                            alt="Clients"></a>
+                                </div>
+                                <div class="single-item">
+                                    <a href="#"><img src="{% static 'assets/landing/assets/img/clients/3.png' %}"
+                                            alt="Clients"></a>
+                                </div>
+                                <div class="single-item">
+                                    <a href="#"><img src="{% static 'assets/landing/assets/img/clients/4.png' %}"
+                                            alt="Clients"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Clients End -->
+
+            <!-- Map Start -->
+            <div class="map-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="map">
+                                <iframe
+                                    src="https://www.google.com/maps/place/Auspicious/@23.7936302,90.421609,17z/data=!3m1!4b1!4m5!3m4!1s0x3755c7116de4f1e7:0xafada13c373b91c7!8m2!3d23.7936107!4d90.4236419?hl=en"
+                                    style="border:0;" loading="lazy"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-md-between">
+                        <div class="col-md-4 col-12">
+                            <div class="icon-text">
+                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                <a href="tel:+8809611699580">{{contact_qs.phone1}}</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="icon-text">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                <a href="mailto:info@auspiciousbd.com">{{contact_qs.email}}</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <ul class="social-icons">
+                                <li><a href=""><i class="fa fa-facebook"></i></a></li>
+                                <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                                <li><a href=""><i class="fa fa-instagram"></i></a></li>
+                                <li><a href=""><i class="fa fa-youtube-play"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Map End -->
+
+            {% include "components/footer.html" %}
+            {% include "components/scripts.html" %}
+            {% block additional_js %}{% endblock %}
+
+    </body>
+
 </html>

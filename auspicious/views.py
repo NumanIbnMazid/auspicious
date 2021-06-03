@@ -28,10 +28,13 @@ def home(request):
     latest_project_lists = Project.objects.filter(developement_start_year__lte = datetime_today.year, created_at__lte = today.date())
     latest_news_category_lists = NewsCategory.objects.all()
     latest_news_lists = News.objects.all()
+    image_lists = Gallery.objects.all().order_by('?')
+    contact_qs = Contact.objects.all().last()
     context = {'project_category_qs':project_category_qs,
               'project_lists':project_lists,'ongoing_project_lists':ongoing_project_lists,
                'completed_project_lists':completed_project_lists,'latest_project_lists':latest_project_lists,
-               'latest_news_category_lists':latest_news_category_lists,'latest_news_lists':latest_news_lists}
+               'latest_news_category_lists':latest_news_category_lists,'latest_news_lists':latest_news_lists,
+               'image_lists':image_lists,'contact_qs':contact_qs}
 
     return render(request, 'index.html', context)
 #
