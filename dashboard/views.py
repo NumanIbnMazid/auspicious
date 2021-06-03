@@ -40,7 +40,7 @@ class DashboardView(TemplateView):
 
 def get_project_category_common_contexts(request):
     common_contexts = get_simple_context_data(
-        request=request, app_namespace="dashboard", model_namespace="project_category", model=ProjectCategory, list_template=None, fields_to_hide_in_table=[""]
+        request=request, app_namespace="dashboard", model_namespace="project_category", model=ProjectCategory, list_template=None, fields_to_hide_in_table=["id","updated_at"]
     )
     return common_contexts
 
@@ -151,7 +151,7 @@ def delete_project_category(request):
 
 def get_project_common_contexts(request):
     common_contexts = get_simple_context_data(
-        request=request, app_namespace="dashboard", model_namespace="project", model=Project, list_template=None, fields_to_hide_in_table=["slug"]
+        request=request, app_namespace="dashboard", model_namespace="project", model=Project, list_template=None, fields_to_hide_in_table=["id","id","slug","updated_at"]
     )
     return common_contexts
 
@@ -263,7 +263,7 @@ def delete_project(request):
 
 def get_news_category_common_contexts(request):
     common_contexts = get_simple_context_data(
-        request=request, app_namespace="dashboard", model_namespace="news_category", model=NewsCategory, list_template=None, fields_to_hide_in_table=[]
+        request=request, app_namespace="dashboard", model_namespace="news_category", model=NewsCategory, list_template=None, fields_to_hide_in_table=["id","updated_at"]
     )
     return common_contexts
 
@@ -370,7 +370,7 @@ def delete_news_category(request):
 
 def get_news_common_contexts(request):
     common_contexts = get_simple_context_data(
-        request=request, app_namespace="dashboard", model_namespace="news", model=News, list_template=None, fields_to_hide_in_table=['slug']
+        request=request, app_namespace="dashboard", model_namespace="news", model=News, list_template=None, fields_to_hide_in_table=["id",'slug',"updated_at"]
     )
     return common_contexts
 
@@ -477,7 +477,7 @@ def delete_news(request):
 
 def get_gallery_common_contexts(request):
     common_contexts = get_simple_context_data(
-        request=request, app_namespace="dashboard", model_namespace="gallery", model=Gallery, list_template=None, fields_to_hide_in_table=["slug"]
+        request=request, app_namespace="dashboard", model_namespace="gallery", model=Gallery, list_template=None, fields_to_hide_in_table=["id","slug","updated_at"]
     )
     return common_contexts
 
@@ -586,7 +586,7 @@ def delete_gallery(request):
 
 def get_client_common_contexts(request):
     common_contexts = get_simple_context_data(
-        request=request, app_namespace="dashboard", model_namespace="client", model=Client, list_template=None, fields_to_hide_in_table=["slug"]
+        request=request, app_namespace="dashboard", model_namespace="client", model=Client, list_template=None, fields_to_hide_in_table=["id","slug","updated_at"]
     )
     return common_contexts
 
@@ -696,7 +696,7 @@ def delete_client(request):
 
 def get_social_account_common_contexts(request):
     common_contexts = get_simple_context_data(
-        request=request, app_namespace="dashboard", model_namespace="social_account", model=SocialAccount, list_template=None, fields_to_hide_in_table=[""]
+        request=request, app_namespace="dashboard", model_namespace="social_account", model=SocialAccount, list_template=None, fields_to_hide_in_table=["id","updated_at"]
     )
     return common_contexts
 
@@ -806,7 +806,7 @@ def delete_social_account(request):
 
 def get_job_position_common_contexts(request):
     common_contexts = get_simple_context_data(
-        request=request, app_namespace="dashboard", model_namespace="job_position", model=JobPosition, list_template=None, fields_to_hide_in_table=[""]
+        request=request, app_namespace="dashboard", model_namespace="job_position", model=JobPosition, list_template=None, fields_to_hide_in_table=["id","updated_at"]
     )
     return common_contexts
 
@@ -915,7 +915,7 @@ def delete_job_position(request):
 
 def get_job_common_contexts(request):
     common_contexts = get_simple_context_data(
-        request=request, app_namespace="dashboard", model_namespace="job", model=Job, list_template=None, fields_to_hide_in_table=[""]
+        request=request, app_namespace="dashboard", model_namespace="job", model=Job, list_template=None, fields_to_hide_in_table=["id","slug", 'updated_at','id']
     )
     return common_contexts
 
@@ -1002,7 +1002,7 @@ def delete_job(request):
 
 def get_contact_common_contexts(request):
     common_contexts = get_simple_context_data(
-        request=request, app_namespace="dashboard", model_namespace="contact", model=Contact, list_template=None, fields_to_hide_in_table=[""]
+        request=request, app_namespace="dashboard", model_namespace="contact", model=Contact, list_template=None, fields_to_hide_in_table=["id","updated_at"]
     )
     return common_contexts
 
@@ -1102,6 +1102,3 @@ class ContactUpdateView(UpdateView):
 @csrf_exempt
 def delete_contact(request):
     return delete_simple_object(request=request, key='id', model=Contact, redirect_url="dashboard:create_contact")
-
-
-
