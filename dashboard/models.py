@@ -349,11 +349,18 @@ class JobPosition(models.Model):
 
 
 class Job(models.Model):
+    class JobType(models.TextChoices):
+        PART_TIME = "Part Time", ("Part Time")
+        FULL_TIME = "Full Time", ("Full Time")
+        INTERNSHIP = "Internship", ("Internship")
     job_position = models.ForeignKey(
         JobPosition, on_delete=models.CASCADE, related_name="career_job_position", verbose_name="job position"
     )
     slug = models.SlugField(
         unique=True, verbose_name='slug'
+    )
+    job_type = models.CharField(
+        max_length=50, choices=JobType.choices, default="Full Time", verbose_name="job type"
     )
     description = models.TextField(
         blank=True, null=True, verbose_name="description"
