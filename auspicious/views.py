@@ -22,19 +22,19 @@ def home(request):
     )
     project_category_qs = ProjectCategory.objects.all()
     project_lists = Project.objects.all()
-    print(project_lists.count())
     ongoing_project_lists = Project.objects.filter(developement_start_year__lte = datetime_today.year,developement_end_year = None)
     completed_project_lists = Project.objects.filter(developement_start_year__lte = datetime_today.year,developement_end_year__lte = datetime_today.year)
-    latest_project_lists = Project.objects.filter(developement_start_year__lte = datetime_today.year, created_at__lte = today.date())
+    latest_project_lists = Project.objects.filter(developement_end_year__lte = datetime_today.year, created_at__lte = today.date())[:4]
     latest_news_category_lists = NewsCategory.objects.all()
     latest_news_lists = News.objects.all()
     image_lists = Gallery.objects.all().order_by('?')
+    clients_lists =  Client.objects.all().order_by('?')[:10]
     contact_qs = Contact.objects.all().last()
     context = {'project_category_qs':project_category_qs,
               'project_lists':project_lists,'ongoing_project_lists':ongoing_project_lists,
                'completed_project_lists':completed_project_lists,'latest_project_lists':latest_project_lists,
                'latest_news_category_lists':latest_news_category_lists,'latest_news_lists':latest_news_lists,
-               'image_lists':image_lists,'contact_qs':contact_qs}
+               'image_lists':image_lists,'contact_qs':contact_qs,'clients_lists':clients_lists}
 
     return render(request, 'index.html', context)
 #
