@@ -370,6 +370,32 @@ class JobPositionManageForm(forms.ModelForm):
         ]
 
 
+# # -------------------------------------------------------------------
+# #                               Job
+# # -------------------------------------------------------------------
+
+class JobManageForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(JobManageForm, self).__init__(*args, **kwargs)
+
+        self.fields['description'].widget.attrs.update({
+            'id': 'job_description_input',
+            'placeholder': 'Enter Job Description...',
+            'rows': 10,
+            'cols': 5,
+        })
+
+    class Meta:
+        model = Job
+        fields = [
+            "job_position", "description", "is_active"
+        ]
+        widgets = {
+            'description': CKEditorWidget(),
+        }
+
+
 
 # # -------------------------------------------------------------------
 # #                               Contact

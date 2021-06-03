@@ -344,7 +344,49 @@ class JobPosition(models.Model):
 
 
 # # -------------------------------------------------------------------
-# #                           Career
+# #                               Job
+# # -------------------------------------------------------------------
+
+
+class Job(models.Model):
+    job_position = models.ForeignKey(
+        JobPosition, on_delete=models.CASCADE, related_name="career_job_position", verbose_name="job position"
+    )
+    slug = models.SlugField(
+        unique=True, verbose_name='slug'
+    )
+    description = models.TextField(
+        blank=True, null=True, verbose_name="description"
+    )
+    is_active = models.BooleanField(
+        default=True, verbose_name="is active"
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name='created at'
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True, verbose_name='updated at'
+    )
+
+    class Meta:
+        verbose_name = ("Job")
+        verbose_name_plural = ("Jobs")
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return self.job_position.title
+
+    def get_fields(self):
+        def get_dynamic_fields(field):
+            if field.name == 'job_position':
+                return (field.name, self.job_position.title, field.get_internal_type())
+            else:
+                return (field.name, field.value_from_object(self), field.get_internal_type())
+        return [get_dynamic_fields(field) for field in self.__class__._meta.fields]
+
+
+# # -------------------------------------------------------------------
+# #                              Career
 # # -------------------------------------------------------------------
 
 
@@ -357,8 +399,8 @@ class Career(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="career_user", verbose_name="user"
     )
-    job_position = models.ForeignKey(
-        JobPosition, on_delete=models.CASCADE, related_name="career_job_position", verbose_name="job position"
+    job = models.ForeignKey(
+        Job, on_delete=models.CASCADE, related_name="career_job", verbose_name="job"
     )
     file = models.FileField(
         blank=True, null=True, verbose_name="file"
@@ -374,8 +416,8 @@ class Career(models.Model):
     )
 
     class Meta:
-        verbose_name = ("Job Position")
-        verbose_name_plural = ("Job Positions")
+        verbose_name = ("Career")
+        verbose_name_plural = ("Career")
         ordering = ["-created_at"]
 
     def __str__(self):
@@ -385,8 +427,8 @@ class Career(models.Model):
         def get_dynamic_fields(field):
             if field.name == 'user':
                 return (field.name, self.user.username, field.get_internal_type())
-            elif field.name == 'job_position':
-                return (field.name, self.job_position.title, field.get_internal_type())
+            elif field.name == 'job':
+                return (field.name, self.job.job_position.title, field.get_internal_type())
             else:
                 return (field.name, field.value_from_object(self), field.get_internal_type())
         return [get_dynamic_fields(field) for field in self.__class__._meta.fields]
@@ -511,3 +553,14 @@ def gallery_slug_pre_save_receiver(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(gallery_slug_pre_save_receiver, sender=Gallery)
+
+# # Job
+
+def job_slug_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        title = slugify(instance.job_position.title.lower()[:17])
+        slug_binding = title + '-' + time_str_mix_slug()
+        instance.slug = slug_binding
+
+
+pre_save.connect(job_slug_pre_save_receiver, sender=Job)
