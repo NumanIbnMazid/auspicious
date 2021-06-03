@@ -133,7 +133,9 @@
                             <div class="listing-title">
                                 <h4>{{ last_job_qs.job_position }}<span class="listing-type">{{ last_job_qs.job_type }}</span></h4>
                                 <ul class="listing-icons">
-                                    <li><i class="ln ln-icon-Management"></i> {{ last_job_qs.description|remove_html_tags|truncatechars_html:20}}</li>
+                                    <li><i class="ln ln-icon-Management"></i> {{ last_job_qs.description|remove_html_tags|truncatechars_html:40}}</li>
+                                    <li><i class="ln ln-icon-Management"></i> {{ last_job_qs.salary}}</li>
+                                    <li><i class="ln ln-icon-Management"></i> {{ last_job_qs.hours}}</li>
                                     <li>
                                         <div class="listing-date new">new</div>
                                     </li>

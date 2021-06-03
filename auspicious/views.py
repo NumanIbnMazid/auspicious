@@ -80,7 +80,7 @@ class TelecomServicesView(TemplateView):
 
 def career(request):
     last_job_qs = Job.objects.all().last()
-    job_lists = Job.objects.all().order_by("-id")[:5]
+    job_lists = Job.objects.all().order_by("id")[1:5]
     context = {'last_job_qs':last_job_qs,'job_lists':job_lists}
     return render(request, "page/career.html", context)
 
