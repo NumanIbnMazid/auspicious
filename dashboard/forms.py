@@ -389,7 +389,7 @@ class JobManageForm(forms.ModelForm):
     class Meta:
         model = Job
         fields = [
-            "job_position", "description", "is_active"
+            "job_position", "job_type", "description", "is_active"
         ]
         widgets = {
             'description': CKEditorWidget(),
