@@ -379,6 +379,15 @@ class JobManageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(JobManageForm, self).__init__(*args, **kwargs)
 
+        self.fields['location'].widget.attrs.update({
+            'placeholder': 'Enter Job Location...',
+        })
+        self.fields['hours'].widget.attrs.update({
+            'placeholder': 'Enter Hours...',
+        })
+        self.fields['salary'].widget.attrs.update({
+            'placeholder': 'Enter Salary...',
+        })
         self.fields['description'].widget.attrs.update({
             'id': 'job_description_input',
             'placeholder': 'Enter Job Description...',
@@ -389,7 +398,7 @@ class JobManageForm(forms.ModelForm):
     class Meta:
         model = Job
         fields = [
-            "job_position", "job_type", "description", "is_active"
+            "job_position", "job_type", "location", "hours", "salary", "description", "is_active"
         ]
         widgets = {
             'description': CKEditorWidget(),

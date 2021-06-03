@@ -362,6 +362,15 @@ class Job(models.Model):
     job_type = models.CharField(
         max_length=50, choices=JobType.choices, default="Full Time", verbose_name="job type"
     )
+    location = models.CharField(
+        max_length=255, blank=True, null=True, verbose_name="location"
+    )
+    hours = models.CharField(
+        max_length=255, blank=True, null=True, verbose_name="hours"
+    )
+    salary = models.CharField(
+        max_length=255, blank=True, null=True, verbose_name="salary"
+    )
     description = models.TextField(
         blank=True, null=True, verbose_name="description"
     )

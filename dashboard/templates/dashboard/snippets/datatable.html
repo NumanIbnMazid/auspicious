@@ -116,7 +116,12 @@
                             </td>
 
                             {% else %}
+                            
+                            {% if value == None or value == "" %}
+                            <td>--</td>
+                            {% else %}
                             <td>{{ value }}</td>
+                            {% endif %}
                             {% endif %}
 
                             {% endif %}
