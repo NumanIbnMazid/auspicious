@@ -1,7 +1,7 @@
 from django.contrib import admin
 from util.mixings import CustomModelAdminMixin
 from .models import (
-    ProjectCategory, Project, NewsCategory, News, Comment, CommentReply, Client, SocialAccount, JobPosition, Career, Gallery, Contact
+    ProjectCategory, Project, NewsCategory, News, Comment, CommentReply, Client, SocialAccount, JobPosition, Job, Career, Gallery, Contact
 )
 
 admin.site.register(ProjectCategory)
@@ -83,6 +83,16 @@ class JobPositionAdmin(CustomModelAdminMixin, admin.ModelAdmin):
 
 
 admin.site.register(JobPosition, JobPositionAdmin)
+
+
+class JobAdmin(CustomModelAdminMixin, admin.ModelAdmin):
+    pass
+
+    class Meta:
+        model = Job
+
+
+admin.site.register(Job, JobAdmin)
 
 
 class CareerAdmin(CustomModelAdminMixin, admin.ModelAdmin):

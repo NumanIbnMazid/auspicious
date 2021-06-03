@@ -7,7 +7,8 @@ from .views import (
     ClientCreateView, ClientUpdateView, ClientDetailView, delete_client, SocialAccountCreateView,
     SocialAccountUpdateView, SocialAccountDetailView, delete_social_account, delete_job_position, JobPositionCreateView,
     JobPositionUpdateView, JobPositionDetailView, ContactCreateView, ContactUpdateView, ContactDetailView,
-    delete_contact, ProjectCategoryCreateView, ProjectCategoryUpdateView, delete_project_category
+    delete_contact, ProjectCategoryCreateView, ProjectCategoryUpdateView, delete_project_category,
+    JobCreateView, JobUpdateView, JobDetailView, delete_job
 )
 
 
@@ -108,6 +109,18 @@ urlpatterns = [
          JobPositionDetailView.as_view(), name="job_position_detail"),
     path("news/job_position/", delete_job_position,
          name="delete_job_position"),
+
+    # # -------------------------------------------------------------------
+    # #                              Job
+    # # -------------------------------------------------------------------
+    path("create/job/", JobCreateView.as_view(),
+         name="create_job"),
+    path("update/job/<slug>/",
+         JobUpdateView.as_view(), name="update_job"),
+    path("job/<slug>/detail/",
+         JobDetailView.as_view(), name="job_detail"),
+    path("news/job/", delete_job,
+         name="delete_job"),
 
     # # -------------------------------------------------------------------
     # #                              Contact

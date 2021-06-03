@@ -18,6 +18,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     {% include "dashboard/components/notifications.html" %}
                 </ul>
@@ -85,6 +86,12 @@
                     </ul>
                 </div>
                 {% endif %}
+
+                <li class="m-2 non-bullet-list">
+                    <a href="{% url 'home' %}" target="_blank" class="btn btn-dark btn-sm">
+                        <i class="fa fa-eye"></i> View Site
+                    </a>
+                </li>
 
             </div>
         </div>

@@ -2,11 +2,11 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from .models import (
     Project, NewsCategory, News, Gallery, Client, SocialAccount,
-    JobPosition,Contact, ProjectCategory
+    JobPosition, Job, Contact, ProjectCategory
 )
 from .forms import (
     ProjectManageForm, NewsCategoryManageForm,NewsManageForm, GalleryManageForm, ClientManageForm, SocialAccountManageForm,
-    JobPositionManageForm, ContactManageForm, ProjectCategoryManageForm
+    JobPositionManageForm, JobManageForm, ContactManageForm, ProjectCategoryManageForm
 )
 
 from util.helpers import (
@@ -906,6 +906,92 @@ class JobPositionUpdateView(UpdateView):
 @csrf_exempt
 def delete_job_position(request):
     return delete_simple_object(request=request, key='id', model=JobPosition, redirect_url="dashboard:create_job_position")
+
+
+
+# # -------------------------------------------------------------------
+# #                               Job
+# # -------------------------------------------------------------------
+
+def get_job_common_contexts(request):
+    common_contexts = get_simple_context_data(
+        request=request, app_namespace="dashboard", model_namespace="job", model=Job, list_template=None, fields_to_hide_in_table=[""]
+    )
+    return common_contexts
+
+
+class JobCreateView(CreateView):
+    template_name = "dashboard/snippets/manage.html"
+    form_class = JobManageForm
+
+    def form_valid(self, form, **kwargs):
+        messages.add_message(
+            self.request, messages.SUCCESS,
+            "Job Created Successfully"
+        )
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_job')
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            JobCreateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = 'Create Job'
+        context['page_short_title'] = 'Create Job'
+        for key, value in get_job_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+class JobDetailView(DetailView):
+    template_name = "dashboard/snippets/detail-common.html"
+
+    def get_object(self):
+        return get_simple_object(key='slug', model=Job, self=self)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            JobDetailView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'Job - {self.get_object().job_position.title} Detail'
+        context['page_short_title'] = f'Job - {self.get_object().job_position.title} Detail'
+        for key, value in get_job_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+class JobUpdateView(UpdateView):
+    template_name = 'dashboard/snippets/manage.html'
+    form_class = JobManageForm
+
+    def get_object(self):
+        return get_simple_object(key="slug", model=Job, self=self)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_job')
+
+    def form_valid(self, form):
+        messages.add_message(
+            self.request, messages.SUCCESS, "Job Updated Successfully!"
+        )
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            JobUpdateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'Update Job "{self.get_object().job_position.title}"'
+        context['page_short_title'] = f'Update Job "{self.get_object().job_position.title}"'
+        for key, value in get_job_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+@csrf_exempt
+def delete_job(request):
+    return delete_simple_object(request=request, key='slug', model=Job, redirect_url="dashboard:create_job")
 
 
 

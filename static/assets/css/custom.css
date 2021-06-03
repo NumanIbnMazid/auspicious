@@ -10,6 +10,13 @@ select.form-control[multiple] {
     height: 300px !important;
 }
 
+/* Form Checkbox Customisation */
+.checkbox {
+    width: 7% !important;
+    margin-left: 0px !important;
+    height: 30px !important;
+}
+
 /* *********************************** Custom Customization *********************************** */
 
 .non-bullet-list {
