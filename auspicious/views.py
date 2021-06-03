@@ -75,8 +75,14 @@ class CivilServicesView(TemplateView):
 class TelecomServicesView(TemplateView):
     template_name = 'page/telecom-service.html'
 
-class CareerView(TemplateView):
-    template_name = 'page/career.html'
+# class CareerView(TemplateView):
+#     template_name = 'page/career.html'
+
+def career(request):
+    last_job_qs = Job.objects.all().last()
+    job_lists = Job.objects.all().order_by("-id")[:5]
+    context = {'last_job_qs':last_job_qs,'job_lists':job_lists}
+    return render(request, "page/career.html", context)
 
 class ClientView(TemplateView):
     template_name = 'page/client.html'
