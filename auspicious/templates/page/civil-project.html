@@ -52,6 +52,7 @@
                         <div class="table-responsive">
                             <table class="table" style="text-align: center">
                                 <tr>
+                                    <th></th>
                                     <th>Sl</th>
                                     <th>Project Name</th>
                                     <th>Client Name</th>
@@ -60,6 +61,7 @@
                                 </tr>
                                 {% for project in ongoing_project_lists %}
                                 <tr>
+                                    <td><button type="button" class="btn btn-outline-primary"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
                                     <td>{{ forloop.counter  }}</td>
                                     <td>{{ project.name}}</td>
                                     <td>{{ project.client_name }}</td>
@@ -91,6 +93,7 @@
                         <div class="table-responsive">
                             <table class="table" style="text-align: center">
                                 <tr>
+                                    <td></td>
                                     <th>Sl</th>
                                     <th>Project Name</th>
                                     <th>Client Name</th>
@@ -99,6 +102,7 @@
                                 </tr>
                                 {% for project in completed_project_lists %}
                                 <tr>
+                                    <td><button type="button" class="btn btn-outline-primary"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
                                     <td>{{ forloop.counter }}</td>
                                     <td>{{ project.name}}</td>
                                     <td>{{ project.client_name }}</td>
