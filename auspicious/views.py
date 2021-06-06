@@ -1,9 +1,11 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView
 from dashboard.models import *
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
 from datetime import date, datetime, timedelta
+from django.urls import reverse
+from .forms import CareerManageForm
 
 # class HomeView(request):
 #     project_category_qs = ProjectCategory.objects.all()
@@ -107,6 +109,7 @@ def job_details(request, slug):
     context ={'job_qs':job_qs, 'job_position_qs':job_position_qs,
               'contact_qs':contact_qs}
     return render(request, "page/job-page.html", context)
+
 def all_job_lists(request):
     last_job_qs = Job.objects.all().last()
     job_lists = Job.objects.filter(is_active = 'True').order_by("id")
@@ -122,3 +125,29 @@ def filtered_job_lists(request, slug):
         'filtered_job_title': job_qs.first().job_position.title if len(job_qs) > 0 else ""
     }
     return render(request, "page/all-jobs.html", context)
+
+
+# # -------------------------------------------------------------------
+# #                               Job Apply
+# # -------------------------------------------------------------------
+
+
+class JobApplyCreateView(CreateView):
+    template_name = "page/job-apply.html"
+    form_class = CareerManageForm
+
+    def form_valid(self, form, **kwargs):
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('home')
+
+    # def get_context_data(self, **kwargs):
+    #     context = super(
+    #         ProjectCategoryCreateView, self
+    #     ).get_context_data(**kwargs)
+    #     context['page_title'] = 'Create Project Category'
+    #     context['page_short_title'] = 'Create Project Category'
+    #     for key, value in get_project_category_common_contexts(request=self.request).items():
+    #         context[key] = value
+    #     return context

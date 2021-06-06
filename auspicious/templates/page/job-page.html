@@ -111,7 +111,13 @@
                         </ul>
 
 
-                        <a href="#" class="popup-with-zoom-anim button">Apply For This Job</a>
+                        <!-- <a href="#" class="popup-with-zoom-anim button" data-target="#jobApplyModal"
+                            data-toggle="modal">
+                            Apply For This Job
+                        </a> -->
+                        <a href="{% url 'job_apply' slug=job_qs.slug %}" class="popup-with-zoom-anim button">
+                            Apply For This Job
+                        </a>
                     </div>
 
                 </div>
@@ -120,6 +126,8 @@
             <!-- Widgets / End -->
         </div>
     </div>
+
+    {% include "page/snippets/job-apply-modal.html" %}
 
 
     {% include "components/footer.html" %}
