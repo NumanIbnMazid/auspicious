@@ -103,3 +103,8 @@ def job_details(request, slug):
     context ={'job_qs':job_qs, 'job_position_qs':job_position_qs,
               'contact_qs':contact_qs}
     return render(request, "page/job-page.html", context)
+def all_job_lists(request):
+    last_job_qs = Job.objects.all().last()
+    job_lists = Job.objects.filter(is_active = 'True').order_by("id")
+    context = {'last_job_qs':last_job_qs,'job_lists': job_lists}
+    return render(request, "page/all-jobs.html", context)
