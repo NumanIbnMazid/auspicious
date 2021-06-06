@@ -16,3 +16,6 @@ ul {
     margin: 2px auto;
     z-index: 1100 !important;
 }
+.job-overview a.button {
+    background-color:blue;
+}
