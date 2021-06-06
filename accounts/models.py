@@ -152,9 +152,14 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
             gender = request.POST.get("gender")
             if gender == None:
                 gender = "U"
-            Profile.objects.create(
-                user=instance, gender=gender, slug=slug_binding, created_by=request.user
-            )
+            try:
+                Profile.objects.create(
+                    user=instance, gender=gender, slug=slug_binding, created_by=request.user
+                )
+            except:
+                Profile.objects.create(
+                    user=instance, gender=gender, slug=slug_binding
+                )
             instance.user_profile.save()
     except AttributeError:
         try:
