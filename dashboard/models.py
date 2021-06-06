@@ -324,12 +324,20 @@ class JobPosition(models.Model):
     title = models.CharField(
         max_length=100, verbose_name="title"
     )
+    slug = models.SlugField(
+        unique=True, verbose_name='slug'
+    )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name='created at'
     )
     updated_at = models.DateTimeField(
         auto_now=True, verbose_name='updated at'
     )
+
+    def get_job_count(self):
+        return len(Job.objects.filter(
+            job_position__id=self.id
+        ))
 
     class Meta:
         verbose_name = ("Job Position")
@@ -572,6 +580,17 @@ def gallery_slug_pre_save_receiver(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(gallery_slug_pre_save_receiver, sender=Gallery)
+
+# # JobPosition
+
+def job_position_slug_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        title = slugify(instance.title.lower()[:17])
+        slug_binding = title + '-' + time_str_mix_slug()
+        instance.slug = slug_binding
+
+
+pre_save.connect(job_position_slug_pre_save_receiver, sender=JobPosition)
 
 # # Job
 

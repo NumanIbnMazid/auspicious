@@ -48,7 +48,7 @@
                             <h4>{{ job_qs.job_position }}</h4>
 
                             <span><a href=""><i class="fa fa-link"></i> {{ job_qs.job_type }}</a></span>
-                            <span><a href="#"><i class="fa fa-twitter"></i> @kingrestaurants</a></span>
+                            <span><a href=""><i class="fa fa-envelope"></i> {{ contact_qs.email }}</a></span>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -86,29 +86,28 @@
                                     <span>{{ job_qs.job_position }}</span>
                                 </div>
                             </li>
+                            {% if job_qs.hours %}
                             <li>
                                 <i class="fa fa-clock-o"></i>
                                 <div>
                                     <strong>Hours:</strong>
-                                    {% if job_qs.hours %}
                                     <span>{{ job_qs.hours }}</span>
-                                    {% else %}
-                                    <span>-</span>
-                                    {% endif %}
                                 </div>
                             </li>
+                             {% endif %}
+                            {% if job_qs.salary %}
                             <li>
                                 <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
                                 <div>
                                     <strong>Salary:</strong>
-                                    {% if job_qs.salary %}
+
                                     <span>{{ job_qs.salary }}</span>
-                                    {% else %}
-                                    <span>-</span>
-                                    {% endif %}
+
+
 
                                 </div>
                             </li>
+                            {% endif %}
                         </ul>
 
 
