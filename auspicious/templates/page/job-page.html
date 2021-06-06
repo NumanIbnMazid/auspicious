@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_tags %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -38,47 +39,24 @@
         <div class="row">
             <!-- Recent Jobs -->
             <div class="col-md-8">
-                <div class="job-content padding-right">
+                <div class="padding-right">
 
                     <!-- Company Info -->
                     <div class="company-info">
                         <img src="{% static 'assets/landing/assets/img/job-list-logo-04.png' %}" alt="">
                         <div class="content">
-                            <h4>King LLC</h4>
-                            <span><a href="#"><i class="fa fa-link"></i> Website</a></span>
+                            <h4>{{ job_qs.job_position }}</h4>
+
+                            <span><a href=""><i class="fa fa-link"></i> {{ job_qs.job_type }}</a></span>
                             <span><a href="#"><i class="fa fa-twitter"></i> @kingrestaurants</a></span>
                         </div>
                         <div class="clearfix"></div>
                     </div>
 
                     <p class="margin-reset">
-                        The Food Service Specialist ensures outstanding customer service is provided to food customers and that all food offerings meet the required stock levels and presentation standards. Beginning your career as a Food Steward will give you a strong foundation in Speedway’s food segment that can make you a vital member of the front line team!
+                        {{ job_qs.description|safe|linebreaks }}
                     </p>
 
-                    <br>
-                    <p>The <strong>Food Service Specialist</strong> will have responsibilities that include:</p>
-
-                    <ul class="list-1">
-                        <li>Executing the Food Service program, including preparing and presenting our wonderful food offerings
-                            to hungry customers on the go!
-                        </li>
-                        <li>Greeting customers in a friendly manner and suggestive selling and sampling items to help increase sales.</li>
-                        <li>Keeping our Store food area looking terrific and ready for our valued customers by managing product
-                            inventory, stocking, cleaning, etc.
-                        </li>
-                        <li>We’re looking for associates who enjoy interacting with people and working in a fast-paced environment!</li>
-                    </ul>
-
-                    <br>
-
-                    <h5 class="margin-bottom-10">Job Requirment</h5>
-
-                    <ul class="list-1">
-                        <li>Excellent customer service skills, communication skills, and a happy, smiling attitude are essential.</li>
-                        <li>Must be available to work required shifts including weekends, evenings and holidays.</li>
-                        <li>Must be able to perform repeated bending, standing and reaching.</li>
-                        <li> Must be able to occasionally lift up to 50 pounds</li>
-                    </ul>
 
                 </div>
             </div>
@@ -93,33 +71,42 @@
 
                     <div class="job-overview">
 
-                        <ul>
+                        <ul class="non-bullet-list">
                             <li>
                                 <i class="fa fa-map" aria-hidden="true"></i>
                                 <div>
                                     <strong>Location:</strong>
-                                    <span>20180 Outer Dr Dearborn, MI 48124</span>
+                                    <span>{{ contact_qs.address }}</span>
                                 </div>
                             </li>
                             <li>
                                 <i class="fa fa-user-o"></i>
                                 <div>
                                     <strong>Job Title:</strong>
-                                    <span>Food Service Specialist</span>
+                                    <span>{{ job_qs.job_position }}</span>
                                 </div>
                             </li>
                             <li>
                                 <i class="fa fa-clock-o"></i>
                                 <div>
                                     <strong>Hours:</strong>
-                                    <span>40h / week</span>
+                                    {% if job_qs.hours %}
+                                    <span>{{ job_qs.hours }}</span>
+                                    {% else %}
+                                    <span>-</span>
+                                    {% endif %}
                                 </div>
                             </li>
                             <li>
                                 <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
                                 <div>
-                                    <strong>Rate:</strong>
-                                    <span>$9.50 - $12.50 / hour</span>
+                                    <strong>Salary:</strong>
+                                    {% if job_qs.salary %}
+                                    <span>{{ job_qs.salary }}</span>
+                                    {% else %}
+                                    <span>-</span>
+                                    {% endif %}
+
                                 </div>
                             </li>
                         </ul>

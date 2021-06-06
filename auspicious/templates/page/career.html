@@ -1,5 +1,5 @@
 {% load static %}
-{% load custom_tags %}
+{% load custom_tags %}{% load custom_tags %}
 
 <!doctype html>
 <html lang="en">
@@ -126,7 +126,7 @@
                     <div class="listings-container">
 
                         <!-- Listing -->
-                        <a href="job-page.html" class="listing full-time">
+                        <a href="{% url 'job_details' slug=last_job_qs.slug %}" class="listing full-time">
                             <div class="listing-logo">
                                 <img src="{% static 'assets/landing/assets/img/job-list-logo-04.png' %}" alt="">
                             </div>
@@ -145,7 +145,7 @@
 
                         <!-- Listing -->
                         {% for job in job_lists %}
-                        <a href="{% url 'job_details' job.slug %}}" class="listing full-time">
+                        <a href="{% url 'job_details' slug=job.slug %}" class="listing full-time">
                             <div class="listing-logo">
                                 <img src="{% static 'assets/landing/assets/img/job-list-logo-04.png' %}" alt="">
                             </div>

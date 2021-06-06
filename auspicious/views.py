@@ -80,8 +80,8 @@ class TelecomServicesView(TemplateView):
 
 def career(request):
     last_job_qs = Job.objects.all().last()
-    job_lists = Job.objects.all().order_by("id")[1:5]
-    context = {'last_job_qs':last_job_qs,'job_lists':job_lists}
+    job_lists = Job.objects.filter(is_active = 'True').order_by("id")[1:5]
+    context = {'last_job_qs':last_job_qs,'job_lists': job_lists}
     return render(request, "page/career.html", context)
 
 class ClientView(TemplateView):
@@ -97,6 +97,9 @@ class NewsDetailsView(TemplateView):
     template_name = 'page/news-details.html'
 
 def job_details(request, slug):
-    job_qs = Job.objects.filter(slug = slug).last()
-    context ={'job_qs':job_qs}
+    job_qs = Job.objects.filter(slug = slug, is_active = 'True').first()
+    job_position_qs = JobPosition.objects.all()
+    contact_qs =  Contact.objects.all().last()
+    context ={'job_qs':job_qs, 'job_position_qs':job_position_qs,
+              'contact_qs':contact_qs}
     return render(request, "page/job-page.html", context)

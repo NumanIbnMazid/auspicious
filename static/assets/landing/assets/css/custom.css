@@ -1,3 +1,7 @@
 .career-area .category-item:hover {
     background-color: blue !important;
 }
+
+ul {
+    list-style-type: disc !important;
+}

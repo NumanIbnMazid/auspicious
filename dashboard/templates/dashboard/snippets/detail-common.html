@@ -97,13 +97,13 @@
                         </tr>
                         {% for label, value, field_type in object.get_fields %}
                         <tr>
-                            <th>
+                            <th class="font-normal">
                                 <div class="row m-3">
                                     <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
                                         {{ label|var_to_title }}
                                     </div>
                                     <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10">
-                                        <span class="text-muted font-700 font-15">
+                                        <span class="">
                                             {% if value == None %}
                                             --
                                             {% else %}

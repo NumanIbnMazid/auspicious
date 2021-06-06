@@ -17,6 +17,10 @@ select.form-control[multiple] {
     height: 30px !important;
 }
 
+.font-normal {
+    font-weight: normal !important;
+}
+
 /* *********************************** Custom Customization *********************************** */
 
 .non-bullet-list {
