@@ -1,6 +1,7 @@
 from allauth.account.forms import SignupForm
 from django import forms
 from django.contrib.auth.models import User
+from dashboard.models import Career
 
 
 class CustomSignupForm(SignupForm):
@@ -25,3 +26,20 @@ class CustomSignupForm(SignupForm):
         user.save()
         userprofile, created = self.get_or_create(user=user)
         user.userprofile.save()
+
+
+class CareerManageForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(CareerManageForm, self).__init__(*args, **kwargs)
+
+        self.fields['contact'].widget.attrs.update({
+            'placeholder': 'Enter Contact Number...',
+            'maxlength': 50
+        })
+
+    class Meta:
+        model = Career
+        fields = [
+            "file", "contact"
+        ]

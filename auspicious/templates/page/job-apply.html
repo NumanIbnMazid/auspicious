@@ -1,0 +1,73 @@
+{% load static %}
+{% load custom_tags %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% include "components/styles.html" %}
+</head>
+
+<body>
+    {% include "components/loader.html" %}
+    {% include "components/header.html" %}
+
+
+    <!-- Breadcrumbs -->
+    <section class="breadcrumbs" style="background-image:url('assets/img/breadcrumbs-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <!-- Breadcrumbs-Content -->
+                <div class="col-lg-7 col-md-7 col-12">
+                    <div class="breadcrumbs-content">
+                        <h2>Apply For This Job</h2>
+                    </div>
+                </div>
+                <!-- Breadcrumbs-Menu -->
+                <div class="col-lg-5 col-md-5 col-12">
+                    <div class="breadcrumbs-menu">
+                        <ul>
+                            <li><a href="index.html">Home</a><i class="fa fa-angle-double-right"></i></li>
+                            <li class="active"><a href="job-page.html">Job Apply</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Breadcrumbs -->
+
+    <div class="container pt-100 pb-100">
+        <div class="row">
+            <form role="form" method="POST" data-toggle="validator" enctype="multipart/form-data" class="form">
+                {% csrf_token %}
+                <div class="card-body">
+                    {% include 'dashboard/snippets/form.html' %}
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer text-center">
+                    <button type="submit" class="btn btn-lg btn-primary m-4">
+                        Apply
+                    </button>
+                    <button type="button" class="btn btn-lg btn-danger m-4" data-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    {% include "components/footer.html" %}
+    {% include "components/scripts.html" %}
+
+    <!-- extra scripts -->
+    {% block additional_js %}
+
+    <!-- Bootstrap Validator -->
+    <script src="{% static 'assets/vendors/bootstrap-validator/validator.js' %}"></script>
+    {% endblock %}
+
+</body>
+
+</html>

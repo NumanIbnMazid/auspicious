@@ -421,6 +421,9 @@ class Career(models.Model):
     file = models.FileField(
         blank=True, null=True, verbose_name="file"
     )
+    contact = models.CharField(
+        max_length=50, verbose_name="contact number"
+    )
     status = models.CharField(
         max_length=50, choices=Status.choices, default="Pending", verbose_name="status"
     )

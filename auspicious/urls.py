@@ -7,11 +7,12 @@ from . import views
 # Import Views
 from .views import  AboutView, \
     CivilServicesView, TelecomServicesView, ClientView, NewsView,\
-    ContactView, NewsDetailsView
+    ContactView, NewsDetailsView, JobApplyCreateView
 
 urlpatterns = [
     # path("", HomeView.as_view(), name="home"),
     path("", views.home, name="home"),
+    path("apply/job/<slug>/", JobApplyCreateView.as_view(), name="job_apply"),
     path("about/", AboutView.as_view(), name="about"),
     path("civil-project/", views.civilproject, name="civil_project"),
     path("telecom-project/", views.telecomproject, name="telecom_project"),
