@@ -137,7 +137,15 @@ class JobApplyCreateView(CreateView):
     form_class = CareerManageForm
 
     def form_valid(self, form, **kwargs):
-        return super().form_valid(form)
+        # title = form.instance.title
+        slug = self.kwargs['slug']
+        job_qs = Job.objects.filter(slug=slug)
+        if job_qs.exists():
+            print(123, "************")
+            form.instance.user = self.request.user
+            form.instance.job = job_qs.last()
+            return super().form_valid(form)
+        return super().form_invalid(form)
 
     def get_success_url(self):
         return reverse('home')
