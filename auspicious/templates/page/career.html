@@ -145,7 +145,7 @@
 
                         <!-- Listing -->
                         {% for job in job_lists %}
-                        <a href="job-page.html" class="listing full-time">
+                        <a href="{% url 'job_details' job.slug %}}" class="listing full-time">
                             <div class="listing-logo">
                                 <img src="{% static 'assets/landing/assets/img/job-list-logo-04.png' %}" alt="">
                             </div>

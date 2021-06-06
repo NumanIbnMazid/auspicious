@@ -95,3 +95,8 @@ class ContactView(TemplateView):
 
 class NewsDetailsView(TemplateView):
     template_name = 'page/news-details.html'
+
+def job_details(request, slug):
+    job_qs = Job.objects.filter(slug = slug).last()
+    context ={'job_qs':job_qs}
+    return render(request, "page/job-page.html", context)
