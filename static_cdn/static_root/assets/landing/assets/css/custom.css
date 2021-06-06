@@ -1,3 +1,18 @@
 .career-area .category-item:hover {
     background-color: blue !important;
 }
+
+ul {
+    list-style-type: disc !important;
+}
+
+/* modal customization */
+.modal-backdrop {
+    z-index: 1040 !important;
+    display: none;
+}
+
+.modal-dialog {
+    margin: 2px auto;
+    z-index: 1100 !important;
+}

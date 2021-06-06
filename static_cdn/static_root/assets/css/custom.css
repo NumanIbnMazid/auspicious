@@ -17,6 +17,17 @@ select.form-control[multiple] {
     height: 30px !important;
 }
 
+/* modal customization */
+.modal-backdrop {
+    z-index: 1040 !important;
+    display: none;
+}
+
+.modal-dialog {
+    margin: 2px auto;
+    z-index: 1100 !important;
+}
+
 .font-normal {
     font-weight: normal !important;
 }
@@ -492,17 +503,6 @@ select.form-control[multiple] {
 .border-muted-5 {
     border: 5px solid #818183e7;
     padding: 14px;
-}
-
-/* modal customization */
-.modal-backdrop {
-    z-index: 1040 !important;
-    display: none;
-}
-
-.modal-dialog {
-    margin: 2px auto;
-    z-index: 1100 !important;
 }
 
 /* logo animation */
