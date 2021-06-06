@@ -20,7 +20,11 @@
                 <!-- Breadcrumbs-Content -->
                 <div class="col-lg-7 col-md-7 col-12">
                     <div class="breadcrumbs-content">
+                        {% if filtered_job_title %}
+                        <h2>{{ filtered_job_title }}</h2>
+                        {% else %}
                         <h2>All Jobs</h2>
+                        {% endif %}
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                     </div>
                 </div>
@@ -29,7 +33,13 @@
                     <div class="breadcrumbs-menu">
                         <ul>
                             <li><a href="index.html">Home</a><i class="fa fa-angle-double-right"></i></li>
-                            <li class="active"><a href="career.html">All Jobs</a></li>
+                            <li class="active"><a href="career.html">
+                                {% if filtered_job_title %}
+                       {{ filtered_job_title }}
+                        {% else %}
+                        All Jobs
+                        {% endif %}
+                            </a></li>
                         </ul>
                     </div>
                 </div>
@@ -43,14 +53,19 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h3 class="mb-25">All Jobs</h3>
+                    {% if filtered_job_title %}
+                        <h3>{{ filtered_job_title }}</h3>
+                        {% else %}
+                        <h3>All Jobs</h3>
+                        {% endif %}
                     <div class="listings-container">
 
+                        {% if last_job_qs %}
                         <!-- Listing -->
                         <a href="{% url 'job_details' slug=last_job_qs.slug %}" class="listing full-time">
                             <div class="listing-logo">
                                 <img src="{% static 'assets/landing/assets/img/job-list-logo-04.png' %}" alt="">
-                            </div>
+                           </div>
                             <div class="listing-title">
                                 <h4>{{ last_job_qs.job_position }}<span class="listing-type">{{ last_job_qs.job_type }}</span></h4>
                                 <ul class="listing-icons">
@@ -63,6 +78,8 @@
                                 </ul>
                             </div>
                         </a>
+
+                        {% endif %}
 
                         <!-- Listing -->
                         {% for job in job_lists %}

@@ -80,8 +80,12 @@ class TelecomServicesView(TemplateView):
 
 def career(request):
     last_job_qs = Job.objects.all().last()
+    job_position_qs = JobPosition.objects.all()
+    # job_count = Job.objects.filter(job_position =job_position_qs).count()
+    # print(job_count)
     job_lists = Job.objects.filter(is_active = 'True').order_by("id")[1:5]
-    context = {'last_job_qs':last_job_qs,'job_lists': job_lists}
+    context = {'last_job_qs':last_job_qs,'job_lists': job_lists,
+               'job_position_qs':job_position_qs}
     return render(request, "page/career.html", context)
 
 class ClientView(TemplateView):
@@ -107,4 +111,14 @@ def all_job_lists(request):
     last_job_qs = Job.objects.all().last()
     job_lists = Job.objects.filter(is_active = 'True').order_by("id")
     context = {'last_job_qs':last_job_qs,'job_lists': job_lists}
+    return render(request, "page/all-jobs.html", context)
+
+def filtered_job_lists(request, slug):
+    job_qs = Job.objects.filter(
+        job_position__slug__iexact=slug
+    )
+    context = {
+        'job_lists':job_qs,
+        'filtered_job_title': job_qs.first().job_position.title if len(job_qs) > 0 else ""
+    }
     return render(request, "page/all-jobs.html", context)

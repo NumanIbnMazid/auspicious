@@ -19,6 +19,7 @@ urlpatterns = [
     path("telecom-service/", TelecomServicesView.as_view(), name="telecom_service"),
     path("career/", views.career, name="career"),
     path("all-job-list/", views.all_job_lists, name="all_job_lists"),
+    path("jobs/<slug>/", views.filtered_job_lists, name="filtered_job_lists"),
     path("job-details/<slug>/", views.job_details, name="job_details"),
     path("sister & client/", ClientView.as_view(), name="client"),
     path("news/", NewsView.as_view(), name="news"),
