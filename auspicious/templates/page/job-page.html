@@ -2,9 +2,11 @@
 {% load custom_tags %}
 <!doctype html>
 <html lang="en">
+
 <head>
     {% include "components/styles.html" %}
 </head>
+
 <body>
     {% include "components/loader.html" %}
     {% include "components/header.html" %}
@@ -18,7 +20,8 @@
                 <div class="col-lg-7 col-md-7 col-12">
                     <div class="breadcrumbs-content">
                         <h2>Job Details</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.</p>
                     </div>
                 </div>
                 <!-- Breadcrumbs-Menu -->
@@ -93,7 +96,7 @@
                                     <span>{{ job_qs.hours }}</span>
                                 </div>
                             </li>
-                             {% endif %}
+                            {% endif %}
                             {% if job_qs.salary %}
                             <li>
                                 <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
@@ -114,9 +117,24 @@
                             data-toggle="modal">
                             Apply For This Job
                         </a> -->
-                        <a href="{% url 'job_apply' slug=job_qs.slug %}" class="popup-with-zoom-anim button">
-                            Apply For This Job
-                        </a>
+                        {% check_if_applied_for_the_job job_qs.slug as check_if_applied_for_the_job %}
+                        <div class="text-center">
+                            {% if check_if_applied_for_the_job == True %}
+                            <span class="badge badge-success text-dark font-15">
+                                <i class="fa fa-check-square-o text-success" aria-hidden="true"></i>
+                                Already Applied
+                            </span>
+
+                            <a href="{% url 'job_apply_update' slug=job_qs.slug %}" class="popup-with-zoom-anim button">
+                                Update Application
+                            </a>
+                            {% else %}
+                            <a href="{% url 'job_apply' slug=job_qs.slug %}" class="popup-with-zoom-anim button">
+                                Apply For This Job
+                            </a>
+                            {% endif %}
+                        </div>
+
                     </div>
 
                 </div>
@@ -134,4 +152,5 @@
     {% block additional_js %}{% endblock %}
 
 </body>
+
 </html>

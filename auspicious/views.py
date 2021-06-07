@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, UpdateView
 from dashboard.models import *
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -12,6 +12,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from util.helpers import (
+    validate_normal_form, get_simple_context_data, get_simple_object, delete_simple_object, user_has_permission
+)
+from django.views.decorators.clickjacking import xframe_options_exempt
 
 # class HomeView(request):
 #     project_category_qs = ProjectCategory.objects.all()
@@ -28,6 +32,7 @@ from django.utils.decorators import method_decorator
 # # -------------------------------------------------------------------
 
 
+# @xframe_options_exempt
 def home(request):
     today = timezone.datetime.now()
     datetime_today = datetime.strptime(
@@ -205,20 +210,42 @@ class JobApplyCreateView(CreateView):
     form_class = CareerManageForm
 
     def form_valid(self, form, **kwargs):
-        # title = form.instance.title
         slug = self.kwargs['slug']
         job_qs = Job.objects.filter(slug=slug)
         if job_qs.exists():
-            form.instance.user = self.request.user
-            form.instance.job = job_qs.last()
-            messages.add_message(
-                self.request, messages.SUCCESS, "Applied successfully!"
+
+            qs = Career.objects.filter(
+                job__slug=slug, user=self.request.user
             )
-            return super().form_valid(form)
+            if not qs.exists():
+                form.instance.user = self.request.user
+                form.instance.job = job_qs.last()
+                messages.add_message(
+                    self.request, messages.SUCCESS, "Applied successfully!"
+                )
+                return super().form_valid(form)
+            else:
+                form.add_error(
+                    None, forms.ValidationError(
+                        "You already applied for this job! Please update the application if required!"
+                    )
+                )
         messages.add_message(
             self.request, messages.ERROR, "Failed to apply!"
         )
         return super().form_invalid(form)
+
+    def dispatch(self, request, *args, **kwargs):
+        slug = self.kwargs['slug']
+        qs = Career.objects.filter(
+            job__slug=slug, user=self.request.user
+        )
+        if qs.exists():
+            messages.add_message(
+                self.request, messages.WARNING, "Already Applied!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(JobApplyCreateView, self).dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
         return self.request.POST.get('next', reverse('home'))
@@ -227,5 +254,51 @@ class JobApplyCreateView(CreateView):
         context = super(
             JobApplyCreateView, self
         ).get_context_data(**kwargs)
-        context['page_title'] = 'Create Project Category'
+        qs = Job.objects.filter(slug=self.kwargs['slug'])
+        if qs.exists():
+            context['job'] = qs.last()
+        else:
+            context['job'] = None
+        return context
+
+@method_decorator(login_required, name='dispatch')
+class JobApplyUpdateView(UpdateView):
+    template_name = "page/job-apply.html"
+    form_class = CareerManageForm
+
+    def get_object(self):
+        qs = Career.objects.filter(
+            job__slug=self.kwargs['slug'], user=self.request.user
+        )
+        if qs.exists():
+            return qs.last()
+        return None
+
+    def form_valid(self, form, **kwargs):
+        slug = self.kwargs['slug']
+        job_qs = Job.objects.filter(slug=slug)
+        if job_qs.exists():
+            form.instance.user = self.request.user
+            form.instance.job = job_qs.last()
+            messages.add_message(
+                self.request, messages.SUCCESS, "Application Updated successfully!"
+            )
+            return super().form_valid(form)
+        messages.add_message(
+            self.request, messages.ERROR, "Failed to update application!"
+        )
+        return super().form_invalid(form)
+
+    def get_success_url(self):
+        return self.request.POST.get('next', reverse('home'))
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            JobApplyUpdateView, self
+        ).get_context_data(**kwargs)
+        qs = Job.objects.filter(slug=self.kwargs['slug'])
+        if qs.exists():
+            context['job'] = qs.last()
+        else:
+            context['job'] = None
         return context
