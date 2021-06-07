@@ -136,8 +136,13 @@ class ClientView(TemplateView):
 # #                              News
 # # -------------------------------------------------------------------
 
-class NewsView(TemplateView):
-    template_name = 'page/news.html'
+# class NewsView(TemplateView):
+#     template_name = 'page/news.html'
+
+def news(request):
+    news_lists= News.objects.all().order_by('-id')
+    context ={'news_lists':news_lists}
+    return render(request,'page/news.html', context )
 
 # # -------------------------------------------------------------------
 # #                               Contact
