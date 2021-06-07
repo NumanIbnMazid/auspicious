@@ -93,7 +93,7 @@
                 {% if field.errors %}
                 {% include "dashboard/snippets/form-script-handler.html" %}
                 {% for error in field.errors %}
-                <div class="row form-error-div">
+                <div class="row form-error-div mt-2">
                     <b class="col-md-12 text-danger">
                         <span id="{{field.name}}_error" class="form-error">
                             {{ error|safe }}

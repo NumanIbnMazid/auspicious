@@ -6,6 +6,12 @@ from django.utils import timezone
 from datetime import date, datetime, timedelta
 from django.urls import reverse
 from .forms import CareerManageForm
+from django.contrib import messages
+from django import forms
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 # class HomeView(request):
 #     project_category_qs = ProjectCategory.objects.all()
@@ -193,7 +199,7 @@ def filtered_job_lists(request, slug):
 # #                               Job Apply
 # # -------------------------------------------------------------------
 
-
+@method_decorator(login_required, name='dispatch')
 class JobApplyCreateView(CreateView):
     template_name = "page/job-apply.html"
     form_class = CareerManageForm
@@ -203,10 +209,21 @@ class JobApplyCreateView(CreateView):
         slug = self.kwargs['slug']
         job_qs = Job.objects.filter(slug=slug)
         if job_qs.exists():
-            print(123, "************")
             form.instance.user = self.request.user
             form.instance.job = job_qs.last()
+            messages.add_message(
+                self.request, messages.SUCCESS, "Applied successfully!"
+            )
             return super().form_valid(form)
+
+            # form.add_error(
+            #     f'{finalized_field_name}', forms.ValidationError(
+            #         f"You already have a pending post similar to this. Please update that post if you need any changes. click <a href='{donation_qs_url}'>here</a> to view the post."
+            #     )
+            # )
+        messages.add_message(
+            self.request, messages.ERROR, "Failed to apply!"
+        )
         return super().form_invalid(form)
 
     def get_success_url(self):

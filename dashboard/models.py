@@ -427,7 +427,7 @@ class Career(models.Model):
         Job, on_delete=models.CASCADE, related_name="career_job", verbose_name="job"
     )
     file = models.FileField(
-        blank=True, null=True, verbose_name="file"
+        verbose_name="file"
     )
     contact = models.CharField(
         max_length=50, verbose_name="contact number"
