@@ -36,7 +36,44 @@
     </section>
     <!-- End Breadcrumbs -->
 
-    <div class="container pt-100 pb-100">
+    {% check_if_applied_for_the_job job.slug as check_if_applied_for_the_job %}
+
+    {% if check_if_applied_for_the_job == True %}
+    <div class="container">
+        <div class="table-responsive m-4">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>File</th>
+                        <td>
+                            <div class="">
+                                {% if object.file.url|get_file_type == "pdf" %}
+                                <img class="ez-view m-2" src="{% static 'assets/images/icons/pdf.png' %}"
+                                    href="{{ object.file.url }}" alt="{{ object.title }}">
+                                {% elif object.file.url|get_file_type == "document" %}
+                                <iframe class="doc img-thumbnail m-2" height="480" width="640"
+                                    src="http://docs.google.com/gview?url={{request.scheme}}://{{ request.get_host }}{{ object.file.url }}&embedded=true">
+                                </iframe>
+                                {% else %}
+                                <span>{{ object.value.url }}</span>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Contact</th>
+                        <td>{{ object.contact }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="container mt-4 pb-100">
+        <div class="text-center">
+            <h4>Application Form</h4>
+        </div>
         <div class="row">
             <form role="form" method="POST" data-toggle="validator" enctype="multipart/form-data" class="form">
                 {% csrf_token %}
@@ -63,6 +100,11 @@
 
     <!-- extra scripts -->
     {% block additional_js %}
+
+    <!-- EZ View JS -->
+    <script src="{% static 'assets/vendors/ez-view/EZView.js' %}"></script>
+    <script src="{% static 'assets/vendors/ez-view/draggable.js' %}"></script>
+    <script src="{% static 'assets/vendors/ez-view/ez-conf.js' %}"></script>
 
     <!-- Bootstrap Validator -->
     <script src="{% static 'assets/vendors/bootstrap-validator/validator.js' %}"></script>

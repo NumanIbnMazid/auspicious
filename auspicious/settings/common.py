@@ -48,6 +48,9 @@ AUTHENTICATION_BACKENDS = [
 
 
 MIDDLEWARE = [
+    # Custom Middleware for SameSite Cookie
+    # 'middlewares.middlewares.SameSiteMiddleware',
+    # Django Defauilt Middlewares
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
