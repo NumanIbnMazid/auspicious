@@ -106,7 +106,10 @@ CKEDITOR_CONFIGS = {
 
 
 """
------------------------ * File Upload Configuration * -----------------------
+----------------------- * File Configuration * -----------------------
 """
 ALLOWED_IMAGE_TYPES = ['.jpg', '.jpeg', '.png', '.svg']
 MAX_UPLOAD_SIZE = 2621440
+
+# File Validation Staffs
+ALLOWED_JOB_APPLY_FILE_TYPES = ['.doc', '.docx', '.pdf']
