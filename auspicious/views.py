@@ -125,7 +125,7 @@ def career(request):
                'job_position_qs':job_position_qs}
     return render(request, "page/career.html", context)
 
-# # -------------------------------------------------------------------
+# # -------News(------------------------------------------------------------
 # #                              Client  Details
 # # -------------------------------------------------------------------
 
@@ -160,8 +160,15 @@ def contact(request):
 # #                               News Details
 # # -------------------------------------------------------------------
 
-class NewsDetailsView(TemplateView):
-    template_name = 'page/news-details.html'
+def news_details(request, slug):
+    news_qs = News.objects.filter(slug = slug).first()
+    comment_qs = Comment.objects.filter(news = news_qs)
+    reply_qs = CommentReply.objects.filter(comment = comment_qs.first())
+
+    context ={'news_qs':news_qs,'comment_qs':comment_qs,
+              'total_comment':comment_qs.count(),
+              'reply_qs':reply_qs}
+    return render(request, "page/news-details.html", context)
 
 # # -------------------------------------------------------------------
 # #                               Job Details

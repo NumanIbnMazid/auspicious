@@ -5,9 +5,7 @@ from django.conf.urls.static import static
 from . import views
 
 # Import Views
-from .views import  AboutView, \
-    CivilServicesView, TelecomServicesView, ClientView,\
-    NewsDetailsView, JobApplyCreateView
+from .views import *
 
 urlpatterns = [
     # path("", HomeView.as_view(), name="home"),
@@ -27,7 +25,7 @@ urlpatterns = [
     path("news/", views.news, name="news"),
     # path("contact/", ContactView.as_view(), name="contact"),
     path("contact/", views.contact, name="contact"),
-    path("news-details/", NewsDetailsView.as_view(), name="news_details"),
+    path("news-details/<str:slug>/", views.news_details, name="news_details"),
     path("admin/", admin.site.urls),
     path("account/", include("accounts.urls")),
     path("dashboard/", include(("dashboard.urls", "dashboard"), namespace="dashboard")),
