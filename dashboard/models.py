@@ -120,6 +120,9 @@ class News(models.Model):
     title = models.CharField(
         max_length=255, verbose_name="title"
     )
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="news_created_by", verbose_name="created by"
+    )
     slug = models.SlugField(
         unique=True, verbose_name='slug'
     )

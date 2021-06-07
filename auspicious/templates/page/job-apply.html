@@ -44,7 +44,7 @@
                     {% include 'page/snippets/form.html' %}
                 </div>
                 <!-- /.card-body -->
-
+                <input type="hidden" name="next" value="{{ request.path }}">
                 <div class="card-footer text-center">
                     <button type="submit" class="btn btn-lg btn-primary m-4">
                         Apply
