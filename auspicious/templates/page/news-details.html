@@ -147,7 +147,8 @@
 
 
                             </div>
-                                {% for reply in reply_qs %}
+                                {% for reply in comment.comment_reply.all %}
+
 
                                 <div class="single-comment-wrapper single-comment-ml aos-init" data-aos="fade-up" data-aos-delay="600">
                                     <div class="blog-comment-img">
@@ -157,13 +158,13 @@
                                         <div class="comment-info-reply-wrap">
                                             <div class="comment-info">
                                                 <span>{{ reply.created_at }}</span>
-                                                <h4>DX Joxova</h4>
+                                                <h4>{{ reply.replied_by }}</h4>
                                             </div>
                                             <div class="comment-reply">
                                                 <a href="#">Reply</a>
                                             </div>
                                         </div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodl tempor incididunt ut labore et dolore </p>
+                                        <p>{{ reply.reply }} </p>
                                     </div>
                                 </div> <br>
                                 {% endfor %}
