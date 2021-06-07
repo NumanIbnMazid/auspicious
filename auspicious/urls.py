@@ -5,11 +5,11 @@ from django.conf.urls.static import static
 from . import views
 
 # Import Views
-from .views import  AboutView, \
-    CivilServicesView, TelecomServicesView, ClientView, NewsView,\
-    NewsDetailsView, JobApplyCreateView, JobApplyUpdateView
-    CivilServicesView, TelecomServicesView, ClientView,\
-    NewsDetailsView, JobApplyCreateView
+from .views import  (AboutView,
+    CivilServicesView, TelecomServicesView, ClientView,
+    NewsDetailsView, JobApplyCreateView, JobApplyUpdateView,
+    CivilServicesView, TelecomServicesView, ClientView,
+    NewsDetailsView, JobApplyCreateView)
 
 urlpatterns = [
     # path("", HomeView.as_view(), name="home"),
