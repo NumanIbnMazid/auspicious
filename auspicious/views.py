@@ -15,7 +15,9 @@ from django.utils.decorators import method_decorator
 from util.helpers import (
     validate_normal_form, get_simple_context_data, get_simple_object, delete_simple_object, user_has_permission
 )
+
 from django.views.decorators.clickjacking import xframe_options_exempt
+
 
 # class HomeView(request):
 #     project_category_qs = ProjectCategory.objects.all()
@@ -32,7 +34,7 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 # # -------------------------------------------------------------------
 
 
-# @xframe_options_exempt
+@xframe_options_exempt
 def home(request):
     today = timezone.datetime.now()
     datetime_today = datetime.strptime(
