@@ -23,6 +23,11 @@ from django.utils.decorators import method_decorator
 #     return render(request, 'index.html', contex)
 #
 
+# # -------------------------------------------------------------------
+# #                              Home
+# # -------------------------------------------------------------------
+
+
 def home(request):
     today = timezone.datetime.now()
     datetime_today = datetime.strptime(
@@ -47,12 +52,19 @@ def home(request):
     return render(request, 'index.html', context)
 #
 
+# # -------------------------------------------------------------------
+# #                               About
+# # -------------------------------------------------------------------
 
 class AboutView(TemplateView):
     template_name = 'page/about.html'
 
 # class CivilProjectView(TemplateView):
 #     template_name = 'page/civil-project.html'
+
+# # -------------------------------------------------------------------
+# #                               Civil  Project
+# # -------------------------------------------------------------------
 
 def civilproject(request):
     today = timezone.datetime.now()
@@ -67,6 +79,11 @@ def civilproject(request):
 # class TelecomProjectView(TemplateView):
 #     template_name = 'page/telecom-project.html'
 
+# # -------------------------------------------------------------------
+# #                               Telecom Project
+# # -------------------------------------------------------------------
+
+
 def telecomproject(request):
     today = timezone.datetime.now()
     datetime_today = datetime.strptime(
@@ -77,14 +94,26 @@ def telecomproject(request):
     context ={'ongoing_project_lists':ongoing_project_lists,'completed_project_lists':completed_project_lists}
     return render(request, 'page/telecom-project.html', context)
 
+# # -------------------------------------------------------------------
+# #                              Civil Services
+# # -------------------------------------------------------------------
+
 class CivilServicesView(TemplateView):
     template_name = 'page/civil-service.html'
+
+# # -------------------------------------------------------------------
+# #                               Telecom Services
+# # -------------------------------------------------------------------
 
 class TelecomServicesView(TemplateView):
     template_name = 'page/telecom-service.html'
 
 # class CareerView(TemplateView):
 #     template_name = 'page/career.html'
+
+# # -------------------------------------------------------------------
+# #                               Career
+# # -------------------------------------------------------------------
 
 def career(request):
     last_job_qs = Job.objects.all().last()
@@ -96,17 +125,37 @@ def career(request):
                'job_position_qs':job_position_qs}
     return render(request, "page/career.html", context)
 
+# # -------------------------------------------------------------------
+# #                              Client  Details
+# # -------------------------------------------------------------------
+
 class ClientView(TemplateView):
     template_name = 'page/client.html'
+
+# # -------------------------------------------------------------------
+# #                              News
+# # -------------------------------------------------------------------
 
 class NewsView(TemplateView):
     template_name = 'page/news.html'
 
+# # -------------------------------------------------------------------
+# #                               Contact
+# # -------------------------------------------------------------------
+
 class ContactView(TemplateView):
     template_name = 'page/contact.html'
 
+# # -------------------------------------------------------------------
+# #                               News Details
+# # -------------------------------------------------------------------
+
 class NewsDetailsView(TemplateView):
     template_name = 'page/news-details.html'
+
+# # -------------------------------------------------------------------
+# #                               Job Details
+# # -------------------------------------------------------------------
 
 def job_details(request, slug):
     job_qs = Job.objects.filter(slug = slug, is_active = 'True').first()
@@ -116,11 +165,19 @@ def job_details(request, slug):
               'contact_qs':contact_qs}
     return render(request, "page/job-page.html", context)
 
+# # -------------------------------------------------------------------
+# #                              All Job Lists
+# # -------------------------------------------------------------------
+
 def all_job_lists(request):
     last_job_qs = Job.objects.all().last()
     job_lists = Job.objects.filter(is_active = 'True').order_by("id")
     context = {'last_job_qs':last_job_qs,'job_lists': job_lists}
     return render(request, "page/all-jobs.html", context)
+
+# # -------------------------------------------------------------------
+# #                              Filtered Job
+# # -------------------------------------------------------------------
 
 def filtered_job_lists(request, slug):
     job_qs = Job.objects.filter(
