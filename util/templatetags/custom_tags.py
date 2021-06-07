@@ -4,6 +4,7 @@ from middlewares.middlewares import RequestMiddleware
 from django.contrib.auth.models import User
 import json
 import re
+from dashboard.models import Job, Career
 
 
 register = template.Library()
@@ -95,3 +96,21 @@ def remove_html_tags(text):
             out = out + c
 
     return out
+
+
+@register.simple_tag(takes_context=True)
+def check_if_applied_for_the_job(context, job_slug):
+    print("********** job_slug **********", job_slug)
+    request = context['request']
+    career_qs = Career.objects.filter(
+        job__slug=job_slug, user_id=request.user.id
+    )
+    print("********** career_qs **********", career_qs)
+    if career_qs.exists():
+        return True
+    return False
+
+# @register.filter
+# def check_if_applied_for_the_job(job_slug):
+#     print("********** job_slug **********", job_slug)
+#     return False

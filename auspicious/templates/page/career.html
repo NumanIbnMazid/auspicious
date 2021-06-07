@@ -1,5 +1,5 @@
 {% load static %}
-{% load custom_tags %}{% load custom_tags %}
+{% load custom_tags %}
 
 <!doctype html>
 <html lang="en">
@@ -95,7 +95,11 @@
                                 <img src="{% static 'assets/landing/assets/img/job-list-logo-04.png' %}" alt="">
                             </div>
                             <div class="listing-title">
-                                <h4>{{ job.job_position }}<span class="listing-type">{{ job.job_type }}</span></h4>
+                                {% check_if_applied_for_the_job last_job_qs.slug as check_if_applied_for_the_job %}
+                                <label></label>
+                                <h4>{{ job.job_position }}
+                                    <span class="listing-type">{{ job.job_type }}</span>
+                                </h4>
                                 <ul class="listing-icons">
                                     <li><i class="ln ln-icon-Management"></i> {{ job.description|remove_html_tags|truncatechars_html:20}}</li>
 
