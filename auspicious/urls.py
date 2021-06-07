@@ -8,6 +8,8 @@ from . import views
 from .views import  AboutView, \
     CivilServicesView, TelecomServicesView, ClientView, NewsView,\
     NewsDetailsView, JobApplyCreateView, JobApplyUpdateView
+    CivilServicesView, TelecomServicesView, ClientView,\
+    NewsDetailsView, JobApplyCreateView
 
 urlpatterns = [
     # path("", HomeView.as_view(), name="home"),
@@ -24,7 +26,8 @@ urlpatterns = [
     path("jobs/<slug>/", views.filtered_job_lists, name="filtered_job_lists"),
     path("job-details/<slug>/", views.job_details, name="job_details"),
     path("sister & client/", ClientView.as_view(), name="client"),
-    path("news/", NewsView.as_view(), name="news"),
+    # path("news/", NewsView.as_view(), name="news"),
+    path("news/", views.news, name="news"),
     # path("contact/", ContactView.as_view(), name="contact"),
     path("contact/", views.contact, name="contact"),
     path("news-details/", NewsDetailsView.as_view(), name="news_details"),
