@@ -143,8 +143,13 @@ class NewsView(TemplateView):
 # #                               Contact
 # # -------------------------------------------------------------------
 
-class ContactView(TemplateView):
-    template_name = 'page/contact.html'
+# class ContactView(TemplateView):
+#     template_name = 'page/contact.html'
+
+def contact(request):
+    contact_qs = Contact.objects.all().last()
+    context ={'contact_qs':contact_qs}
+    return render(request, 'page/contact.html', context)
 
 # # -------------------------------------------------------------------
 # #                               News Details
