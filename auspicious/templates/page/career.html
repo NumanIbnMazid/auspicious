@@ -3,9 +3,11 @@
 
 <!doctype html>
 <html lang="en">
+
 <head>
     {% include "components/styles.html" %}
 </head>
+
 <body>
 
 
@@ -14,14 +16,16 @@
 
 
     <!-- Breadcrumbs -->
-    <section class="breadcrumbs" style="background-image:url({% static 'assets/landing/assets/img/breadcrumbs-bg.jpg' %})">
+    <section class="breadcrumbs"
+        style="background-image:url({% static 'assets/landing/assets/img/breadcrumbs-bg.jpg' %})">
         <div class="container">
             <div class="row">
                 <!-- Breadcrumbs-Content -->
                 <div class="col-lg-7 col-md-7 col-12">
                     <div class="breadcrumbs-content">
                         <h2>Career</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.</p>
                     </div>
                 </div>
                 <!-- Breadcrumbs-Menu -->
@@ -62,12 +66,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                     <div class="row">
-                    <h3 class="col-6">Recent Jobs</h3>
-                    <h4 class="col-6" style="text-align:right; ">
-                        <a href="{% url 'all_job_lists' %}" style="color:#8a8888">View All</a>
-                    </h4>
-                     </div>
+                    <div class="row">
+                        <h3 class="col-6">Recent Jobs</h3>
+                        <h4 class="col-6" style="text-align:right; ">
+                            <a href="{% url 'all_job_lists' %}" style="color:#8a8888">View All</a>
+                        </h4>
+                    </div>
                     <div class="listings-container">
 
                         <!-- Listing -->
@@ -76,9 +80,24 @@
                                 <img src="{% static 'assets/landing/assets/img/job-list-logo-04.png' %}" alt="">
                             </div>
                             <div class="listing-title">
-                                <h4>{{ last_job_qs.job_position }}<span class="listing-type">{{ last_job_qs.job_type }}</span></h4>
+                                <h4>
+                                    {{ last_job_qs.job_position }}
+
+                                    <span class="">
+                                        {% check_if_applied_for_the_job last_job_qs.slug as check_if_applied_for_the_job %}
+                                        {% if check_if_applied_for_the_job == True %}
+                                        <span class="badge badge-success text-dark font-15">
+                                            <i class="fa fa-check-square-o text-success" aria-hidden="true"></i>
+                                            Already Applied
+                                        </span>
+                                        {% endif %}
+                                    </span>
+
+                                    <span class="listing-type">{{ last_job_qs.job_type }}</span>
+                                </h4>
                                 <ul class="listing-icons">
-                                    <li><i class="ln ln-icon-Management"></i> {{ last_job_qs.description|remove_html_tags|truncatechars_html:40}}</li>
+                                    <li><i class="ln ln-icon-Management"></i>
+                                        {{ last_job_qs.description|remove_html_tags|truncatechars_html:40}}</li>
                                     <li><i class="ln ln-icon-Management"></i> {{ last_job_qs.salary}}</li>
                                     <li><i class="ln ln-icon-Management"></i> {{ last_job_qs.hours}}</li>
                                     <li>
@@ -95,14 +114,26 @@
                                 <img src="{% static 'assets/landing/assets/img/job-list-logo-04.png' %}" alt="">
                             </div>
                             <div class="listing-title">
-                                {% check_if_applied_for_the_job last_job_qs.slug as check_if_applied_for_the_job %}
-                                <label></label>
-                                <h4>{{ job.job_position }}
-                                    <span class="listing-type">{{ job.job_type }}</span>
+                                <h4>
+                                    {{ job.job_position }}
+
+                                    <span class="">
+                                        {% check_if_applied_for_the_job job.slug as check_if_applied_for_the_job %}
+                                        {% if check_if_applied_for_the_job == True %}
+                                        <span class="badge badge-success text-dark font-15">
+                                            <i class="fa fa-check-square-o text-success" aria-hidden="true"></i>
+                                            Already Applied
+                                        </span>
+                                        {% endif %}
+                                    </span>
+
+                                    <span class="listing-type">
+                                        {{ job.job_type }}
+                                    </span>
                                 </h4>
                                 <ul class="listing-icons">
-                                    <li><i class="ln ln-icon-Management"></i> {{ job.description|remove_html_tags|truncatechars_html:20}}</li>
-
+                                    <li><i class="ln ln-icon-Management"></i>
+                                        {{ job.description|remove_html_tags|truncatechars_html:20}}</li>
                                 </ul>
                             </div>
                         </a>
@@ -120,4 +151,5 @@
     {% block additional_js %}{% endblock %}
 
 </body>
+
 </html>

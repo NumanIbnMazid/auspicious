@@ -215,26 +215,17 @@ class JobApplyCreateView(CreateView):
                 self.request, messages.SUCCESS, "Applied successfully!"
             )
             return super().form_valid(form)
-
-            # form.add_error(
-            #     f'{finalized_field_name}', forms.ValidationError(
-            #         f"You already have a pending post similar to this. Please update that post if you need any changes. click <a href='{donation_qs_url}'>here</a> to view the post."
-            #     )
-            # )
         messages.add_message(
             self.request, messages.ERROR, "Failed to apply!"
         )
         return super().form_invalid(form)
 
     def get_success_url(self):
-        return reverse('home')
+        return self.request.POST.get('next', reverse('home'))
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(
-    #         ProjectCategoryCreateView, self
-    #     ).get_context_data(**kwargs)
-    #     context['page_title'] = 'Create Project Category'
-    #     context['page_short_title'] = 'Create Project Category'
-    #     for key, value in get_project_category_common_contexts(request=self.request).items():
-    #         context[key] = value
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super(
+            JobApplyCreateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = 'Create Project Category'
+        return context
