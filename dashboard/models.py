@@ -265,6 +265,9 @@ class Client(models.Model):
     category = models.CharField(
         max_length=50, choices=ClientCategory.choices, default=None, verbose_name="category"
     )
+    url = models.URLField(
+        blank=True, null=True, verbose_name="url"
+    )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name='created at'
     )
