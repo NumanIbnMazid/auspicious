@@ -136,9 +136,19 @@ def career(request):
 # #                              Client  Details
 # # -------------------------------------------------------------------
 
-class ClientView(TemplateView):
-    template_name = 'page/client.html'
-
+# class ClientView(TemplateView):
+#     template_name = 'page/client.html'
+def client(request):
+    sister_client_lists = Client.objects.filter(category = 'Sister Concern')
+    enlistment_client_lists = Client.objects.filter(category = 'Enlistment')
+    local_client_representative_lists = Client.objects.filter(category = 'Local Representative')
+    civil_client_lists = Client.objects.filter(category = 'Civil')
+    telecom_client_lists = Client.objects.filter(category = 'Telecom')
+    context = {'sister_client_lists':sister_client_lists,
+               'enlistment_client_lists':enlistment_client_lists,
+               'local_client_representative_lists':local_client_representative_lists,
+               'civil_client_lists':civil_client_lists,'telecom_client_lists':telecom_client_lists}
+    return render(request, 'page/client.html', context)
 # # -------------------------------------------------------------------
 # #                              News
 # # -------------------------------------------------------------------
@@ -170,14 +180,38 @@ def contact(request):
 def news_details(request, slug):
     news_qs = News.objects.filter(slug = slug).first()
     comment_qs = Comment.objects.filter(news = news_qs)
-    # for i in comment_qs:
+    news_category_lists = NewsCategory.objects.all().order_by('-id')
     reply_qs = CommentReply.objects.filter(comment = comment_qs.first())
-        # print(reply_qs)
+    last_three_job_lists = News.objects.all().exclude(slug = slug).order_by('-id')[0:3]
+
+    pre_news = News.objects.filter(
+        id__lt=news_qs.id
+    ).first()
+    next_news = News.objects.filter(
+        id__gt=news_qs.id
+    ).first()
 
     context ={'news_qs':news_qs,'comment_qs':comment_qs,
               'total_comment':comment_qs.count(),
-              'reply_qs':reply_qs}
+              'reply_qs':reply_qs,'news_category_lists':news_category_lists,
+              'last_three_job_lists':last_three_job_lists,
+              'pre_news':pre_news,'next_news':next_news}
     return render(request, "page/news-details.html", context)
+
+
+# # -------------------------------------------------------------------
+# #                              Filtered News
+# # -------------------------------------------------------------------
+
+def filtered_news_lists(request, slug):
+    news_qs = News.objects.filter(
+        news__slug__iexact=slug
+    )
+    context = {
+        'news_qs':news_qs,
+        'filtered_job_title': news_qs.first().news_category.title if len(news_qs) > 0 else ""
+    }
+    return render(request, "page/news.html", context)
 
 # # -------------------------------------------------------------------
 # #                               Job Details

@@ -6,9 +6,9 @@ from . import views
 
 # Import Views
 from .views import  (AboutView,
-    CivilServicesView, TelecomServicesView, ClientView,
+    CivilServicesView, TelecomServicesView,
      JobApplyCreateView, JobApplyUpdateView,
-    CivilServicesView, TelecomServicesView, ClientView,
+    CivilServicesView, TelecomServicesView,
      JobApplyCreateView)
 
 urlpatterns = [
@@ -25,9 +25,11 @@ urlpatterns = [
     path("all-job-list/", views.all_job_lists, name="all_job_lists"),
     path("jobs/<slug>/", views.filtered_job_lists, name="filtered_job_lists"),
     path("job-details/<slug>/", views.job_details, name="job_details"),
-    path("sister & client/", ClientView.as_view(), name="client"),
+    # path("sister & client/", ClientView.as_view(), name="client"),
+    path("sister & client/",views.client, name="client"),
     # path("news/", NewsView.as_view(), name="news"),
     path("news/", views.news, name="news"),
+    # path("news/<slug>/", views.filtered_news_lists, name="filtered_news_lists"),
     # path("contact/", ContactView.as_view(), name="contact"),
     path("contact/", views.contact, name="contact"),
     path("news-details/<str:slug>/", views.news_details, name="news_details"),
