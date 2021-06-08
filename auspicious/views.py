@@ -136,9 +136,19 @@ def career(request):
 # #                              Client  Details
 # # -------------------------------------------------------------------
 
-class ClientView(TemplateView):
-    template_name = 'page/client.html'
-
+# class ClientView(TemplateView):
+#     template_name = 'page/client.html'
+def client(request):
+    sister_client_lists = Client.objects.filter(category = 'Sister Concern')
+    enlistment_client_lists = Client.objects.filter(category = 'Enlistment')
+    local_client_representative_lists = Client.objects.filter(category = 'Local Representative')
+    civil_client_lists = Client.objects.filter(category = 'Civil')
+    telecom_client_lists = Client.objects.filter(category = 'Telecom')
+    context = {'sister_client_lists':sister_client_lists,
+               'enlistment_client_lists':enlistment_client_lists,
+               'local_client_representative_lists':local_client_representative_lists,
+               'civil_client_lists':civil_client_lists,'telecom_client_lists':telecom_client_lists}
+    return render(request, 'page/client.html', context)
 # # -------------------------------------------------------------------
 # #                              News
 # # -------------------------------------------------------------------
