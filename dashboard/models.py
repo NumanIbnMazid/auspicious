@@ -110,6 +110,11 @@ class NewsCategory(models.Model):
     def get_fields(self):
         return [get_dynamic_fields(field, self) for field in self.__class__._meta.fields]
 
+    def get_news_count(self):
+        return len(News.objects.filter(
+            category__id=self.id
+        ))
+
 
 # # -------------------------------------------------------------------
 # #                           News
@@ -558,6 +563,15 @@ def news_slug_pre_save_receiver(sender, instance, *args, **kwargs):
         title = slugify(instance.title.lower()[:17])
         slug_binding = title + '-' + time_str_mix_slug()
         instance.slug = slug_binding
+        # save created by
+        try:
+            request = RequestMiddleware(get_response=None)
+            request = request.thread_local.current_request
+            instance.created_by = request.user
+        except Exception as E:
+            raise (
+                f"Failed to save user instance! [{str(E)}]"
+            )
 
 
 pre_save.connect(news_slug_pre_save_receiver, sender=News)
