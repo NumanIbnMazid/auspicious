@@ -284,7 +284,11 @@ class ClientManageForm(forms.ModelForm):
         super(ClientManageForm, self).__init__(*args, **kwargs)
 
         self.fields['name'].widget.attrs.update({
-            'placeholder': 'Enter News Client Name...',
+            'placeholder': 'Enter  Client Name...',
+            'maxlength': 100
+        })
+        self.fields['url'].widget.attrs.update({
+            'placeholder': 'Enter Client Url...',
             'maxlength': 100
         })
 
@@ -292,7 +296,7 @@ class ClientManageForm(forms.ModelForm):
     class Meta:
         model = Client
         fields = [
-            "name", "category",  "logo"
+            "name","url", "category",  "logo"
         ]
 
 

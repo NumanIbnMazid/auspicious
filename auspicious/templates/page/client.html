@@ -44,8 +44,10 @@
                 {% for sister_client in sister_client_lists %}
                 <div class="col-md-3 col-6">
                     <div class="sister-item">
-                        <img src="{{ sister_client.logo.url }}" class="img-fluid" alt="">
-                        <p>{{ sister_client.name }}</p>
+                        <a href="{{ sister_client.url }}">
+                            <img src="{{ sister_client.logo.url }}" class="img-fluid" alt="">
+                            <p>{{ sister_client.name }}</p>
+                        </a>
                     </div>
                 </div>
                 {% endfor %}
@@ -53,11 +55,13 @@
             </div>
             <h3 class="text-center text-uppercase fw-bold py-4"><span>Auspicious</span> Enlistment at</h3>
             <div class="row">
-                {% for enlistment in enlistment_client_lists %}
+                {% for enlistment_client in enlistment_client_lists %}
                 <div class="col-md-4 col-6">
                     <div class="sister-item">
-                        <img src="{{ enlistment.logo.url }}" class="img-fluid" alt="">
-                        <p>{{ enlistment.title }}</p>
+                        <a href="{{ enlistment_client.url }}">
+                            <img src="{{ enlistment_client.logo.url }}" class="img-fluid" alt="">
+                            <p>{{ enlistment_client.title }}</p>
+                        </a>
                     </div>
                 </div>
                 {% endfor %}
@@ -65,11 +69,13 @@
             </div>
             <h3 class="text-center text-uppercase fw-bold py-4">We are <span>Local Representative</span> of</h3>
             <div class="row">
-                {% for enlistment in local_client_representative_lists %}
+                {% for local_client_representative in local_client_representative_lists %}
                 <div class="col-md-4 col-6">
                     <div class="sister-item">
-                        <img src="{{ enlistment.logo.url }}" class="img-fluid" alt="">
-                        <p>{{ enlistment.title }}</p>
+                        <a href="{{ local_client_representative.url }}">
+                            <img src="{{ local_client_representative.logo.url }}" class="img-fluid" alt="">
+                            <p>{{ local_client_representative.title }}</p>
+                        </a>
                     </div>
                 </div>
                 {% endfor %}
@@ -77,22 +83,26 @@
 
             <h3 class="text-center text-uppercase fw-bold py-4">Our<span> Civil</span> Clients</h3>
             <div class="row">
-                {% for enlistment in civil_client_lists %}
+                {% for civil_client in civil_client_lists %}
                 <div class="col-md-4 col-6">
                     <div class="sister-item">
-                        <img src="{{ enlistment.logo.url }}" class="img-fluid" alt="">
-                        <p>{{ enlistment.title }}</p>
+                        <a href="{{ civil_client.url }}">
+                            <img src="{{ civil_client.logo.url }}" class="img-fluid" alt="">
+                            <p>{{ civil_client.title }}</p>
+                        </a>
                     </div>
                 </div>
                 {% endfor %}
             </div>
             <h3 class="text-center text-uppercase fw-bold py-4">Our <span>Telecom</span> Clients</h3>
             <div class="row">
-                {% for enlistment in telecom_client_lists %}
+                {% for telecom_client in telecom_client_lists %}
                 <div class="col-md-4 col-6">
                     <div class="sister-item">
-                        <img src="{{ enlistment.logo.url }}" class="img-fluid" alt="">
-                        <p>{{ enlistment.title }}</p>
+                        <a href="{{ telecom_client.url }}">
+                            <img src="{{ telecom_client.logo.url }}" class="img-fluid" alt="">
+                            <p>{{ telecom_client.title }}</p>
+                        </a>
                     </div>
                 </div>
                 {% endfor %}
