@@ -170,7 +170,9 @@ def contact(request):
 def news_details(request, slug):
     news_qs = News.objects.filter(slug = slug).first()
     comment_qs = Comment.objects.filter(news = news_qs)
+    # for i in comment_qs:
     reply_qs = CommentReply.objects.filter(comment = comment_qs.first())
+        # print(reply_qs)
 
     context ={'news_qs':news_qs,'comment_qs':comment_qs,
               'total_comment':comment_qs.count(),
