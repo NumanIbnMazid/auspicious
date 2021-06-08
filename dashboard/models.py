@@ -427,7 +427,7 @@ class Career(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="career_user", verbose_name="user"
     )
     job = models.ForeignKey(
-        Job, on_delete=models.CASCADE, related_name="career_job", verbose_name="job"
+        Job, blank=True, null=True, on_delete=models.CASCADE, related_name="career_job", verbose_name="job"
     )
     file = models.FileField(
         verbose_name="file"
