@@ -89,9 +89,6 @@ class NewsCategory(models.Model):
     title = models.CharField(
         max_length=100, verbose_name="title"
     )
-    slug = models.SlugField(
-        unique=True, verbose_name='slug'
-    )
     image = models.ImageField(
         blank=True, null=True, verbose_name="image"
     )
@@ -562,17 +559,6 @@ def project_slug_pre_save_receiver(sender, instance, *args, **kwargs):
 
 pre_save.connect(project_slug_pre_save_receiver, sender=Project)
 
-# # NewsCategory
-
-def news_category_slug_pre_save_receiver(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        title = slugify(instance.title.lower()[:17])
-        slug_binding = title + '-' + time_str_mix_slug()
-        instance.slug = slug_binding
-
-
-pre_save.connect(news_category_slug_pre_save_receiver, sender=NewsCategory)
-
 # # News
 
 def news_slug_pre_save_receiver(sender, instance, *args, **kwargs):
@@ -636,3 +622,5 @@ def job_slug_pre_save_receiver(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(job_slug_pre_save_receiver, sender=Job)
+
+
