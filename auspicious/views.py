@@ -203,13 +203,13 @@ def news_details(request, slug):
 # #                              Filtered News
 # # -------------------------------------------------------------------
 
-def filtered_news_lists(request, slug):
+def filtered_news_lists(request, title):
     news_qs = News.objects.filter(
-        news__slug__iexact=slug
+        category__title__iexact=title
     )
     context = {
         'news_qs':news_qs,
-        'filtered_job_title': news_qs.first().news_category.title if len(news_qs) > 0 else ""
+        # 'filtered_job_title': news_qs.first().news_category.title if len(news_qs) > 0 else ""
     }
     return render(request, "page/news.html", context)
 
