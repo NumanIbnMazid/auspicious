@@ -9,13 +9,15 @@ from .views import  (AboutView,
     CivilServicesView, TelecomServicesView,
      JobApplyCreateView, JobApplyUpdateView,
     CivilServicesView, TelecomServicesView,
-     JobApplyCreateView)
+     JobApplyCreateView,CvDropCreateView,CvDropUpdateView)
 
 urlpatterns = [
     # path("", HomeView.as_view(), name="home"),
     path("", views.home, name="home"),
     path("apply/job/<slug>/", JobApplyCreateView.as_view(), name="job_apply"),
+    path("cv-drop/", CvDropCreateView.as_view(), name="cv_drop"),
     path("apply/job/<slug>/update/", JobApplyUpdateView.as_view(), name="job_apply_update"),
+    path("cv-drop/<user>/update/", CvDropUpdateView.as_view(), name="cv_drop_update"),
     path("about/", AboutView.as_view(), name="about"),
     path("civil-project/", views.civilproject, name="civil_project"),
     path("telecom-project/", views.telecomproject, name="telecom_project"),
@@ -29,7 +31,7 @@ urlpatterns = [
     path("sister & client/",views.client, name="client"),
     # path("news/", NewsView.as_view(), name="news"),
     path("news/", views.news, name="news"),
-    path("news/<title>/", views.filtered_news_lists, name="filtered_news_lists"),
+    path("news-category/<str:slug>/", views.filtered_news_lists, name="filtered_news_lists"),
     # path("contact/", ContactView.as_view(), name="contact"),
     path("contact/", views.contact, name="contact"),
     path("news-details/<str:slug>/", views.news_details, name="news_details"),

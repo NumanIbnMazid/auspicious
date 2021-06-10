@@ -243,7 +243,7 @@
                             <div class="sidebar-list-style-2">
                                 <ul>
                                     {% for news_category in news_category_lists %}
-                                    <li><a href="">{{ news_category.title }} ({{ news_category.get_news_count }})</a></li>
+                                    <li><a href="{% url 'filtered_news_lists' news_category.slug %}">{{ news_category.title }} ({{ news_category.get_news_count }})</a></li>
                                     {% endfor %}
 
                                 </ul>

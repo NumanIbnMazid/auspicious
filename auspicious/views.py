@@ -128,8 +128,9 @@ def career(request):
     # job_count = Job.objects.filter(job_position =job_position_qs).count()
     # print(job_count)
     job_lists = Job.objects.filter(is_active = 'True').order_by("id")[1:5]
+    career_qs = Career.objects.all()
     context = {'last_job_qs':last_job_qs,'job_lists': job_lists,
-               'job_position_qs':job_position_qs}
+               'job_position_qs':job_position_qs,'career_qs':career_qs}
     return render(request, "page/career.html", context)
 
 # # -------News(------------------------------------------------------------
@@ -203,13 +204,13 @@ def news_details(request, slug):
 # #                              Filtered News
 # # -------------------------------------------------------------------
 
-def filtered_news_lists(request, title):
+def filtered_news_lists(request, slug):
     news_qs = News.objects.filter(
-        category__title__iexact=title
+        category__slug__iexact=slug
     )
     context = {
         'news_qs':news_qs,
-        # 'filtered_job_title': news_qs.first().news_category.title if len(news_qs) > 0 else ""
+        'filtered_news_title': news_qs.first().category.title if len(news_qs) > 0 else ""
     }
     return render(request, "page/news.html", context)
 
@@ -351,4 +352,109 @@ class JobApplyUpdateView(UpdateView):
             context['job'] = qs.last()
         else:
             context['job'] = None
+        return context
+
+
+
+# # -------------------------------------------------------------------
+# #                              CV Drop
+# # -------------------------------------------------------------------
+
+@method_decorator(login_required, name='dispatch')
+class CvDropCreateView(CreateView):
+    template_name = "page/job-apply.html"
+    form_class = CareerManageForm
+
+    def form_valid(self, form, **kwargs):
+        # slug = self.kwargs['slug']
+        # job_qs = Job.objects.filter(slug=slug)
+        # if job_qs.exists():
+
+        qs = Career.objects.filter(
+            user=self.request.user
+        )
+        if not qs.exists():
+            form.instance.user = self.request.user
+            # form.instance.job = job_qs.last()
+            messages.add_message(
+                self.request, messages.SUCCESS, "Applied successfully!"
+            )
+            return super().form_valid(form)
+        else:
+            form.add_error(
+                None, forms.ValidationError(
+                    "You already applied for this job! Please update the application if required!"
+                )
+            )
+        messages.add_message(
+            self.request, messages.ERROR, "Failed to apply!"
+        )
+        return super().form_invalid(form)
+
+    def dispatch(self, request, *args, **kwargs):
+        # slug = self.kwargs['slug']
+        qs = Career.objects.filter(
+            user=self.request.user
+        )
+        if qs.exists():
+            messages.add_message(
+                self.request, messages.WARNING, "Already Applied!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(CvDropCreateView, self).dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return self.request.POST.get('next', reverse('home'))
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            CvDropCreateView, self
+        ).get_context_data(**kwargs)
+        # qs = Job.objects.filter(slug=self.kwargs['slug'])
+        # if qs.exists():
+        #     context['job'] = qs.last()
+        # else:
+        #     context['job'] = None
+        return context
+
+@method_decorator(login_required, name='dispatch')
+class CvDropUpdateView(UpdateView):
+    template_name = "page/job-apply.html"
+    form_class = CareerManageForm
+
+    def get_object(self):
+        qs = Career.objects.filter(
+             user=self.request.user
+        )
+        if qs.exists():
+            return qs.last()
+        return None
+
+    def form_valid(self, form, **kwargs):
+        # slug = self.kwargs['slug']
+        career_qs = Career.objects.filter(user=self.request.user)
+        if career_qs.exists():
+            # form.instance.user = self.request.user
+            form.instance.user = career_qs.last()
+            messages.add_message(
+                self.request, messages.SUCCESS, "Application Updated successfully!"
+            )
+            return super().form_valid(form)
+        messages.add_message(
+            self.request, messages.ERROR, "Failed to update application!"
+        )
+        return super().form_invalid(form)
+
+    def get_success_url(self):
+        return self.request.POST.get('next', reverse('home'))
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            CvDropUpdateView, self
+        ).get_context_data(**kwargs)
+        # qs = Job.objects.filter(slug=self.kwargs['slug'])
+        # if qs.exists():
+        #     context['job'] = qs.last()
+        # else:
+        #     context['job'] = None
         return context
