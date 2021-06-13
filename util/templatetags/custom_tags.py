@@ -108,6 +108,17 @@ def check_if_applied_for_the_job(context, job_slug):
         return True
     return False
 
+@register.simple_tag(takes_context=True)
+def check_if_applied_for_the_cv(context):
+    request = context['request']
+    career_qs = Career.objects.filter(
+        user_id=request.user.id
+    )
+
+    if career_qs.exists():
+        return True
+    return False
+
 # @register.filter
 # def check_if_applied_for_the_job(job_slug):
 #     print("********** job_slug **********", job_slug)

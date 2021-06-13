@@ -129,8 +129,11 @@ def career(request):
     # print(job_count)
     job_lists = Job.objects.filter(is_active = 'True').order_by("id")[1:5]
     career_qs = Career.objects.all()
+    user = request.user
+    
     context = {'last_job_qs':last_job_qs,'job_lists': job_lists,
-               'job_position_qs':job_position_qs,'career_qs':career_qs}
+               'job_position_qs':job_position_qs,'career_qs':career_qs,
+               'user':user}
     return render(request, "page/career.html", context)
 
 # # -------News(------------------------------------------------------------
@@ -430,7 +433,7 @@ class CvDropUpdateView(UpdateView):
 
     def get_object(self):
         qs = Career.objects.filter(
-             user=self.request.user
+            user=self.request.user
         )
         if qs.exists():
             return qs.last()
@@ -438,10 +441,10 @@ class CvDropUpdateView(UpdateView):
 
     def form_valid(self, form, **kwargs):
         # slug = self.kwargs['slug']
-        career_qs = Career.objects.filter(user=self.request.user)
+        career_qs = Career.objects.filter(user = self.request.user)
         if career_qs.exists():
-            # form.instance.user = self.request.user
-            form.instance.user = career_qs.last()
+            form.instance.user = self.request.user
+            form.instance = career_qs.last()
             messages.add_message(
                 self.request, messages.SUCCESS, "Application Updated successfully!"
             )
@@ -458,10 +461,9 @@ class CvDropUpdateView(UpdateView):
         context = super(
             CvDropUpdateView, self
         ).get_context_data(**kwargs)
-        # qs = Job.objects.filter(slug=self.kwargs['slug'])
+        # qs = Career.objects.filter(user = self.request.user)
         # if qs.exists():
-        #     context['job'] = qs.last()
+        #     context['user'] = qs.last()
         # else:
-        #     context['job'] = None
+        #     context['user'] = None
         return context
-
