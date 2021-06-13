@@ -126,18 +126,22 @@
                             {% endfor %} -->
 
                             {% for project in ongoing_project_lists %}
+            
                             <div class="col-md-3 col-sm-6 item ongoing">
+                                <a href="{% url 'project_details' slug=project.slug %}"></a>
                                 <div class="product-item">
                                     <img src="{{ project.image.url }}" alt="" class="img-fluid">
                                     <div class="overlay">
                                         <p>{{ project.name }}</p>
                                     </div>
                                     <div class="explore">
-                                        <a href="">Explore</a>
+                                        <a href="{% url 'project_details' slug=project.slug %}">Explore</a>
                                     </div>
                                 </div>
+                            </a>
 
                             </div>
+                        
                             {% endfor %}
 
                             {% for project in latest_project_lists %}
