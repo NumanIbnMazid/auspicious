@@ -9,7 +9,8 @@ from .views import (
     JobPositionUpdateView, JobPositionDetailView, ContactCreateView, ContactUpdateView, ContactDetailView,
     delete_contact, ProjectCategoryCreateView, ProjectCategoryUpdateView, delete_project_category,
     JobCreateView, JobUpdateView, JobDetailView, delete_job,
-    JobApplicationListView, JobApplicationUpdateView, JobApplicationDetailView, delete_job_application
+    JobApplicationListView, JobApplicationUpdateView, JobApplicationDetailView, delete_job_application,
+    update_job_application_status
 )
 
 
@@ -146,5 +147,7 @@ urlpatterns = [
          JobApplicationDetailView.as_view(), name="job_application_detail"),
     path("delete/job-application/", delete_job_application,
          name="delete_job_application"),
+    path("update/job-application/<slug>/status", update_job_application_status,
+         name="update_job_application_status"),
 ]
 

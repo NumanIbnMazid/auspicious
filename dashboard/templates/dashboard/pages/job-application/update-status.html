@@ -1,0 +1,46 @@
+{% extends 'dashboard/base.html' %}
+
+{% load static %}
+
+{% load custom_tags %}
+
+{% block head_title %}
+{% block page_short_title %}
+{% block breadcrumb %}
+{{ page_short_title }}
+{% endblock %}
+{% endblock %}
+{% endblock %}
+{% block page_title %}
+{{ page_title }}
+{% endblock %}
+
+
+{% block content %}
+
+{% if can_change == True %}
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title text-center">
+            <span class="">{{ page_title }}</span>
+        </h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col-12">
+                <h1>Update Application Status</h1>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock %}
+
+{% block additional_js %}
+
+{% endblock %}
