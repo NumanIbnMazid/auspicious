@@ -37,6 +37,9 @@
 
                             {% if not update_url == None or not detail_url == None or not delete_url == None %}
                             <td style="width:14%">
+                                <a href="#" class="btn btn-primary btn-sm text-deco-none">
+                                    Update Status
+                                </a>
                                 <!-- update url -->
                                 {% if not update_url == None and can_add_change == True %}
                                 {% if not object.slug == None %}

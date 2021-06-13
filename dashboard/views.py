@@ -25,6 +25,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, UpdateView, TemplateView, DetailView, ListView
 from django.http import HttpResponse
+from django.core.mail import EmailMultiAlternatives
 
 # # -------------------------------------------------------------------
 # #                             Dashboard
@@ -1111,12 +1112,12 @@ def delete_contact(request):
 
 def get_job_application_common_contexts(request):
     common_contexts = get_simple_context_data(
-        request=request, app_namespace="dashboard", model_namespace="career", model=Career, list_template="dashboard/snippets/list-common.html", fields_to_hide_in_table=["id", "updated_at"]
+        request=request, app_namespace="dashboard", model_namespace="career", model=Career, list_template="dashboard/snippets/list-common.html", fields_to_hide_in_table=["id", "slug", "updated_at"]
     )
     return common_contexts
 
 class JobApplicationListView(ListView):
-    template_name = "dashboard/snippets/list-common.html"
+    template_name = "dashboard/pages/job-application/list.html"
 
     def get_queryset(self):
         qs = Career.objects.filter(
@@ -1207,3 +1208,31 @@ class JobApplicationDetailView(DetailView):
 @csrf_exempt
 def delete_job_application(request):
     return delete_simple_object(request=request, key='slug', model=Career, redirect_url="dashboard:job_application_list")
+
+
+def update_job_application_status(request, slug):
+    job_qs = Career.objects.filter(
+        slug=slug
+    )
+    job = None
+    if job_qs.exists():
+        job = job_qs.last()
+    message = "Simple text Message"
+    mail_subject = "Simple mail subject"
+    mail_from = 'numanworkstation@gmail.com'
+    mail_to = job.user.email
+    mail_text = 'Please do not Reply'
+    html_content = "Hi " + job.user.user_profile.get_smallname() + "!<br>" + message + \
+        "<br>Have a nice day."
+    msg = EmailMultiAlternatives(
+        mail_subject, mail_text, mail_from, [mail_to]
+    )
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
+
+    context = {
+        "can_change": request.user.has_perm(
+            'dashboard.change_career'
+        )
+    }
+    return render(request, "dashboard/pages/job-application/update-status.html", context)
