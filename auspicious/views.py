@@ -47,6 +47,7 @@ def home(request):
     latest_project_lists = Project.objects.filter(developement_end_year__lte = datetime_today.year, created_at__lte = today.date())[:4]
     latest_news_category_lists = NewsCategory.objects.all()
     latest_news_lists = News.objects.all()
+    print(latest_news_lists)
     image_lists = Gallery.objects.all().order_by('?')
     clients_lists =  Client.objects.all().order_by('?')[:10]
     contact_qs = Contact.objects.all().last()

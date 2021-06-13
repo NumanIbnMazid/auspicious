@@ -179,6 +179,7 @@
 
             <!-- News Start -->
             <div class="news-area">
+
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4 col-4">
@@ -188,6 +189,7 @@
                                 <a href="">Explore More</a>
                             </div>
                         </div>
+                        {% if latest_news_lists %}
                         <div class="col-md-8 col-8">
 
                             <div class="news">
@@ -205,9 +207,11 @@
                             </div>
 
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
+
             <!-- News End -->
 
             <!-- swipper gallery example start -->
