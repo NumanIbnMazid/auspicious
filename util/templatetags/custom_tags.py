@@ -109,12 +109,11 @@ def check_if_applied_for_the_job(context, job_slug):
     return False
 
 @register.simple_tag(takes_context=True)
-def check_if_applied_for_the_cv(context):
+def check_if_applied_for_the_cv(context, slug):
     request = context['request']
     career_qs = Career.objects.filter(
-        user_id=request.user.id
+        slug=slug, user_id=request.user.id
     )
-
     if career_qs.exists():
         return True
     return False

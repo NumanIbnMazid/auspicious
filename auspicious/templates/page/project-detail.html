@@ -1,0 +1,158 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    {% include "components/styles.html" %}
+</head>
+<body>
+
+
+    {% include "components/loader.html" %}
+    {% include "components/header.html" %}
+
+
+    <!-- Breadcrumbs -->
+    <section class="breadcrumbs" style="background-image:url('assets/img/breadcrumbs-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <!-- Breadcrumbs-Content -->
+                <div class="col-lg-7 col-md-7 col-12">
+                    <div class="breadcrumbs-content">
+                        <h2>Project Details</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </div>
+                <!-- Breadcrumbs-Menu -->
+                <div class="col-lg-5 col-md-5 col-12">
+                    <div class="breadcrumbs-menu">
+                        <ul>
+                            <li><a href="index.html">Home</a><i class="fa fa-angle-double-right"></i></li>
+                            <li class="active"><a href="project-detail.html">Project Details</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Breadcrumbs -->
+
+    <div class="blog-details-area pt-100 pb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="blog-details-wrapper">
+                        <div class="blog-details-img-date-wrap mb-35 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                            <div class="blog-details-img">
+                                <img src="{{ project_qs.image.url }}" alt="">
+                            </div>
+                            <div class="blog-details-date">
+                                <h5>{{ project_qs.created_at.date.day }}
+                                    <span>{{ project_qs.created_at|date:"M" }}</span></h5>
+                            </div>
+                        </div>
+                        <div class="blog-meta-2 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                            <ul class="non-bullet-list">
+                                <li><a href="#">{{ project_qs.category }}</a>,</li>
+                                <li>By:<a href="#"> Admin</a></li>
+                            </ul>
+                        </div>
+                        <h1 data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">{{ project_qs.name }}</h1>
+                        <p data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">{{ project_qs.scope|safe }}</p>
+
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="sidebar-wrapper blog-sidebar-mt">
+                        <div class="sidebar-widget mb-50 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                            <div class="search-wrap-3">
+                                <form class="search-3-form" action="#">
+                                    <input placeholder="Search*" type="text">
+                                    <button class="button-search"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="sidebar-widget mb-40 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                            <div class="sidebar-widget-title-2 mb-25">
+                                <h3>Categories</h3>
+                            </div>
+                            <div class="sidebar-list-style-2">
+                                <ul>
+                                    {% for project_category in project_category_lists %}
+                                    <li><a href="">{{ project_category }}({{ project_category.get_project_count }})</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="sidebar-widget mb-40 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                            <div class="sidebar-widget-title-2 mb-30">
+                                <h3>Latest Post</h3>
+                            </div>
+                            <div class="latest-post-wrap">
+                                <div class="single-latest-post">
+                                    <div class="latest-post-img">
+                                        <a href="news-details.html"><img src="assets/img/blog/latest-post-1.png" alt=""></a>
+                                    </div>
+                                    <div class="latest-post-content">
+                                        <span>01 May 2021</span>
+                                        <h4><a href="news-details.html">Lorem ipsum dolor sit am conse ctetur adipis</a></h4>
+                                        <div class="latest-post-btn">
+                                            <a href="news-details.html">Continue Reading...</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="single-latest-post">
+                                    <div class="latest-post-img">
+                                        <a href="news-details.html"><img src="assets/img/blog/latest-post-2.png" alt=""></a>
+                                    </div>
+                                    <div class="latest-post-content">
+                                        <span>08 Dec 2020</span>
+                                        <h4><a href="news-details.html">Phasellus vehicula sit amet nibh vitae posuere</a></h4>
+                                        <div class="latest-post-btn">
+                                            <a href="news-details.html">Continue Reading...</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="single-latest-post">
+                                    <div class="latest-post-img">
+                                        <a href="news-details.html"><img src="assets/img/blog/latest-post-3.png" alt=""></a>
+                                    </div>
+                                    <div class="latest-post-content">
+                                        <span>01 Feb 2021</span>
+                                        <h4><a href="news-details.html">Class aptent taciti sociosqu ad litora torquent</a></h4>
+                                        <div class="latest-post-btn">
+                                            <a href="news-details.html">Continue Reading...</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sidebar-widget mb-35 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                            <div class="sidebar-widget-title-2 mb-30">
+                                <h3>Tags</h3>
+                            </div>
+                            <div class="sidebar-widget-tag-2">
+                                <a href="#">Furniture</a>
+                                <a href="#">Electronic</a>
+                                <a href="#">Home Decore</a>
+                                <a href="#">Design Home</a>
+                                <a href="#">Furniture</a>
+                            </div>
+                        </div>
+                        <div class="sidebar-widget aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                            <div class="sidebar-banner">
+                                <a href="product-details.html"><img src="assets/img/banner/banner-29.png" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% include "components/footer.html" %}
+    {% include "components/scripts.html" %}
+    {% block additional_js %}{% endblock %}
+
+</body>
+</html>
