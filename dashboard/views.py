@@ -303,7 +303,7 @@ class NewsCategoryDetailView(DetailView):
     template_name = "dashboard/snippets/detail-common.html"
 
     def get_object(self):
-        return get_simple_object(key='id', model=NewsCategory, self=self)
+        return get_simple_object(key='slug', model=NewsCategory, self=self)
 
     def get_context_data(self, **kwargs):
         context = super(
@@ -321,7 +321,7 @@ class NewsCategoryUpdateView(UpdateView):
     form_class = NewsCategoryManageForm
 
     def get_object(self):
-        return get_simple_object(key="id", model=NewsCategory, self=self)
+        return get_simple_object(key="slug", model=NewsCategory, self=self)
 
     def get_success_url(self):
         return reverse('dashboard:create_news_category')
@@ -360,7 +360,7 @@ class NewsCategoryUpdateView(UpdateView):
 
 @csrf_exempt
 def delete_news_category(request):
-    return delete_simple_object(request=request, key='id', model=NewsCategory, redirect_url="dashboard:create_news_category")
+    return delete_simple_object(request=request, key='slug', model=NewsCategory, redirect_url="dashboard:create_news_category")
 
 
 # # -------------------------------------------------------------------
