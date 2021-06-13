@@ -1,0 +1,68 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    {% include "components/styles.html" %}
+</head>
+<body>
+
+
+    {% include "components/loader.html" %}
+    {% include "components/header.html" %}
+
+
+
+    <!-- Breadcrumbs -->
+    <section class="breadcrumbs" style="background-image:url('assets/img/breadcrumbs-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <!-- Breadcrumbs-Content -->
+                <div class="col-lg-7 col-md-7 col-12">
+                    <div class="breadcrumbs-content">
+                        <h2>Galleries</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </div>
+                <!-- Breadcrumbs-Menu -->
+                <div class="col-lg-5 col-md-5 col-12">
+                    <div class="breadcrumbs-menu">
+                        <ul>
+                            <li><a href="index.html">Home</a><i class="fa fa-angle-double-right"></i></li>
+                            <li class="active"><a href="galleries.html">Galleries</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Breadcrumbs -->
+    <br>
+    <!-- Galleries Start -->
+    <div class="galleries">
+        <div class="container">
+            <div class="row">
+                {% for gallery in gallery_lists %}
+                <div class="col-md-3 col-2">
+                    <a href="{{ gallery.image.url }}"
+                        data-fancybox="images-preview"
+                        data-width="1500" data-height="1000"
+                        data-thumbs='{"autoStart":true}'>
+                        <img src="{{ gallery.image.url }}" title="Gallery Title" class="img-fluid" style="width: 200px; height: 200px;"/>
+                    </a>
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+        </div>
+    </div>
+    <!-- Galleries End -->
+    <br>
+
+    {% include "components/footer.html" %}
+    {% include "components/scripts.html" %}
+    {% block additional_js %}{% endblock %}
+
+</body>
+</html>
