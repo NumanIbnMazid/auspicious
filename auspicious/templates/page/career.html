@@ -44,7 +44,19 @@
 
     <div class="career-area py-5">
         <div class="container">
-            <h3>Categories</h3>
+            <div class="row">
+                <div class="col-6">
+                    <h3>Categories</h3>
+                </div>
+                {% check_if_applied_for_the_job career_qs. as check_if_applied_for_the_job %}
+                <div class="col-6" style="text-align: right; font-size:16;">
+                    <a href="{% url 'cv_drop' %}">
+                        <b>Drop CV</b>
+                        <img style="height:40px; width:40px;" src="{% static 'assets/landing/assets/img/Auspicious_Cv_Submit.png' %}">
+                    </a>
+                </div>
+            </div>
+
             <div class="row">
                 {% for job_position in job_position_qs %}
                 <div class="col-md-3 col-sm-2">
