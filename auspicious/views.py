@@ -444,7 +444,7 @@ class CvDropUpdateView(UpdateView):
         career_qs = Career.objects.filter(user = self.request.user)
         if career_qs.exists():
             form.instance.user = self.request.user
-            form.instance = career_qs.last()
+            # form.instance = career_qs.last()
             messages.add_message(
                 self.request, messages.SUCCESS, "Application Updated successfully!"
             )

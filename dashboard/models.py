@@ -648,9 +648,16 @@ pre_save.connect(job_slug_pre_save_receiver, sender=Job)
 
 def career_slug_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
-        title = slugify(instance.job.job_position.title.lower()[:17])
-        slug_binding = title + '-' + time_str_mix_slug()
-        instance.slug = slug_binding
+        if not instance.job == None:
+            title = slugify(instance.job.job_position.title.lower()[:17])
+            slug_binding = title + '-' + time_str_mix_slug()
+            instance.slug = slug_binding
+        else:
+            request = RequestMiddleware(get_response=None)
+            request = request.thread_local.current_request
+            title = slugify(request.user.username.lower()[:17])
+            slug_binding = title + '-' + time_str_mix_slug()
+            instance.slug = slug_binding
 
 
 pre_save.connect(career_slug_pre_save_receiver, sender=Career)
