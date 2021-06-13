@@ -33,7 +33,6 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 # #                              Home
 # # -------------------------------------------------------------------
 
-
 @xframe_options_exempt
 def home(request):
     today = timezone.datetime.now()
@@ -47,6 +46,7 @@ def home(request):
     latest_project_lists = Project.objects.filter(developement_end_year__lte = datetime_today.year, created_at__lte = today.date())[:4]
     latest_news_category_lists = NewsCategory.objects.all()
     latest_news_lists = News.objects.all()
+    print(latest_news_lists)
     image_lists = Gallery.objects.all().order_by('?')
     clients_lists =  Client.objects.all().order_by('?')[:10]
     contact_qs = Contact.objects.all().last()
@@ -205,12 +205,12 @@ def news_details(request, slug):
 # # -------------------------------------------------------------------
 
 def filtered_news_lists(request, slug):
-    news_qs = News.objects.filter(
+    news_lists = News.objects.filter(
         category__slug__iexact=slug
     )
     context = {
-        'news_qs':news_qs,
-        'filtered_news_title': news_qs.first().category.title if len(news_qs) > 0 else ""
+        'news_lists':news_lists,
+        'filtered_news_title': news_lists.first().category.title if len(news_lists) > 0 else ""
     }
     return render(request, "page/news.html", context)
 
@@ -354,7 +354,13 @@ class JobApplyUpdateView(UpdateView):
             context['job'] = None
         return context
 
-
+# # -------------------------------------------------------------------
+# #                              Gallery
+# # -------------------------------------------------------------------
+def gallery(request):
+    gallery_lists = Gallery.objects.all()
+    context = {'gallery_lists':gallery_lists}
+    return render(request, 'page/galleries.html', context)
 
 # # -------------------------------------------------------------------
 # #                              CV Drop
@@ -458,3 +464,4 @@ class CvDropUpdateView(UpdateView):
         # else:
         #     context['job'] = None
         return context
+

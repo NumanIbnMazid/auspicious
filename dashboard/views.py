@@ -264,7 +264,7 @@ def delete_project(request):
 
 def get_news_category_common_contexts(request):
     common_contexts = get_simple_context_data(
-        request=request, app_namespace="dashboard", model_namespace="news_category", model=NewsCategory, list_template=None, fields_to_hide_in_table=["id","updated_at"]
+        request=request, app_namespace="dashboard", model_namespace="news_category", model=NewsCategory, list_template=None, fields_to_hide_in_table=["id","updated_at","slug"]
     )
     return common_contexts
 

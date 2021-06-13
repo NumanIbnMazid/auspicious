@@ -573,7 +573,7 @@ pre_save.connect(project_slug_pre_save_receiver, sender=Project)
 
 def news_category_slug_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
-        title = slugify(instance.name.lower()[:17])
+        title = slugify(instance.title.lower()[:17])
         slug_binding = title + '-' + time_str_mix_slug()
         instance.slug = slug_binding
 
