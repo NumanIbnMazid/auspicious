@@ -44,9 +44,9 @@ urlpatterns = [
     # # -------------------------------------------------------------------
     path("create/news_category/", NewsCategoryCreateView.as_view(),
          name="create_news_category"),
-    path("update/news_category/<id>/",
+    path("update/news_category/<slug>/",
          NewsCategoryUpdateView.as_view(), name="update_news_category"),
-    path("news_category/<id>/detail/",
+    path("news_category/<slug>/detail/",
          NewsCategoryDetailView.as_view(), name="news_category_detail"),
     path("delete/news_category/", delete_news_category,
          name="delete_news_category"),
