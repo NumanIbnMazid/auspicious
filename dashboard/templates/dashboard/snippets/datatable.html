@@ -1,3 +1,4 @@
+{% load static %}
 {% load custom_tags %}
 
 {% if can_view == True %}
@@ -16,7 +17,9 @@
                     style="width:100%">
                     <thead class="thead-dark">
                         <tr class="text-center">
+                            {% if not update_url == None or not detail_url == None or not delete_url == None %}
                             <th>Action</th>
+                            {% endif %}
                             <th>#</th>
                             {% for key, value in fields.items %}
                             {% if not key in fields_to_hide_in_table %}
@@ -32,7 +35,9 @@
                         {% for object in list_objects %}
                         <tr class="text-center">
 
+                            {% if not update_url == None or not detail_url == None or not delete_url == None %}
                             <td style="width:14%">
+                                <!-- update url -->
                                 {% if not update_url == None and can_add_change == True %}
                                 {% if not object.slug == None %}
                                 <a href="{% url update_url slug=object.slug %}"
@@ -60,8 +65,7 @@
                                     </span>
                                 </a>
                                 {% else %}
-                                <a href="{% url detail_url id=object.id %}"
-                                    class="btn btn-info btn-sm text-deco-none">
+                                <a href="{% url detail_url id=object.id %}" class="btn btn-info btn-sm text-deco-none">
                                     <span class="">
                                         View
                                     </span>
@@ -86,11 +90,8 @@
                                 {% endif %}
                                 {% endif %}
 
-                                {% if update_url == None and delete_url == None %}
-                                ---
-                                {% endif %}
-
                             </td>
+                            {% endif %}
 
                             <th>{{ forloop.counter }}</th>
 
@@ -103,7 +104,20 @@
                             <td>
                                 {% if not value.url == None and not value == None and value != "" %}
 
-                                <img src="{{ value.url }}" alt="{{ value }}" style="height:100px;width:100px;">
+                                {% if value.url|get_file_type == "image" %}
+                                <img class="img-thumbnail ez-view m-2" src="{{ value.url }}" alt="{{ value }}"
+                                    style="height:70px;width:70px;">
+                                {% elif value.url|get_file_type == "pdf" %}
+                                <img class="ez-view m-2" style="height:70px;width:70px"
+                                    src="{% static 'assets/images/icons/pdf.png' %}" href="{{ value.url }}"
+                                    alt="{{ object.title }}">
+                                {% elif value.url|get_file_type == "document" %}
+                                <iframe class="doc img-thumbnail m-2" height="50" width="330"
+                                    src="http://docs.google.com/gview?url={{request.scheme}}://{{ request.get_host }}{{ value.url }}&embedded=true">
+                                </iframe>
+                                {% else %}
+                                <span>{{ value.url }}</span>
+                                {% endif %}
 
                                 {% else %}
                                 ---
@@ -116,7 +130,7 @@
                             </td>
 
                             {% else %}
-                            
+
                             {% if value == None or value == "" %}
                             <td>--</td>
                             {% else %}
@@ -143,7 +157,9 @@
 
                     <tfoot class="thead-dark">
                         <tr class="text-center">
+                            {% if not update_url == None or not detail_url == None or not delete_url == None %}
                             <th>Action</th>
+                            {% endif %}
                             <th>#</th>
                             {% for key, value in fields.items %}
                             {% if not key in fields_to_hide_in_table %}

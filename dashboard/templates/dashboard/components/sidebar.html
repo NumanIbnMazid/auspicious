@@ -22,6 +22,16 @@
                 </a>
             </li>
             
+            <!-- Job Career -->
+            {% if perms.dashboard.view_career %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:job_application_list' %}" class='sidebar-link'>
+                    <i class="fa fa-layer-group"></i>
+                    <span>Job Applications</span>
+                </a>
+            </li>
+            {% endif %}
+            
             <!-- Group -->
             {% if perms.auth.add_group %}
             <li class="sidebar-item">
