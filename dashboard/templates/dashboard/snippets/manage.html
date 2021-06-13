@@ -103,6 +103,7 @@
 <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
 <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
 
+{% if list_template == None %}
 <!-- JQuery DataTable JS -->
 <script src="{% static 'assets/vendors/jquery-datatable/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'assets/vendors/jquery-datatable/dataTables.bootstrap4.min.js' %}"></script>
@@ -128,6 +129,7 @@
         });
     });
 </script>
+{% endif %}
 
 <!-- EZ View JS -->
 <script src="{% static 'assets/vendors/ez-view/EZView.js' %}"></script>

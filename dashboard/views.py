@@ -1133,9 +1133,12 @@ class JobApplicationListView(ListView):
         for key, value in get_job_application_common_contexts(request=self.request).items():
             context[key] = value
         context['list_objects'] = self.get_queryset()
-        context['detail_url'] = None
+        context['list_template'] = "dashboard/pages/job-application/datatable.html"
+        context['detail_url'] = "dashboard:job_application_detail"
         context['update_url'] = "dashboard:job_application_update"
-        context['delete_url'] = None
+        context['delete_url'] = "dashboard:delete_job_application"
+        context['create_url'] = None
+        context['list_url'] = "dashboard:job_application_list"
         return context
 
 
@@ -1164,4 +1167,43 @@ class JobApplicationUpdateView(UpdateView):
         for key, value in get_job_application_common_contexts(request=self.request).items():
             context[key] = value
         context['update_url'] = "dashboard:job_application_update"
+        context['detail_url'] = "dashboard:job_application_detail"
+        context['delete_url'] = "dashboard:delete_job_application"
+        context['create_url'] = None
+        context['list_template'] = "dashboard/pages/job-application/datatable.html"
+        context['list_objects'] = Career.objects.filter(
+            ~Q(job__id=None)
+        )
+        context['list_url'] = "dashboard:job_application_list"
         return context
+
+
+class JobApplicationDetailView(DetailView):
+    template_name = "dashboard/pages/job-application/detail.html"
+
+    def get_object(self):
+        return get_simple_object(key='slug', model=Career, self=self)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            JobApplicationDetailView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = 'Job Application Detail'
+        context['page_short_title'] = 'Job Application Detail'
+        for key, value in get_job_application_common_contexts(request=self.request).items():
+            context[key] = value
+        context['delete_url'] = "dashboard:delete_job_application"
+        context['create_url'] = None
+        context['update_url'] = "dashboard:job_application_update"
+        context['detail_url'] = "dashboard:job_application_detail"
+        context['list_template'] = "dashboard/pages/job-application/datatable.html"
+        context['list_objects'] = Career.objects.filter(
+            ~Q(job__id=None)
+        )
+        context['list_url'] = "dashboard:job_application_list"
+        return context
+
+
+@csrf_exempt
+def delete_job_application(request):
+    return delete_simple_object(request=request, key='slug', model=Career, redirect_url="dashboard:job_application_list")
