@@ -2,16 +2,17 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from .models import (
     Project, NewsCategory, News, Gallery, Client, SocialAccount,
-    JobPosition, Job, Contact, ProjectCategory
+    JobPosition, Job, Contact, ProjectCategory, Career
 )
 from .forms import (
     ProjectManageForm, NewsCategoryManageForm,NewsManageForm, GalleryManageForm, ClientManageForm, SocialAccountManageForm,
-    JobPositionManageForm, JobManageForm, ContactManageForm, ProjectCategoryManageForm
+    JobPositionManageForm, JobManageForm, ContactManageForm, ProjectCategoryManageForm, JobApplicationManageForm
 )
 
 from util.helpers import (
     validate_normal_form, get_simple_context_data, get_simple_object, delete_simple_object, user_has_permission
 )
+from django.db.models import Q
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
@@ -22,7 +23,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView, UpdateView, TemplateView, DetailView
+from django.views.generic import CreateView, UpdateView, TemplateView, DetailView, ListView
 from django.http import HttpResponse
 
 # # -------------------------------------------------------------------
@@ -1102,3 +1103,65 @@ class ContactUpdateView(UpdateView):
 @csrf_exempt
 def delete_contact(request):
     return delete_simple_object(request=request, key='id', model=Contact, redirect_url="dashboard:create_contact")
+
+
+# # -------------------------------------------------------------------
+# #                              Career
+# # -------------------------------------------------------------------
+
+def get_job_application_common_contexts(request):
+    common_contexts = get_simple_context_data(
+        request=request, app_namespace="dashboard", model_namespace="career", model=Career, list_template="dashboard/snippets/list-common.html", fields_to_hide_in_table=["id", "updated_at"]
+    )
+    return common_contexts
+
+class JobApplicationListView(ListView):
+    template_name = "dashboard/snippets/list-common.html"
+
+    def get_queryset(self):
+        qs = Career.objects.filter(
+            ~Q(job__id=None)
+        )
+        if qs.exists():
+            return qs
+        return None
+
+    def get_context_data(self, **kwargs):
+        context = super(JobApplicationListView, self).get_context_data(**kwargs)
+        context['page_title'] = 'Job Application List'
+        context['page_short_title'] = 'Job Application List'
+        for key, value in get_job_application_common_contexts(request=self.request).items():
+            context[key] = value
+        context['list_objects'] = self.get_queryset()
+        context['detail_url'] = None
+        context['update_url'] = "dashboard:job_application_update"
+        context['delete_url'] = None
+        return context
+
+
+class JobApplicationUpdateView(UpdateView):
+    template_name = 'dashboard/snippets/manage.html'
+    form_class = JobApplicationManageForm
+
+    def get_object(self):
+        return get_simple_object(key="slug", model=Career, self=self)
+
+    def get_success_url(self):
+        return reverse('dashboard:job_application_list')
+
+    def form_valid(self, form):
+        messages.add_message(
+            self.request, messages.SUCCESS, "Updated Successfully!"
+        )
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            JobApplicationUpdateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = 'Update Application'
+        context['page_short_title'] = 'Update Application'
+        for key, value in get_job_application_common_contexts(request=self.request).items():
+            context[key] = value
+        context['update_url'] = "dashboard:job_application_update"
+        return context

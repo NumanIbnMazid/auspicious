@@ -441,3 +441,23 @@ class ContactManageForm(forms.ModelForm):
         fields = [
             "phone1","phone2","email","address"
         ]
+
+
+# # -------------------------------------------------------------------
+# #                               Job Application
+# # -------------------------------------------------------------------
+
+class JobApplicationManageForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(JobApplicationManageForm, self).__init__(*args, **kwargs)
+        self.fields['contact'].widget.attrs.update({
+            'placeholder': 'Enter Contact Number...',
+            'maxlength': 50
+        })
+
+    class Meta:
+        model = Career
+        fields = [
+            "job", "file", "contact", "status"
+        ]

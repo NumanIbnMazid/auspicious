@@ -437,6 +437,9 @@ class Career(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="career_user", verbose_name="user"
     )
+    slug = models.SlugField(
+        unique=True, verbose_name='slug'
+    )
     job = models.ForeignKey(
         Job, blank=True, null=True, on_delete=models.CASCADE, related_name="career_job", verbose_name="job"
     )
@@ -469,7 +472,10 @@ class Career(models.Model):
             if field.name == 'user':
                 return (field.name, self.user.username, field.get_internal_type())
             elif field.name == 'job':
-                return (field.name, self.job.job_position.title, field.get_internal_type())
+                if not self.job == None:
+                    return (field.name, self.job.job_position.title, field.get_internal_type())
+                else:
+                    return (field.name, "-", field.get_internal_type())
             else:
                 return (field.name, field.value_from_object(self), field.get_internal_type())
         return [get_dynamic_fields(field) for field in self.__class__._meta.fields]
@@ -637,5 +643,16 @@ def job_slug_pre_save_receiver(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(job_slug_pre_save_receiver, sender=Job)
+
+# # Career
+
+def career_slug_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        title = slugify(instance.job.job_position.title.lower()[:17])
+        slug_binding = title + '-' + time_str_mix_slug()
+        instance.slug = slug_binding
+
+
+pre_save.connect(career_slug_pre_save_receiver, sender=Career)
 
 
