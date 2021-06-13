@@ -33,7 +33,7 @@
                 Create
             </a>
             {% endif %}
-            
+
             {% if not update_url == None and can_add_change == True %}
             {% if not object.slug == None %}
             <a href="{% url update_url slug=object.slug %}" class="btn btn-primary">
@@ -48,8 +48,8 @@
                 </span>
             </a>
             {% endif %}
-
             {% endif %}
+            
             {% if not list_url == None and can_view == True %}
             <a href="{% url list_url %}" class="btn btn-primary">
                 View List
