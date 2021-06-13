@@ -35,6 +35,7 @@ class CustomSignupForm(SignupForm):
 class CareerManageForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
+        self.object = kwargs.pop('object', None)
         super(CareerManageForm, self).__init__(*args, **kwargs)
 
         self.fields['contact'].widget.attrs.update({
@@ -52,15 +53,26 @@ class CareerManageForm(forms.ModelForm):
 
     def clean_file(self):
         file = self.cleaned_data.get('file')
-        if not file == None:
-            file_extension = os.path.splitext(file.name)[1]
-            allowed_file_types = settings.ALLOWED_JOB_APPLY_FILE_TYPES
-            content_type = file.content_type.split('/')[0]
-            if not file_extension in allowed_file_types:
-                raise forms.ValidationError("Only %s file formats are supported! Current file format is %s" % (
-                    allowed_file_types, file_extension))
-            if file.size > settings.MAX_UPLOAD_SIZE:
-                raise forms.ValidationError("Please keep filesize under %s. Current filesize %s" % (
-                    filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(file.size)))
-            return file
-        return None
+        if not file == None and type(file) == str:
+            if not self.object == None:
+                if not file == self.object.file:
+                    file_extension = os.path.splitext(file.name)[1]
+                    allowed_file_types = settings.ALLOWED_JOB_APPLY_FILE_TYPES
+                    content_type = file.content_type.split('/')[0]
+                    if not file_extension in allowed_file_types:
+                        raise forms.ValidationError("Only %s file formats are supported! Current file format is %s" % (
+                            allowed_file_types, file_extension))
+                    if file.size > settings.MAX_UPLOAD_SIZE:
+                        raise forms.ValidationError("Please keep filesize under %s. Current filesize %s" % (
+                            filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(file.size)))
+            else:
+                file_extension = os.path.splitext(file.name)[1]
+                allowed_file_types = settings.ALLOWED_JOB_APPLY_FILE_TYPES
+                content_type = file.content_type.split('/')[0]
+                if not file_extension in allowed_file_types:
+                    raise forms.ValidationError("Only %s file formats are supported! Current file format is %s" % (
+                        allowed_file_types, file_extension))
+                if file.size > settings.MAX_UPLOAD_SIZE:
+                    raise forms.ValidationError("Please keep filesize under %s. Current filesize %s" % (
+                        filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(file.size)))
+        return file

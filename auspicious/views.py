@@ -46,7 +46,6 @@ def home(request):
     latest_project_lists = Project.objects.filter(developement_end_year__lte = datetime_today.year, created_at__lte = today.date())[:4]
     latest_news_category_lists = NewsCategory.objects.all()
     latest_news_lists = News.objects.all()
-    print(latest_news_lists)
     image_lists = Gallery.objects.all().order_by('?')
     clients_lists =  Client.objects.all().order_by('?')[:10]
     contact_qs = Contact.objects.all().last()
@@ -126,7 +125,7 @@ def career(request):
     last_job_qs = Job.objects.all().last()
     job_position_qs = JobPosition.objects.all()
     # job_count = Job.objects.filter(job_position =job_position_qs).count()
-    # print(job_count)
+
     job_lists = Job.objects.filter(is_active = 'True').order_by("id")[1:5]
     career_qs = Career.objects.all()
     user = request.user
@@ -328,6 +327,12 @@ class JobApplyUpdateView(UpdateView):
             return qs.last()
         return None
 
+    def get_form_kwargs(self):
+        kwargs = super(JobApplyUpdateView, self).get_form_kwargs()
+        if self.form_class:
+            kwargs.update({'object': self.get_object()})
+        return kwargs
+
     def form_valid(self, form, **kwargs):
         slug = self.kwargs['slug']
         job_qs = Job.objects.filter(slug=slug)
@@ -438,6 +443,12 @@ class CvDropUpdateView(UpdateView):
         if qs.exists():
             return qs.last()
         return None
+    
+    def get_form_kwargs(self):
+        kwargs = super(CvDropUpdateView, self).get_form_kwargs()
+        if self.form_class:
+            kwargs.update({'object': self.get_object()})
+        return kwargs
 
     def form_valid(self, form, **kwargs):
         # slug = self.kwargs['slug']
