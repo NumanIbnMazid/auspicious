@@ -4,6 +4,14 @@
 
 {% load custom_tags %}
 
+<!-- extra styles -->
+{% block additional_css %}
+<!-- CKEDITOR JS -->
+<script>
+    window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';
+</script>
+{% endblock %}
+
 {% block head_title %}
 {% block page_short_title %}
 {% block breadcrumb %}
@@ -30,7 +38,19 @@
         <div class="row">
 
             <div class="col-12">
-                <h1>Update Application Status</h1>
+                <form role="form" method="POST" data-toggle="validator" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="card-body">
+                        {% include 'dashboard/snippets/form.html' %}
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    </div>
+                </form>
             </div>
 
         </div>
@@ -42,5 +62,10 @@
 {% endblock %}
 
 {% block additional_js %}
+<!-- Bootstrap Validator -->
+<script src="{% static 'assets/vendors/bootstrap-validator/validator.js' %}"></script>
 
+<!-- CKeditor Plugin -->
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
 {% endblock %}

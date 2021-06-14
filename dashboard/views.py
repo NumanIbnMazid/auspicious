@@ -6,7 +6,7 @@ from .models import (
 )
 from .forms import (
     ProjectManageForm, NewsCategoryManageForm,NewsManageForm, GalleryManageForm, ClientManageForm, SocialAccountManageForm,
-    JobPositionManageForm, JobManageForm, ContactManageForm, ProjectCategoryManageForm, JobApplicationManageForm
+    JobPositionManageForm, JobManageForm, ContactManageForm, ProjectCategoryManageForm, JobApplicationManageForm, JobStatusManageForm, CVManageForm
 )
 
 from util.helpers import (
@@ -1163,9 +1163,11 @@ def delete_contact(request):
 # #                              Career
 # # -------------------------------------------------------------------
 
+### Job Application ###
+
 def get_job_application_common_contexts(request):
     common_contexts = get_simple_context_data(
-        request=request, app_namespace="dashboard", model_namespace="career", model=Career, list_template="dashboard/snippets/list-common.html", fields_to_hide_in_table=["id", "slug", "updated_at"]
+        request=request, app_namespace="dashboard", model_namespace="career", model=Career, list_template=None, fields_to_hide_in_table=["id", "slug", "updated_at"]
     )
     return common_contexts
 
@@ -1237,7 +1239,7 @@ class JobApplicationUpdateView(UpdateView):
 
 @method_decorator(dashboard_decorators, name='dispatch')
 class JobApplicationDetailView(DetailView):
-    template_name = "dashboard/pages/job-application/detail.html"
+    template_name = "dashboard/snippets/detail-common.html"
 
     def get_object(self):
         return get_simple_object(key='slug', model=Career, self=self)
@@ -1269,32 +1271,185 @@ def delete_job_application(request):
     return delete_simple_object(request=request, key='slug', model=Career, redirect_url="dashboard:job_application_list")
 
 
+### CV ###
+
+def get_cv_common_contexts(request):
+    common_contexts = get_simple_context_data(
+        request=request, app_namespace="dashboard", model_namespace="career", model=Career, list_template=None, fields_to_hide_in_table=["id", "slug", "updated_at"]
+    )
+    return common_contexts
+
+
+@method_decorator(dashboard_decorators, name='dispatch')
+class CVListView(ListView):
+    template_name = "dashboard/pages/job-application/list.html"
+
+    def get_queryset(self):
+        qs = Career.objects.filter(
+            Q(job__id=None)
+        )
+        if qs.exists():
+            return qs
+        return None
+
+    def get_context_data(self, **kwargs):
+        context = super(CVListView, self).get_context_data(**kwargs)
+        context['page_title'] = 'CV List'
+        context['page_short_title'] = 'CV List'
+        for key, value in get_cv_common_contexts(request=self.request).items():
+            context[key] = value
+        context['list_objects'] = self.get_queryset()
+        context['list_template'] = "dashboard/pages/job-application/datatable.html"
+        context['detail_url'] = "dashboard:cv_detail"
+        context['update_url'] = "dashboard:cv_update"
+        context['delete_url'] = "dashboard:delete_cv"
+        context['create_url'] = None
+        context['list_url'] = "dashboard:cv_list"
+        return context
+
+
+@method_decorator(dashboard_decorators, name='dispatch')
+class CVUpdateView(UpdateView):
+    template_name = 'dashboard/snippets/manage.html'
+    form_class = CVManageForm
+
+    def get_object(self):
+        return get_simple_object(key="slug", model=Career, self=self)
+
+    def get_success_url(self):
+        return reverse('dashboard:cv_list')
+
+    def form_valid(self, form):
+        messages.add_message(
+            self.request, messages.SUCCESS, "Updated Successfully!"
+        )
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            CVUpdateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = 'Update CV'
+        context['page_short_title'] = 'Update CV'
+        for key, value in get_cv_common_contexts(request=self.request).items():
+            context[key] = value
+        context['update_url'] = "dashboard:cv_update"
+        context['detail_url'] = "dashboard:cv_detail"
+        context['delete_url'] = "dashboard:delete_cv"
+        context['create_url'] = None
+        context['list_url'] = "dashboard:cv_list"
+        context['list_template'] = "dashboard/pages/job-application/datatable.html"
+        context['list_objects'] = Career.objects.filter(
+            Q(job__id=None)
+        )
+        return context
+
+
+@method_decorator(dashboard_decorators, name='dispatch')
+class CVDetailView(DetailView):
+    template_name = "dashboard/snippets/detail-common.html"
+
+    def get_object(self):
+        return get_simple_object(key='slug', model=Career, self=self)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            CVDetailView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = 'CV Detail'
+        context['page_short_title'] = 'CV Detail'
+        for key, value in get_cv_common_contexts(request=self.request).items():
+            context[key] = value
+        context['delete_url'] = "dashboard:delete_cv"
+        context['create_url'] = None
+        context['update_url'] = "dashboard:cv_update"
+        context['detail_url'] = "dashboard:cv_detail"
+        context['list_template'] = "dashboard/pages/job-application/datatable.html"
+        context['list_objects'] = Career.objects.filter(
+            Q(job__id=None)
+        )
+        context['list_url'] = "dashboard:cv_list"
+        return context
+
+
+@csrf_exempt
+@has_dashboard_permission_required
+@login_required
+def delete_cv(request):
+    return delete_simple_object(request=request, key='slug', model=Career, redirect_url="dashboard:cv_list")
+
+
 # @csrf_exempt
 @has_dashboard_permission_required
 @login_required
 def update_job_application_status(request, slug):
-    job_qs = Career.objects.filter(
+    url = reverse('home')
+    career_qs = Career.objects.filter(
         slug=slug
     )
-    job = None
-    if job_qs.exists():
-        job = job_qs.last()
-    message = "Simple text Message"
-    mail_subject = "Simple mail subject"
-    mail_from = 'numanworkstation@gmail.com'
-    mail_to = job.user.email
-    mail_text = 'Please do not Reply'
-    html_content = "Hi " + job.user.user_profile.get_smallname() + "!<br>" + message + \
-        "<br>Have a nice day."
-    msg = EmailMultiAlternatives(
-        mail_subject, mail_text, mail_from, [mail_to]
-    )
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
 
-    context = {
-        "can_change": request.user.has_perm(
-            'dashboard.change_career'
-        )
-    }
+    if career_qs:
+
+        career = career_qs.last()
+
+        if not career.job == None:
+            url = reverse("dashboard:job_application_list")
+            page_title = "Update Application Status"
+        else:
+            url = reverse("dashboard:cv_list")
+            page_title = "Update CV Status"
+
+        if request.method == "POST":
+            form = JobStatusManageForm(
+                request.POST, career_object=career_qs.last()
+            )
+
+            status = request.POST.get('status')
+
+            finalized_status = "Under Review" if status == "Review" else status
+
+            if not career.job == None:
+                mail_subject = f"Your application status for the position '{career.job.job_position.title}' is : {finalized_status}"
+            else:
+                mail_subject = f"Your CV is : {finalized_status}"
+            mail_body = request.POST.get('mail_body')
+
+            # Save Status in DB
+            career.status = status
+            career.save()
+
+            message = mail_body
+            mail_from = settings.MAIL_FROM
+            mail_to = career.user.email
+            mail_text = 'Please do not Reply'
+            html_content = "Hi " + career.user.user_profile.get_fullname() + "!<br><br>" + f"<h3>{mail_subject}</h3>" + "<br>" + message + \
+                "<br>Have a nice day."
+            msg = EmailMultiAlternatives(
+                mail_subject, mail_text, mail_from, [mail_to]
+            )
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+
+            messages.add_message(request, messages.SUCCESS,
+                                 "Updated Successfully!"
+                                 )
+            return HttpResponseRedirect(url)
+
+        else:
+            form = JobStatusManageForm(career_object=career_qs.last())
+
+        context = {
+            "form": form,
+            "can_change": request.user.has_perm(
+                'dashboard.change_career'
+            ),
+            "page_title": page_title,
+            "page_short_title": page_title,
+        }
+
+    else:
+        messages.add_message(request, messages.ERROR,
+                             "Job Application Not Found!"
+                             )
+        return HttpResponseRedirect(url)
     return render(request, "dashboard/pages/job-application/update-status.html", context)

@@ -37,7 +37,9 @@
 
                             {% if not update_url == None or not detail_url == None or not delete_url == None %}
                             <td style="width:14%">
-                                <a href="#" class="btn btn-primary btn-sm text-deco-none">
+                                <!-- update job applicaiton status -->
+                                <a href="{% url 'dashboard:update_job_application_status' slug=object.slug %}"
+                                    class="btn btn-primary btn-sm text-deco-none">
                                     Update Status
                                 </a>
                                 <!-- update url -->

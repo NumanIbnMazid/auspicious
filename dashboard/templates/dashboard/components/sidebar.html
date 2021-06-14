@@ -32,6 +32,16 @@
             </li>
             {% endif %}
             
+            <!-- CV Career -->
+            {% if perms.dashboard.view_career %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:cv_list' %}" class='sidebar-link'>
+                    <i class="fa fa-layer-group"></i>
+                    <span>CVs</span>
+                </a>
+            </li>
+            {% endif %}
+            
             <!-- Group -->
             {% if perms.auth.add_group %}
             <li class="sidebar-item">

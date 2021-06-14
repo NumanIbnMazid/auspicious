@@ -1,3 +1,8 @@
+"""
+----------------------- * Dynamic Content Configuration * -----------------------
+"""
+
+MAIL_FROM = "info@rappleslimited.com"
 
 BLOCKED_URL = '/blocked/'
 ACCESS_DENIED_URL = '/access-denied/'
