@@ -63,7 +63,14 @@
                                 {% for project in ongoing_project_lists %}
                                 <tr>
 
-                                    <td><button type="button" class="btn btn-outline-primary"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
+                                    <td>
+                                        <a href="{% url 'project_details' slug=project.slug %}">
+                                            <button type="button" class="btn btn-outline-primary">
+                                                <i class="fa fa-eye" aria-hidden="true">
+                                                </i>
+                                            </button>
+                                        </a>
+                                    </td>
                                     <td>{{ forloop.counter  }}</td>
                                     <td>{{ project.name}}</td>
                                     <td><img src="{{ project.image.url }}" alt="" style="height: 70px;width: 70px;"></td>
@@ -106,7 +113,14 @@
                                 </tr>
                                 {% for project in completed_project_lists %}
                                 <tr>
-                                    <td><button type="button" class="btn btn-outline-primary"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
+                                    <td>
+                                        <a href="{% url 'project_details' slug=project.slug %}">
+                                            <button type="button" class="btn btn-outline-primary">
+                                                <i class="fa fa-eye" aria-hidden="true">
+                                                </i>
+                                            </button>
+                                        </a>
+                                    </td>
                                     <td>{{ forloop.counter }}</td>
                                     <td>{{ project.name}}</td>
                                     <td><img src="{{ project.image.url }}" alt="" style="height: 70px;width: 70px;"></td>
