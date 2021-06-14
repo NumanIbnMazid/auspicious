@@ -37,6 +37,7 @@ urlpatterns = [
     # path("contact/", ContactView.as_view(), name="contact"),
     path("contact/", views.contact, name="contact"),
     path("news-details/<str:slug>/", views.news_details, name="news_details"),
+    path("comment/<id>/reply/", views.comment_reply, name="comment_reply"),
     path("admin/", admin.site.urls),
     path("account/", include("accounts.urls")),
     path("dashboard/", include(("dashboard.urls", "dashboard"), namespace="dashboard")),

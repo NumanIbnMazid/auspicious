@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.utils import timezone
 from datetime import date, datetime, timedelta
 from django.urls import reverse
-from .forms import CareerManageForm
+from .forms import CareerManageForm, CommentForm
 from django.contrib import messages
 from django import forms
 from django.views.decorators.csrf import csrf_exempt
@@ -188,6 +188,7 @@ def contact(request):
 # #                               News Details
 # # -------------------------------------------------------------------
 
+# @login_required
 def news_details(request, slug):
     news_qs = News.objects.filter(slug = slug).first()
     comment_qs = Comment.objects.filter(news = news_qs)
@@ -203,12 +204,124 @@ def news_details(request, slug):
     ).first()
 
     context ={'news_qs':news_qs,'comment_qs':comment_qs,
-              'total_comment':comment_qs.count(),
-              'reply_qs':reply_qs,'news_category_lists':news_category_lists,
-              'last_three_job_lists':last_three_job_lists,
-              'pre_news':pre_news,'next_news':next_news}
+                'total_comment':comment_qs.count(),
+                'reply_qs':reply_qs,'news_category_lists':news_category_lists,
+                'last_three_job_lists':last_three_job_lists,
+                'pre_news':pre_news,'next_news':next_news
+            }
+
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            comment = request.POST.get("comment")
+            Comment.objects.create(
+                news=news_qs,
+                commented_by=request.user,
+                comment=comment
+            )
+            return HttpResponseRedirect(reverse("news_details", kwargs={"slug": slug}))
+        else:
+            return HttpResponseRedirect(reverse("account_login"))
+
     return render(request, "page/news-details.html", context)
 
+
+# # -------------------------------------------------------------------
+# #                              Comment
+# # -------------------------------------------------------------------
+
+
+@method_decorator(login_required, name='dispatch')
+class CommentCreateView(CreateView):
+    template_name = "page/news-details.html"
+    form_class = CommentForm
+
+    def form_valid(self, form, **kwargs):
+        slug = self.kwargs['slug']
+        comment_qs = Comment.objects.filter(news__slug=slug)
+        if comment_qs.exists():
+            qs = Comment.objects.filter(
+                news__slug = slug, user=self.request.user
+            )
+            if not qs.exists():
+                form.instance.user = self.request.user
+                form.instance.news = comment_qs.last()
+                messages.add_message(
+                    self.request, messages.SUCCESS, "Comment successfully!"
+                )
+                return super().form_valid(form)
+            # else:
+            #     form.add_error(
+            #         None, forms.ValidationError(
+            #             "You already applied for this job! Please update the application if required!"
+            #         )
+            #     )
+        messages.add_message(
+            self.request, messages.ERROR, "Failed to Comment!"
+        )
+        return super().form_invalid(form)
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     slug = self.kwargs['slug']
+    #     qs = Comment.objects.filter(
+    #         news__slug=slug, user=self.request.user
+    #     )
+    #     if qs.exists():
+    #         messages.add_message(
+    #             self.request, messages.WARNING, "Already Applied!"
+    #         )
+    #         return HttpResponseRedirect(reverse('home'))
+    #     return super(JobApplyCreateView, self).dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return self.request.POST.get('next', reverse('home'))
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            JobApplyCreateView, self
+        ).get_context_data(**kwargs)
+        qs = Job.objects.filter(slug=self.kwargs['slug'])
+        if qs.exists():
+            context['job'] = qs.last()
+        else:
+            context['job'] = None
+        return context
+
+
+@login_required
+def comment_reply(request, id):
+    comment_qs = Comment.objects.filter(id=id)
+    if comment_qs.exists():
+        comment_object = comment_qs.last()
+        slug = comment_object.news.slug
+        news_qs = News.objects.filter(slug=slug).first()
+        comment_qs = Comment.objects.filter(news=news_qs)
+        news_category_lists = NewsCategory.objects.all().order_by('-id')
+        reply_qs = CommentReply.objects.filter(comment=comment_qs.first())
+        last_three_job_lists = News.objects.all().exclude(
+            slug=slug).order_by('-id')[0:3]
+
+        pre_news = News.objects.filter(
+            id__lt=news_qs.id
+        ).first()
+        next_news = News.objects.filter(
+            id__gt=news_qs.id
+        ).first()
+
+        context = {'news_qs': news_qs, 'comment_qs': comment_qs,
+                'total_comment': comment_qs.count(),
+                'reply_qs': reply_qs, 'news_category_lists': news_category_lists,
+                'last_three_job_lists': last_three_job_lists,
+                'pre_news': pre_news, 'next_news': next_news
+                }
+        if request.method == "POST":
+            reply = request.POST.get("reply")
+            CommentReply.objects.create(
+                comment=comment_object,
+                replied_by=request.user,
+                reply=reply
+            )
+        return HttpResponseRedirect(reverse("news_details", kwargs={"slug": slug}))
+    return render(request, "page/news-details.html")
 
 # # -------------------------------------------------------------------
 # #                              Filtered News

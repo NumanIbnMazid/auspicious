@@ -1,7 +1,7 @@
 from allauth.account.forms import SignupForm
 from django import forms
 from django.contrib.auth.models import User
-from dashboard.models import Career
+from dashboard.models import Career, Comment
 from django.conf import settings
 import re
 from django.template.defaultfilters import filesizeformat
@@ -76,3 +76,21 @@ class CareerManageForm(forms.ModelForm):
                     raise forms.ValidationError("Please keep filesize under %s. Current filesize %s" % (
                         filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(file.size)))
         return file
+
+
+class CommentForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        self.object = kwargs.pop('object', None)
+        super(CommentForm, self).__init__(*args, **kwargs)
+
+        self.fields['contact'].widget.attrs.update({
+            'placeholder': 'Enter Comment...........',
+            'maxlength': 500
+        })
+
+    class Meta:
+        model = Comment
+        fields = [
+            'comment'
+        ]

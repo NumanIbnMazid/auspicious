@@ -1,5 +1,5 @@
 .career-area .category-item:hover {
-    background-color: blue !important;
+   background-image: linear-gradient(#7ad1f5, #3492d0);
 }
 
 ul {
@@ -18,4 +18,16 @@ ul {
 }
 .job-overview a.button {
     background-color:blue;
+}
+/* .img-fluid{
+    height: 200px;
+    weight:200px;
+} */
+
+.text-deco-none {
+    text-decoration: none !important;
+}
+
+.hide {
+    display: none !important;
 }

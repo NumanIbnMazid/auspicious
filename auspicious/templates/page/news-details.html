@@ -134,6 +134,7 @@
                                 ({{ total_comment }})
                             </h4>
                             {% for comment in news_qs.news_comment.all %}
+                            
                             <div class="single-comment-wrapper single-comment-border aos-init" data-aos="fade-up" data-aos-delay="400">
                                 <div class="blog-comment-img">
                                     <img src="{% static 'assets/landing/assets/img/blog/blog-comment-1.png' %}" alt="">
@@ -147,14 +148,42 @@
                                             <h4>{{ comment.commented_by }}</h4>
                                         </div>
                                         <div class="comment-reply">
-                                            <a href="#">Reply</a>
+                                            <!-- <button type="button"
+                                                class="btn btn-info btn-sm text-deco-none m-1 comment_reply"
+                                                id="reply-btn-{{comment.id}}"
+                                                value="{{comment.id}}"
+                                                onclick="commentReply(this.value)">
+                                                Reply
+                                            </button> -->
+                                            <button class="btn btn-primary m-l-10" type="button" data-bs-toggle="collapse" data-bs-target="#commentReplyForm_{{comment.id}}"
+                                                aria-expanded="false" aria-controls="commentReplyForm_{{comment.id}}">
+                                                Reply
+                                            </button>
                                         </div>
                                     </div>
                                     <p>{{ comment.comment }}</p>
+
+                                    <div class="collapse multi-collapse" id="commentReplyForm_{{comment.id}}">
+                                        <div class="card card-body">
+                                            <div class="row comment-reply-parent" id="comment_reply_parent_{{comment.id}}">
+                                                <form action="{% url 'comment_reply' id=comment.id %}" method="POST" class="m-b-none" id="">
+                                                    {% csrf_token %}
+                                                    <div class="">
+                                                        <textarea class="form-control" name="reply" rows="3" id="reply"></textarea>
+                                                        <span class="input-group-btn">
+                                                            <button type="submit" class="btn btn-primary btn-raised ripple-effect mt-4" id="comment-btn">
+                                                                Reply
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-
-
                             </div>
+
+                            
                                 {% for reply in comment.comment_reply.all %}
 
 
@@ -168,9 +197,6 @@
                                                 <span>{{ reply.created_at }}</span>
                                                 <h4>{{ reply.replied_by }}</h4>
                                             </div>
-                                            <div class="comment-reply">
-                                                <a href="#">Reply</a>
-                                            </div>
                                         </div>
                                         <p>{{ reply.reply }} </p>
                                     </div>
@@ -180,46 +206,22 @@
 
                             {% endfor %}
                              </div>
-
+                            
                         <div class="blog-comment-form-wrap">
                             <div class="blog-comment-form-title">
                                 <h2 data-aos="fade-up" data-aos-delay="200" class="aos-init">Leave a Reply</h2>
-                                <p data-aos="fade-up" data-aos-delay="400" class="aos-init">Your email address will not be published. please fill out this form.</p>
+                                <!-- <p data-aos="fade-up" data-aos-delay="400" class="aos-init">Your email address will not be published. please fill out this form.</p> -->
                             </div>
                             <div class="blog-comment-form">
-                                <form action="#">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="single-blog-comment-form aos-init" data-aos="fade-up" data-aos-delay="200">
-                                                <input type="text" placeholder="Your Name">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="single-blog-comment-form aos-init" data-aos="fade-up" data-aos-delay="300">
-                                                <input type="email" placeholder="Your Mail">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-md-12">
-                                            <div class="single-blog-comment-form aos-init" data-aos="fade-up" data-aos-delay="400">
-                                                <input type="text" placeholder="Your Website">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-md-12">
-                                            <div class="single-blog-comment-form aos-init" data-aos="fade-up" data-aos-delay="500">
-                                                <textarea placeholder="Comment"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-md-12">
-                                            <div class="single-blog-comment-checkbox aos-init" data-aos="fade-up" data-aos-delay="600">
-                                                <input type="checkbox">
-                                                <label>Save my name, email, and website in this browser for the next time I comment.</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-md-12">
-                                            <div class="comment-submit-btn btn-hover aos-init" data-aos="fade-up" data-aos-delay="700">
-                                                <button class="submit" type="submit">Post Comment <i class=" ti-arrow-right"></i></button>
-                                            </div>
-                                        </div>
+                                <form action="{% url 'news_details' slug=news_qs.slug %}" method="POST" class="m-b-none" id="comment_form">
+                                    {% csrf_token %}
+                                    <div class="">
+                                        <textarea class="form-control" name="comment" rows="3" id="comment"></textarea>
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-primary btn-raised ripple-effect mt-4" id="comment-btn">
+                                                Comment
+                                            </button>
+                                        </span>
                                     </div>
                                 </form>
                             </div>
@@ -261,9 +263,9 @@
                                     </div>
                                     <div class="latest-post-content">
                                         <span>{{ news.created_at.date }}</span>
-                                        <h4><a href="news-details.html">{{ news.title }}</a></h4>
+                                        <h4><a href="{% url 'news_details' news.slug %}">{{ news.title }}</a></h4>
                                         <div class="latest-post-btn">
-                                            <a href="news-details.html">Continue Reading...</a>
+                                            <a href="{% url 'news_details' news.slug %}">Continue Reading...</a>
                                         </div>
                                     </div>
                                 </div>
@@ -298,7 +300,25 @@
 
     {% include "components/footer.html" %}
     {% include "components/scripts.html" %}
-    {% block additional_js %}{% endblock %}
+    {% block additional_js %}
+    
+    <script>
+        let replyBtn = $(".comment_reply")
+        let replyForm = $(".comment-reply-parent")
+
+        // replyBtn.click(function(){
+        //     replyForm.removeClass("hide")
+        // })
+
+
+        function commentReply(commentID) {
+            $("#comment_reply_parent_" + commentID).removeClass("hide")
+            $("#comment_reply_parent_" + commentID).removeClass("comment-reply-parent")
+            $(".comment-reply-parent").html("")
+        }
+    </script>
+
+    {% endblock %}
 
 </body>
 </html>
