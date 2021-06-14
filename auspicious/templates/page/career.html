@@ -48,10 +48,15 @@
                 <div class="col-6">
                     <h3>Categories</h3>
                 </div>
-                {% check_if_applied_for_the_cv as check_if_applied_for_the_cv %}
+                
                 <div class="col-6" style="text-align: right; font-size:16;">
+                    {% if not user_cv == None %}
+                    {% check_if_applied_for_the_cv user_cv.slug as check_if_applied_for_the_cv %}
+                    {% else %}
+                    {% check_if_applied_for_the_cv None as check_if_applied_for_the_cv %}
+                    {% endif %}
                     {% if check_if_applied_for_the_cv == True %}
-                    <a href="{% url 'cv_drop_update' user=user %}">
+                    <a href="{% url 'cv_drop_update' slug=user_cv.slug %}">
                         <b>Update CV</b>
                         <img style="height:40px; width:40px;" src="{% static 'assets/landing/assets/img/Auspicious_Cv_Submit.png' %}">
                     </a>

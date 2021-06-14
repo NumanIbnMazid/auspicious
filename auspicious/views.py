@@ -128,11 +128,19 @@ def career(request):
 
     job_lists = Job.objects.filter(is_active = 'True').order_by("id")[1:5]
     career_qs = Career.objects.all()
+    user_cv_qs = Career.objects.filter(
+        user=request.user, job_id=None
+    )
     user = request.user
     
-    context = {'last_job_qs':last_job_qs,'job_lists': job_lists,
-               'job_position_qs':job_position_qs,'career_qs':career_qs,
-               'user':user}
+    context = {
+        'last_job_qs':last_job_qs,
+        'job_lists': job_lists,
+        'job_position_qs':job_position_qs,
+        'career_qs':career_qs,
+        'user':user,
+        'user_cv': user_cv_qs.last() if user_cv_qs.exists() else None
+    }
     return render(request, "page/career.html", context)
 
 # # -------News(------------------------------------------------------------
@@ -254,6 +262,25 @@ def filtered_job_lists(request, slug):
 
 
 # # -------------------------------------------------------------------
+# #                              Gallery
+# # -------------------------------------------------------------------
+def gallery(request):
+    gallery_lists = Gallery.objects.all()
+    context = {'gallery_lists':gallery_lists}
+    return render(request, 'page/galleries.html', context)
+
+
+# # -------------------------------------------------------------------
+# #                              Project Details
+# # -------------------------------------------------------------------
+def project_details(request, slug):
+    project_qs = Project.objects.filter(slug = slug).first()
+    project_category_lists = ProjectCategory.objects.all()
+    context = {'project_qs':project_qs,
+    'project_category_lists':project_category_lists}
+    return render(request, 'page/project-detail.html', context)
+
+# # -------------------------------------------------------------------
 # #                               Job Apply
 # # -------------------------------------------------------------------
 
@@ -362,13 +389,6 @@ class JobApplyUpdateView(UpdateView):
             context['job'] = None
         return context
 
-# # -------------------------------------------------------------------
-# #                              Gallery
-# # -------------------------------------------------------------------
-def gallery(request):
-    gallery_lists = Gallery.objects.all()
-    context = {'gallery_lists':gallery_lists}
-    return render(request, 'page/galleries.html', context)
 
 # # -------------------------------------------------------------------
 # #                              CV Drop
@@ -438,7 +458,7 @@ class CvDropUpdateView(UpdateView):
 
     def get_object(self):
         qs = Career.objects.filter(
-            user=self.request.user
+            user=self.request.user, slug = self.kwargs['slug']
         )
         if qs.exists():
             return qs.last()
@@ -452,7 +472,8 @@ class CvDropUpdateView(UpdateView):
 
     def form_valid(self, form, **kwargs):
         # slug = self.kwargs['slug']
-        career_qs = Career.objects.filter(user = self.request.user)
+        career_qs = Career.objects.filter(user = self.request.user,
+                    slug=self.kwargs['slug'])
         if career_qs.exists():
             form.instance.user = self.request.user
             # form.instance = career_qs.last()

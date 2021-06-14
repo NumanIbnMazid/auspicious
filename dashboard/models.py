@@ -32,6 +32,10 @@ class ProjectCategory(models.Model):
     def get_fields(self):
         return [get_dynamic_fields(field, self) for field in self.__class__._meta.fields]
 
+    def get_project_count(self):
+        return len(Project.objects.filter(
+            category__id=self.id
+        ))
 
 # # -------------------------------------------------------------------
 # #                           Project
