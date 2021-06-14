@@ -275,9 +275,11 @@ def gallery(request):
 # # -------------------------------------------------------------------
 def project_details(request, slug):
     project_qs = Project.objects.filter(slug = slug).first()
+    latest_project_lists = Project.objects.all().exclude(slug=slug)[0:4]
     project_category_lists = ProjectCategory.objects.all()
     context = {'project_qs':project_qs,
-    'project_category_lists':project_category_lists}
+    'project_category_lists':project_category_lists,
+    'latest_project_lists':latest_project_lists}
     return render(request, 'page/project-detail.html', context)
 
 # # -------------------------------------------------------------------

@@ -52,8 +52,8 @@
                         </div>
                         <div class="blog-meta-2 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                             <ul class="non-bullet-list">
-                                <li><a href="#">{{ project_qs.category }}</a>,</li>
-                                <li>By:<a href="#"> Admin</a></li>
+                                <li><a href="">{{ project_qs.category }}</a>,</li>
+                                <li><b>{{ project_qs.client_name }}</b></li>
                             </ul>
                         </div>
                         <h1 data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">{{ project_qs.name }}</h1>
@@ -85,48 +85,33 @@
                         </div>
                         <div class="sidebar-widget mb-40 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                             <div class="sidebar-widget-title-2 mb-30">
-                                <h3>Latest Post</h3>
+                                <h3>Project</h3>
                             </div>
+                            {% for latest_project in latest_project_lists %}
                             <div class="latest-post-wrap">
                                 <div class="single-latest-post">
                                     <div class="latest-post-img">
-                                        <a href="news-details.html"><img src="assets/img/blog/latest-post-1.png" alt=""></a>
+                                        <a href="{% url 'project_details' slug=latest_project.slug %}">
+                                            <img src="{{ latest_project.image.url }}" alt=""></a>
                                     </div>
                                     <div class="latest-post-content">
-                                        <span>01 May 2021</span>
-                                        <h4><a href="news-details.html">Lorem ipsum dolor sit am conse ctetur adipis</a></h4>
+                                        {% if latest_project.developement_end_year %}
+                                        <span>{{ latest_project.developement_start_year }} - {{ latest_project.developement_end_year }} </span>
+                                        {% else %}
+                                        <span>{{ latest_project.developement_start_year }}</span>
+                                        {% endif %}
+                                        <h4><a href="{% url 'project_details' slug=latest_project.slug %}">{{latest_project.name }}</a></h4>
                                         <div class="latest-post-btn">
-                                            <a href="news-details.html">Continue Reading...</a>
+                                            <a href="{% url 'project_details' slug=latest_project.slug %}">Continue Reading...</a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="single-latest-post">
-                                    <div class="latest-post-img">
-                                        <a href="news-details.html"><img src="assets/img/blog/latest-post-2.png" alt=""></a>
-                                    </div>
-                                    <div class="latest-post-content">
-                                        <span>08 Dec 2020</span>
-                                        <h4><a href="news-details.html">Phasellus vehicula sit amet nibh vitae posuere</a></h4>
-                                        <div class="latest-post-btn">
-                                            <a href="news-details.html">Continue Reading...</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="single-latest-post">
-                                    <div class="latest-post-img">
-                                        <a href="news-details.html"><img src="assets/img/blog/latest-post-3.png" alt=""></a>
-                                    </div>
-                                    <div class="latest-post-content">
-                                        <span>01 Feb 2021</span>
-                                        <h4><a href="news-details.html">Class aptent taciti sociosqu ad litora torquent</a></h4>
-                                        <div class="latest-post-btn">
-                                            <a href="news-details.html">Continue Reading...</a>
-                                        </div>
-                                    </div>
-                                </div>
+    
                             </div>
+                            <hr>
+                            {% endfor %}
                         </div>
-                        <div class="sidebar-widget mb-35 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                        <!-- <div class="sidebar-widget mb-35 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                             <div class="sidebar-widget-title-2 mb-30">
                                 <h3>Tags</h3>
                             </div>
@@ -137,7 +122,7 @@
                                 <a href="#">Design Home</a>
                                 <a href="#">Furniture</a>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="sidebar-widget aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                             <div class="sidebar-banner">
                                 <a href="product-details.html"><img src="assets/img/banner/banner-29.png" alt=""></a>
