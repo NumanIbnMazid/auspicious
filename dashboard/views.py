@@ -12,6 +12,9 @@ from .forms import (
 from util.helpers import (
     validate_normal_form, get_simple_context_data, get_simple_object, delete_simple_object, user_has_permission
 )
+from util.decorators import (
+    has_dashboard_permission_required
+)
 from django.db.models import Q
 from django.urls import reverse
 from django.shortcuts import render, redirect
@@ -27,9 +30,14 @@ from django.views.generic import CreateView, UpdateView, TemplateView, DetailVie
 from django.http import HttpResponse
 from django.core.mail import EmailMultiAlternatives
 
+dashboard_decorators = [login_required, has_dashboard_permission_required]
+
 # # -------------------------------------------------------------------
 # #                             Dashboard
 # # -------------------------------------------------------------------
+
+
+@method_decorator(dashboard_decorators, name='dispatch')
 class DashboardView(TemplateView):
     template_name = 'dashboard/base.html'
 
@@ -47,6 +55,7 @@ def get_project_category_common_contexts(request):
     return common_contexts
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class ProjectCategoryCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = ProjectCategoryManageForm
@@ -79,7 +88,7 @@ class ProjectCategoryCreateView(CreateView):
         return context
 
 
-
+@method_decorator(dashboard_decorators, name='dispatch')
 class ProjectCategoryDetailView(DetailView):
     template_name = "dashboard/snippets/detail-common.html"
 
@@ -97,6 +106,7 @@ class ProjectCategoryDetailView(DetailView):
         return context
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class ProjectCategoryUpdateView(UpdateView):
     template_name = 'dashboard/snippets/manage.html'
     form_class = ProjectCategoryManageForm
@@ -140,6 +150,8 @@ class ProjectCategoryUpdateView(UpdateView):
 
 
 @csrf_exempt
+@has_dashboard_permission_required
+@login_required
 def delete_project_category(request):
     return delete_simple_object(request=request, key='id', model=ProjectCategory, redirect_url="dashboard:create_project_category")
 
@@ -158,6 +170,7 @@ def get_project_common_contexts(request):
     return common_contexts
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class ProjectCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = ProjectManageForm
@@ -190,7 +203,7 @@ class ProjectCreateView(CreateView):
         return context
 
 
-
+@method_decorator(dashboard_decorators, name='dispatch')
 class ProjectDetailView(DetailView):
     template_name = "dashboard/snippets/detail-common.html"
 
@@ -208,6 +221,7 @@ class ProjectDetailView(DetailView):
         return context
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class ProjectUpdateView(UpdateView):
     template_name = 'dashboard/snippets/manage.html'
     form_class = ProjectManageForm
@@ -251,6 +265,8 @@ class ProjectUpdateView(UpdateView):
 
 
 @csrf_exempt
+@has_dashboard_permission_required
+@login_required
 def delete_project(request):
     return delete_simple_object(request=request, key='slug', model=Project, redirect_url="dashboard:create_project")
 
@@ -269,6 +285,8 @@ def get_news_category_common_contexts(request):
     )
     return common_contexts
 
+
+@method_decorator(dashboard_decorators, name='dispatch')
 class NewsCategoryCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = NewsCategoryManageForm
@@ -301,6 +319,7 @@ class NewsCategoryCreateView(CreateView):
         return context
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class NewsCategoryDetailView(DetailView):
     template_name = "dashboard/snippets/detail-common.html"
 
@@ -318,6 +337,7 @@ class NewsCategoryDetailView(DetailView):
         return context
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class NewsCategoryUpdateView(UpdateView):
     template_name = 'dashboard/snippets/manage.html'
     form_class = NewsCategoryManageForm
@@ -361,6 +381,8 @@ class NewsCategoryUpdateView(UpdateView):
 
 
 @csrf_exempt
+@has_dashboard_permission_required
+@login_required
 def delete_news_category(request):
     return delete_simple_object(request=request, key='slug', model=NewsCategory, redirect_url="dashboard:create_news_category")
 
@@ -376,6 +398,8 @@ def get_news_common_contexts(request):
     )
     return common_contexts
 
+
+@method_decorator(dashboard_decorators, name='dispatch')
 class NewsCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = NewsManageForm
@@ -408,6 +432,7 @@ class NewsCreateView(CreateView):
         return context
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class NewsDetailView(DetailView):
     template_name = "dashboard/snippets/detail-common.html"
 
@@ -425,6 +450,7 @@ class NewsDetailView(DetailView):
         return context
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class NewsUpdateView(UpdateView):
     template_name = 'dashboard/snippets/manage.html'
     form_class = NewsManageForm
@@ -468,6 +494,8 @@ class NewsUpdateView(UpdateView):
 
 
 @csrf_exempt
+@has_dashboard_permission_required
+@login_required
 def delete_news(request):
     return delete_simple_object(request=request, key='slug', model=News, redirect_url="dashboard:create_news")
 
@@ -484,6 +512,7 @@ def get_gallery_common_contexts(request):
     return common_contexts
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class GalleryCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = GalleryManageForm
@@ -516,7 +545,7 @@ class GalleryCreateView(CreateView):
         return context
 
 
-
+@method_decorator(dashboard_decorators, name='dispatch')
 class GalleryDetailView(DetailView):
     template_name = "dashboard/snippets/detail-common.html"
 
@@ -534,6 +563,7 @@ class GalleryDetailView(DetailView):
         return context
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class GalleryUpdateView(UpdateView):
     template_name = 'dashboard/snippets/manage.html'
     form_class = GalleryManageForm
@@ -577,6 +607,8 @@ class GalleryUpdateView(UpdateView):
 
 
 @csrf_exempt
+@has_dashboard_permission_required
+@login_required
 def delete_gallery(request):
     return delete_simple_object(request=request, key='slug', model=Gallery, redirect_url="dashboard:create_gallery")
 
@@ -593,6 +625,7 @@ def get_client_common_contexts(request):
     return common_contexts
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class ClientCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = ClientManageForm
@@ -625,7 +658,7 @@ class ClientCreateView(CreateView):
         return context
 
 
-
+@method_decorator(dashboard_decorators, name='dispatch')
 class ClientDetailView(DetailView):
     template_name = "dashboard/snippets/detail-common.html"
 
@@ -643,6 +676,7 @@ class ClientDetailView(DetailView):
         return context
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class ClientUpdateView(UpdateView):
     template_name = 'dashboard/snippets/manage.html'
     form_class = ClientManageForm
@@ -686,6 +720,8 @@ class ClientUpdateView(UpdateView):
 
 
 @csrf_exempt
+@has_dashboard_permission_required
+@login_required
 def delete_client(request):
     return delete_simple_object(request=request, key='slug', model=Client, redirect_url="dashboard:create_client")
 
@@ -703,6 +739,7 @@ def get_social_account_common_contexts(request):
     return common_contexts
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class SocialAccountCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = SocialAccountManageForm
@@ -735,7 +772,7 @@ class SocialAccountCreateView(CreateView):
         return context
 
 
-
+@method_decorator(dashboard_decorators, name='dispatch')
 class SocialAccountDetailView(DetailView):
     template_name = "dashboard/snippets/detail-common.html"
 
@@ -753,6 +790,7 @@ class SocialAccountDetailView(DetailView):
         return context
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class SocialAccountUpdateView(UpdateView):
     template_name = 'dashboard/snippets/manage.html'
     form_class = SocialAccountManageForm
@@ -796,6 +834,8 @@ class SocialAccountUpdateView(UpdateView):
 
 
 @csrf_exempt
+@has_dashboard_permission_required
+@login_required
 def delete_social_account(request):
     return delete_simple_object(request=request, key='id', model=SocialAccount, redirect_url="dashboard:create_social_account")
 
@@ -813,6 +853,7 @@ def get_job_position_common_contexts(request):
     return common_contexts
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class JobPositionCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = JobPositionManageForm
@@ -845,7 +886,7 @@ class JobPositionCreateView(CreateView):
         return context
 
 
-
+@method_decorator(dashboard_decorators, name='dispatch')
 class JobPositionDetailView(DetailView):
     template_name = "dashboard/snippets/detail-common.html"
 
@@ -863,6 +904,7 @@ class JobPositionDetailView(DetailView):
         return context
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class JobPositionUpdateView(UpdateView):
     template_name = 'dashboard/snippets/manage.html'
     form_class = JobPositionManageForm
@@ -906,6 +948,8 @@ class JobPositionUpdateView(UpdateView):
 
 
 @csrf_exempt
+@has_dashboard_permission_required
+@login_required
 def delete_job_position(request):
     return delete_simple_object(request=request, key='id', model=JobPosition, redirect_url="dashboard:create_job_position")
 
@@ -922,6 +966,7 @@ def get_job_common_contexts(request):
     return common_contexts
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class JobCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = JobManageForm
@@ -947,6 +992,7 @@ class JobCreateView(CreateView):
         return context
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class JobDetailView(DetailView):
     template_name = "dashboard/snippets/detail-common.html"
 
@@ -964,6 +1010,7 @@ class JobDetailView(DetailView):
         return context
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class JobUpdateView(UpdateView):
     template_name = 'dashboard/snippets/manage.html'
     form_class = JobManageForm
@@ -992,6 +1039,8 @@ class JobUpdateView(UpdateView):
 
 
 @csrf_exempt
+@has_dashboard_permission_required
+@login_required
 def delete_job(request):
     return delete_simple_object(request=request, key='slug', model=Job, redirect_url="dashboard:create_job")
 
@@ -1009,6 +1058,7 @@ def get_contact_common_contexts(request):
     return common_contexts
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class ContactCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = ContactManageForm
@@ -1041,7 +1091,7 @@ class ContactCreateView(CreateView):
         return context
 
 
-
+@method_decorator(dashboard_decorators, name='dispatch')
 class ContactDetailView(DetailView):
     template_name = "dashboard/snippets/detail-common.html"
 
@@ -1059,6 +1109,7 @@ class ContactDetailView(DetailView):
         return context
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class ContactUpdateView(UpdateView):
     template_name = 'dashboard/snippets/manage.html'
     form_class = ContactManageForm
@@ -1102,6 +1153,8 @@ class ContactUpdateView(UpdateView):
 
 
 @csrf_exempt
+@has_dashboard_permission_required
+@login_required
 def delete_contact(request):
     return delete_simple_object(request=request, key='id', model=Contact, redirect_url="dashboard:create_contact")
 
@@ -1116,6 +1169,8 @@ def get_job_application_common_contexts(request):
     )
     return common_contexts
 
+
+@method_decorator(dashboard_decorators, name='dispatch')
 class JobApplicationListView(ListView):
     template_name = "dashboard/pages/job-application/list.html"
 
@@ -1143,6 +1198,7 @@ class JobApplicationListView(ListView):
         return context
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class JobApplicationUpdateView(UpdateView):
     template_name = 'dashboard/snippets/manage.html'
     form_class = JobApplicationManageForm
@@ -1179,6 +1235,7 @@ class JobApplicationUpdateView(UpdateView):
         return context
 
 
+@method_decorator(dashboard_decorators, name='dispatch')
 class JobApplicationDetailView(DetailView):
     template_name = "dashboard/pages/job-application/detail.html"
 
@@ -1206,10 +1263,15 @@ class JobApplicationDetailView(DetailView):
 
 
 @csrf_exempt
+@has_dashboard_permission_required
+@login_required
 def delete_job_application(request):
     return delete_simple_object(request=request, key='slug', model=Career, redirect_url="dashboard:job_application_list")
 
 
+# @csrf_exempt
+@has_dashboard_permission_required
+@login_required
 def update_job_application_status(request, slug):
     job_qs = Career.objects.filter(
         slug=slug

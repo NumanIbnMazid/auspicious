@@ -12,3 +12,16 @@ user_has_permission = user_passes_test(
 def has_permission_required(view_func):
     decorated_view_func = login_required(user_has_permission(view_func))
     return decorated_view_func
+
+
+# has dashboard permission required
+
+
+has_dashboard_permission = user_passes_test(
+    lambda user: user.is_superuser == True or not user.user_profile.created_by == None, login_url=settings.HOME_URL
+)
+
+
+def has_dashboard_permission_required(view_func):
+    decorated_view_func = login_required(has_dashboard_permission(view_func))
+    return decorated_view_func
