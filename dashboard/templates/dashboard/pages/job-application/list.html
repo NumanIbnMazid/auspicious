@@ -170,7 +170,15 @@
                                 {% if value == None or value == "" %}
                                 <td>--</td>
                                 {% else %}
+
+                                {% if label == "status" %}
+                                <td
+                                    class="{% if value == 'Rejected' %}text-danger font-bold{% endif %}{% if value == 'Confirmed' %}text-success font-bold{% endif %}">
+                                    {{ value }}</td>
+                                {% else %}
                                 <td>{{ value }}</td>
+                                {% endif %}
+
                                 {% endif %}
                                 {% endif %}
 
@@ -214,6 +222,10 @@
     </div>
 </div>
 
+{% endif %}
+
+{% if not delete_url == None and can_delete == True %}
+{% include 'dashboard/snippets/delete-modal.html' %}
 {% endif %}
 
 {% endblock %}
