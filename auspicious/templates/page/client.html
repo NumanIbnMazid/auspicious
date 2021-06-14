@@ -44,10 +44,17 @@
                 {% for sister_client in sister_client_lists %}
                 <div class="col-md-3 col-6">
                     <div class="sister-item">
-                        <a href="{{ sister_client.url }}">
+                        {% if sister_client.url %}
+                        <a href="{{ sister_client.url }}" target="_blank">
                             <img src="{{ sister_client.logo.url }}" class="img-fluid" alt="">
                             <p>{{ sister_client.name }}</p>
                         </a>
+                        {% else %}
+                        <a href="">
+                            <img src="{{ sister_client.logo.url }}" class="img-fluid" alt="">
+                            <p>{{ sister_client.name }}</p>
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
@@ -58,10 +65,17 @@
                 {% for enlistment_client in enlistment_client_lists %}
                 <div class="col-md-4 col-6">
                     <div class="sister-item">
-                        <a href="{{ enlistment_client.url }}">
+                        {% if enlistment_client.url %}
+                        <a href="{{ enlistment_client.url }}" target="_blank">
                             <img src="{{ enlistment_client.logo.url }}" class="img-fluid" alt="">
                             <p>{{ enlistment_client.title }}</p>
                         </a>
+                        {% else %}
+                        <a href="" >
+                            <img src="{{ enlistment_client.logo.url }}" class="img-fluid" alt="">
+                            <p>{{ enlistment_client.title }}</p>
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
@@ -72,10 +86,18 @@
                 {% for local_client_representative in local_client_representative_lists %}
                 <div class="col-md-4 col-6">
                     <div class="sister-item">
+                        {% if local_client_representative.url %}
+                        <a href="{{ local_client_representative.url }}" target="_blank">
+                            <img src="{{ local_client_representative.logo.url }}" class="img-fluid" alt="">
+                            <p>{{ local_client_representative.title }}</p>
+                        </a>
+                        {% else %}
                         <a href="{{ local_client_representative.url }}">
                             <img src="{{ local_client_representative.logo.url }}" class="img-fluid" alt="">
                             <p>{{ local_client_representative.title }}</p>
                         </a>
+                        {% endif %}
+
                     </div>
                 </div>
                 {% endfor %}
@@ -86,10 +108,17 @@
                 {% for civil_client in civil_client_lists %}
                 <div class="col-md-4 col-6">
                     <div class="sister-item">
-                        <a href="{{ civil_client.url }}">
+                        {% if civil_client.url %}
+                        <a href="{{ civil_client.url }}" target="_blank">
                             <img src="{{ civil_client.logo.url }}" class="img-fluid" alt="">
                             <p>{{ civil_client.title }}</p>
                         </a>
+                        {% else %}
+                        <a href="">
+                            <img src="{{ civil_client.logo.url }}" class="img-fluid" alt="">
+                            <p>{{ civil_client.title }}</p>
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
@@ -99,10 +128,17 @@
                 {% for telecom_client in telecom_client_lists %}
                 <div class="col-md-4 col-6">
                     <div class="sister-item">
-                        <a href="{{ telecom_client.url }}">
+                        {% if telecom_client.url %}
+                        <a href="{{ telecom_client.url }}" target="_blank">
                             <img src="{{ telecom_client.logo.url }}" class="img-fluid" alt="">
                             <p>{{ telecom_client.title }}</p>
                         </a>
+                        {% else %}
+                        <a href="">
+                            <img src="{{ telecom_client.logo.url }}" class="img-fluid" alt="">
+                            <p>{{ telecom_client.title }}</p>
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
