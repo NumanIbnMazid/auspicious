@@ -10,7 +10,8 @@ from .views import (
     delete_contact, ProjectCategoryCreateView, ProjectCategoryUpdateView, delete_project_category,
     JobCreateView, JobUpdateView, JobDetailView, delete_job,
     JobApplicationListView, JobApplicationUpdateView, JobApplicationDetailView, delete_job_application,
-    update_job_application_status
+    update_job_application_status,
+    CVListView, CVUpdateView, delete_cv, CVDetailView
 )
 
 
@@ -149,5 +150,19 @@ urlpatterns = [
          name="delete_job_application"),
     path("update/job-application/<slug>/status", update_job_application_status,
          name="update_job_application_status"),
+
+    # # -------------------------------------------------------------------
+    # #                       Career / CV
+    # # -------------------------------------------------------------------
+    path("cv/list/", CVListView.as_view(),
+         name="cv_list"),
+    path("cv/<slug>/update/", CVUpdateView.as_view(),
+         name="cv_update"),
+    path("cv/<slug>/detail/",
+         CVDetailView.as_view(), name="cv_detail"),
+    path("delete/cv/", delete_cv,
+         name="delete_cv"),
+#     path("update/cv/<slug>/status", update_cv_status,
+#          name="update_cv_status"),
 ]
 

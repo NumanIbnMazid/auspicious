@@ -461,3 +461,39 @@ class JobApplicationManageForm(forms.ModelForm):
         fields = [
             "job", "file", "contact", "status"
         ]
+
+class CVManageForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(CVManageForm, self).__init__(*args, **kwargs)
+        self.fields['contact'].widget.attrs.update({
+            'placeholder': 'Enter Contact Number...',
+            'maxlength': 50
+        })
+
+    class Meta:
+        model = Career
+        fields = [
+            "file", "contact", "status"
+        ]
+
+
+JOB_APPLICATION_STATUS_CHOICES = (
+    ("Pending", "Pending"),
+    ("Review", "Review"),
+    ("Confirmed", "Confirmed"),
+    ("Rejected", "Rejected"),
+)
+class JobStatusManageForm(forms.Form):
+    status = forms.ChoiceField(
+        choices=JOB_APPLICATION_STATUS_CHOICES, label="status"
+    )
+    mail_body = forms.CharField(
+        required=False, widget=CKEditorWidget()
+    )
+
+    def __init__(self, *args, **kwargs):
+        career_object = kwargs.pop('career_object', None)
+        print(career_object, "*** Career Object From View in Form ***")
+        super(JobStatusManageForm, self).__init__(*args, **kwargs)
+        self.fields['status'].initial = career_object.status
