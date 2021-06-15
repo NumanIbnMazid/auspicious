@@ -320,11 +320,24 @@
                             <i class="fa fa-phone" aria-hidden="true"></i>
                             <a href="tel:+8809611699580">{{contact_qs.phone1}}</a>
                         </div>
-                    </div>
-                    <div class="col-md-4 col-12">
-                        <div class="icon-text">
-                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                            <a href="mailto:info@auspiciousbd.com">{{contact_qs.email}}</a>
+                        <div class="col-md-4 col-12">
+                            <ul class="social-icons">
+                                {% for social_account in social_account_lists %}
+                                    {% if social_account.title in "Facebook, facebook" %}
+                                    <li><a href="{{ social_account.url }}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                    {% elif social_account.title in "Linkdine, Linkedin" %}
+                                    <li><a href="{{ social_account.url }}" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                                    {% elif social_account.title in "Instragram, instagram" %}
+                                    <li><a href="{{ social_account.url }}" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                                    {% else %}
+                                    <li>
+                                        <a href="{{ social_account.url }}" target="_blank">
+                                            <img style="height: 50px;width: 50px;" src="{{ social_account.logo.url }}" alt="{{social_account.title}}">
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
