@@ -43,12 +43,10 @@
             <div class="row">
                 {% for gallery in gallery_lists %}
                 <div class="col-md-3 col-2">
-                    <a href="{{ gallery.image.url }}"
-                        data-fancybox="images-preview"
-                        data-width="1500" data-height="1000"
-                        data-thumbs='{"autoStart":true}'>
-                        <img src="{{ gallery.image.url }}" title="Gallery Title" class="img-fluid" style="width: 200px; height: 200px;"/>
-                    </a>
+                    <img class="img-thumbnail ez-view m-2" src="{{ gallery.image.url }}" alt="{{ gallery.image.url }}"
+                        style="width: 200px; height: 200px;">
+                    <!-- <img src="{{ gallery.image.url }}" title="Gallery Title" class="img-fluid"
+                        style="width: 200px; height: 200px;" /> -->
                 </div>
                 {% endfor %}
 
@@ -62,7 +60,12 @@
 
     {% include "components/footer.html" %}
     {% include "components/scripts.html" %}
-    {% block additional_js %}{% endblock %}
+    {% block additional_js %}
+    <!-- EZ View JS -->
+    <script src="{% static 'assets/vendors/ez-view/EZView.js' %}"></script>
+    <script src="{% static 'assets/vendors/ez-view/draggable.js' %}"></script>
+    <script src="{% static 'assets/vendors/ez-view/ez-conf.js' %}"></script>
+    {% endblock %}
 
 </body>
 </html>

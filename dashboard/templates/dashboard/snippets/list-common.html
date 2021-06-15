@@ -208,6 +208,10 @@
 
 {% endif %}
 
+{% if not delete_url == None and can_delete == True %}
+{% include 'dashboard/snippets/delete-modal.html' %}
+{% endif %}
+
 {% endblock %}
 
 {% block additional_js %}
