@@ -29,8 +29,20 @@
     <div class="{% if not field.label == 'Remember Me' %}input-group input-group-merge input-group-alternative"{% endif %}>
         <div class="col-md-3">
             {% if not field.label == "Remember Me" %}
+            {% if field.label == "Password (again)" %}
             <div class="input-group-prepend">
-                <span class="input-group-text bg-white border-none">
+                <span class="input-group-text border-none">
+                    <strong>Confirm Password</strong>
+                    {% if field.field.required %}
+                    <small class="text-danger ml-2 font-bold font-17">
+                        <i class="field_priority" id="{{field.name}}_priority"> *</i>
+                    </small>
+                    {% endif %}
+                </span>
+            </div>
+            {% else %}
+            <div class="input-group-prepend">
+                <span class="input-group-text border-none">
                     <strong>{{ field.label |title }}</strong>
                     {% if field.field.required %}
                     <small class="text-danger ml-2 font-bold font-17">
@@ -39,6 +51,7 @@
                     {% endif %}
                 </span>
             </div>
+            {% endif %}
             {% endif %}
         </div>
 

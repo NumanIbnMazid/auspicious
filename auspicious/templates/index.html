@@ -98,111 +98,84 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="item-menu">
-                            <ul class="non-bullet-list">
-                                <li data-filter="" class="active">All</li>
-                                <li data-filter=".ongoing">Ongoing</li>
-                                <li data-filter=".latest">Latest</li>
-                                <li data-filter=".completed">Completed</li>
+                            <ul class="controls">
+                                <li type="button" class="control" data-filter="all">All</li>
+                                <li type="button" class="control" data-filter=".ongoing">Ongoing</li>
+                                <li type="button" class="control" data-filter=".latest">Latest</li>
+                                <li type="button" class="control" data-filter=".completed">Completed</li>
                             </ul>
                         </div>
                     </div>
+                </div>
 
-                    <div class="project-items">
-
-                        <div class="row">
-                            <!-- {% for project in project_lists %}
-                            <div class="col-md-3 col-sm-6 item all">
-                                <div class="product-item">
-                                    <img src="{{ project.image.url }}" alt="" class="img-fluid" height="150px">
-                                    <div class="overlay">
-                                        <p>{{ project.name }}</p>
-                                    </div>
-                                    <div class="explore">
-                                        <a href="">Explore</a>
-                                    </div>
+                <div class="project-items">
+                    <div class="row">
+                        {% for project in ongoing_project_lists %}
+                        <div class="col-md-3 col-sm-6 mix ongoing">
+                            <div class="product-item">
+                                <img src="{{ project.image.url }}" alt="" class="img-fluid" style="height:172px;width:350px;">
+                                <div class="overlay">
+                                    <p>{{ project.name }}</p>
                                 </div>
-
-                            </div>
-                            {% endfor %} -->
-
-                            {% for project in ongoing_project_lists %}
-            
-                            <div class="col-md-3 col-sm-6 item ongoing">
-                                
-                                <div class="product-item">
-                                    <img src="{{ project.image.url }}" alt="" class="img-fluid">
-                                    <div class="overlay">
-                                        <p>{{ project.name }}</p>
-                                    </div>
-                                    <div class="explore">
-                                        <a href="{% url 'project_details' slug=project.slug %}">Explore</a>
-                                    </div>
+                                <div class="explore">
+                                    <a href="{% url 'project_details' slug=project.slug %}">Explore</a>
                                 </div>
-                            
-
                             </div>
-                        
-                            {% endfor %}
-
-                            {% for project in latest_project_lists %}
-                            <div class="col-md-3 col-sm-6 item latest">
-                                
-                                <div class="product-item">
-                                    <img src="{{ project.image.url }}" alt="" class="img-fluid">
-                                    <div class="overlay">
-                                        <p>{{ project.name }}</p>
-                                    </div>
-                                    <div class="explore">
-                                        <a href="{% url 'project_details' slug=project.slug %}">Explore</a>
-                                    </div>
-                                </div>
-                                
-
-                            </div>
-                            {% endfor %}
-
-                            {% for project in completed_project_lists %}
-                            <div class="col-md-3 col-sm-6 item completed">
-                                
-                                <div class="product-item">
-                                    <img src="{{ project.image.url }}" alt="" class="img-fluid">
-                                    <div class="overlay">
-                                        <p>{{ project.name }}</p>
-                                    </div>
-                                    <div class="explore">
-                                        <a href="{% url 'project_details' slug=project.slug %}">Explore</a>
-                                    </div>
-                                </div>
-                                
-
-                            </div>
-                            {% endfor %}
-
                         </div>
+                        {% endfor %}
+
+                        {% for project in latest_project_lists %}
+                        <div class="col-md-3 col-sm-6 mix latest">
+                            <div class="product-item">
+                                <img src="{{ project.image.url }}" alt="" class="img-fluid" style="height:172px;width:350px;">
+                                <div class="overlay">
+                                    <p>{{ project.name }}</p>
+                                </div>
+                                <div class="explore">
+                                    <a href="{% url 'project_details' slug=project.slug %}">Explore</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        {% for project in completed_project_lists %}
+                        <div class="col-md-3 col-sm-6 mix completed">
+                            <div class="product-item">
+                                <img src="{{ project.image.url }}" alt="" class="img-fluid" style="height:172px;width:350px;">
+                                <div class="overlay">
+                                    <p>{{ project.name }}</p>
+                                </div>
+                                <div class="explore">
+                                    <a href="{% url 'project_details' slug=project.slug %}">Explore</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
 
                     </div>
                 </div>
             </div>
-            <!-- Project End -->
+        </div>
+        <!-- Project End -->
 
-            <!-- News Start -->
-            <div class="news-area">
+        <!-- News Start -->
+        <div class="news-area">
 
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4 col-4">
-                            <div class="title">
-                                <h2>Latest</h2>
-                                <h1>News!</h1>
-                                <a href="">Explore More</a>
-                            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-4">
+                        <div class="title">
+                            <h2>Latest</h2>
+                            <h1>News!</h1>
+                            <a href="">Explore More</a>
                         </div>
-                        {% if latest_news_lists %}
-                        <div class="col-md-8 col-8">
+                    </div>
+                    {% if latest_news_lists %}
+                    <div class="col-md-8 col-8">
 
-                            <div class="news">
-                                {% for news in latest_news_lists %}
-                                <a href="{% url 'news_details' slug=news.slug %}">
+                        <div class="news">
+                            {% for news in latest_news_lists %}
+                            <a href="{% url 'news_details' slug=news.slug %}">
 
                                 <div class="item">
                                     <img src="{{ news.image.url }}" alt="" style="height: 250px; width: 250px;">
@@ -212,65 +185,63 @@
                                     </div>
                                 </div>
                             </a>
-                                {% endfor %}
-
-                            </div>
-
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            <!-- News End -->
-
-            <!-- swipper gallery example start -->
-
-            <!--Carousel Gallery-->
-            <div class="gallery-area">
-                <div class="container">
-                    <div class="section-title">
-                        <div class="row">
-                            <div class="col-8">
-                                <h4>Gallery</h4>
-                            </div>
-                            <div class="col-4 text-end">
-                                <a href="{% url 'gallery' %}" class="">View all</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="wrapper">
-                <div class="carousel-gallery">
-                    <div class="swiper-container">
-                        <div class="swiper-wrapper">
-                            {% for image in image_lists %}
-                            <div class="swiper-slide">
-                                <a href="{{ image.image.url }}"
-                                    data-fancybox="gallery">
-                                    <div class="image", 
-                                        style="background-image: url({{ image.image.url }})">
-                                        <div class="overlay">
-                                            <em class="mdi mdi-magnify-plus"></em>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
                             {% endfor %}
 
                         </div>
-                        <div class="swiper-pagination"></div>
+
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- News End -->
+
+        <!-- swipper gallery example start -->
+
+        <!--Carousel Gallery-->
+        <div class="gallery-area">
+            <div class="container">
+                <div class="section-title">
+                    <div class="row">
+                        <div class="col-8">
+                            <h4>Gallery</h4>
+                        </div>
+                        <div class="col-4 text-end">
+                            <a href="{% url 'gallery' %}" class="">View all</a>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="wrapper">
+            <div class="carousel-gallery">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        {% for image in image_lists %}
+                        <div class="swiper-slide">
+                            <a href="{{ image.image.url }}" data-fancybox="gallery">
+                                <div class="image" , style="background-image: url({{ image.image.url }})">
+                                    <div class="overlay">
+                                        <em class="mdi mdi-magnify-plus"></em>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
 
-            <!--#Carousel Gallery-->
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </div>
 
-            <!-- swiper gallery example end -->
+        <!--#Carousel Gallery-->
 
-            <!-- Gallery Start -->
-            <!-- <div class="gallery-area">
+        <!-- swiper gallery example end -->
+
+        <!-- Gallery Start -->
+        <!-- <div class="gallery-area">
                 <div class="container">
                     <div class="section-title">
                         <div class="row">
@@ -299,78 +270,81 @@
 
                 </div>
             </div> -->
-            <!-- Gallery End -->
+        <!-- Gallery End -->
 
-            <!-- Clients Start -->
-            <div class="clients-area">
-                <div class="container">
-                    <div class="section-title">
-                        <div class="row">
-                            <div class="col-8">
-                                <h4>Clients & Sister Concern</h4>
-                            </div>
-                            <div class="col-4 text-end">
-                                <a href="{% url 'client' %}" class="">View all</a>
-                            </div>
+        <!-- Clients Start -->
+        <div class="clients-area">
+            <div class="container">
+                <div class="section-title">
+                    <div class="row">
+                        <div class="col-8">
+                            <h4>Clients & Sister Concern</h4>
+                        </div>
+                        <div class="col-4 text-end">
+                            <a href="{% url 'client' %}" class="">View all</a>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="clients-items owl-carousel owl-theme text-center">
-                                {% for clients in clients_lists %}
-                                <div class="single-item">
-                                    <a href="{% url 'client' %}"><img src="{{ clients.logo.url }}"
-                                            alt="{{ clients.name }}"></a>
-                                </div>
-                                {% endfor %}
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="clients-items owl-carousel owl-theme text-center">
+                            {% for clients in clients_lists %}
+                            <div class="single-item">
+                                <a href="{% url 'client' %}"><img src="{{ clients.logo.url }}"
+                                        alt="{{ clients.name }}"></a>
                             </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Clients End -->
+        </div>
+        <!-- Clients End -->
 
-            <!-- Map Start -->
-            <div class="map-area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="map">
-                                    <div style="width: 100%"><iframe width="100%" height="600" frameborder="0"
-                                            scrolling="no" marginheight="0" marginwidth="0"
-                                            src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=+(Auspicious)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
-                                    </div>
+        <!-- Map Start -->
+        <div class="map-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="map">
+                            <div style="width: 100%"><iframe width="100%" height="600" frameborder="0" scrolling="no"
+                                    marginheight="0" marginwidth="0"
+                                    src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=+(Auspicious)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-md-between">
-                        <div class="col-md-4 col-12">
-                            <div class="icon-text">
-                                <i class="fa fa-phone" aria-hidden="true"></i>
-                                <a href="tel:+8809611699580">{{contact_qs.phone1}}</a>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-12">
-                            <div class="icon-text">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                                <a href="mailto:info@auspiciousbd.com">{{contact_qs.email}}</a>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-12">
-                            <ul class="social-icons">
-                                <li><a href="https://www.facebook.com/AuspiciousBangladesh"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="https://www.linkedin.com/company/auspicious/"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="https://www.facebook.com/AuspiciousBangladesh"><i class="fa fa-instagram"></i></a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
+                <div class="row justify-content-md-between">
+                    <div class="col-md-4 col-12">
+                        <div class="icon-text">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                            <a href="tel:+8809611699580">{{contact_qs.phone1}}</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="icon-text">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            <a href="mailto:info@auspiciousbd.com">{{contact_qs.email}}</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <ul class="social-icons">
+                            <li><a href="https://www.facebook.com/AuspiciousBangladesh"><i
+                                        class="fa fa-facebook"></i></a></li>
+                            <li><a href="https://www.linkedin.com/company/auspicious/"><i
+                                        class="fa fa-linkedin"></i></a></li>
+                            <li><a href="https://www.facebook.com/AuspiciousBangladesh"><i
+                                        class="fa fa-instagram"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <!-- Map End -->
+        </div>
+        <!-- Map End -->
 
-            {% include "components/footer.html" %}
-            {% include "components/scripts.html" %}
-            {% block additional_js %}{% endblock %}
+        {% include "components/footer.html" %}
+        {% include "components/scripts.html" %}
+        {% block additional_js %}{% endblock %}
 
     </body>
 

@@ -128,9 +128,12 @@ def career(request):
 
     job_lists = Job.objects.filter(is_active = 'True').order_by("id")[1:5]
     career_qs = Career.objects.all()
-    user_cv_qs = Career.objects.filter(
-        user=request.user, job_id=None
-    )
+    if request.user.is_authenticated:
+        user_cv = Career.objects.filter(
+            user=request.user, job_id=None
+        ).last()
+    else:
+        user_cv = None
     user = request.user
     
     context = {
@@ -139,7 +142,7 @@ def career(request):
         'job_position_qs':job_position_qs,
         'career_qs':career_qs,
         'user':user,
-        'user_cv': user_cv_qs.last() if user_cv_qs.exists() else None
+        'user_cv': user_cv
     }
     return render(request, "page/career.html", context)
 
@@ -614,3 +617,8 @@ class CvDropUpdateView(UpdateView):
         # else:
         #     context['user'] = None
         return context
+
+
+# # -------------------------------------------------------------------
+# #                              Contact
+# # -------------------------------------------------------------------

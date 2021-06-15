@@ -1,28 +1,70 @@
-{% extends "account/base.html" %}
+{% load static %}
 
-{% block head_title %}{% block page_title %}
-Sign up
-{% endblock %}{% endblock %}
+{% url 'home' as home_url %}
+{% url 'account_signup' as signup_url %}
+{% url 'account_login' as login_url %}
+{% url 'account_logout' as logout_url %}
 
-{% block content %}
+<!doctype html>
+<html lang="en">
 
-<form method="POST" action="{% url 'account_signup' %}" class="" data-toggle="validator">
-  {% csrf_token %}
-  {% include 'snippets/account-form.html' %}
+<head>
+  {% include "components/styles.html" %}
 
-  <div class="row justify-content-center">
-    <div class="col-4 text-center">
-      <button type="submit" class="btn btn-primary btn-block btn-lg">Sign up</button>
+  <title>Auspicious</title>
+</head>
+
+<body>
+  {% include "components/loader.html" %}
+  {% include "components/header.html" %}
+  {% block additional_css %}{% endblock %}
+
+
+  <div class="blog-details-area pt-100 pb-100">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="blog-details-wrapper">
+            <div class="blog-comment-form-wrap">
+              <div class="blog-comment-form-title text-center">
+                <h2 data-aos="fade-up" data-aos-delay="200" class="aos-init">Signup</h2>
+              </div>
+              <div class="blog-comment-form">
+                <form method="POST" action="{% url 'account_signup' %}" class="" data-toggle="validator">
+                  {% csrf_token %}
+                  {% include 'snippets/account-form.html' %}
+                  <div class="row justify-content-center">
+                    <div class="col-4 text-center">
+                      <button type="submit" class="btn btn-block btn-lg text-white" style="background-color:#077ece">
+                        Sign up
+                      </button>
+                    </div>
+                  </div>
+                </form>
+
+                <div class="text-center m-4">
+                  <p class="text-muted">
+                    <small>Already have an account?</small>
+                    <a href="{{ login_url }}">
+                      Login
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 
-</form>
 
-<hr>
+  {% include "components/footer.html" %}
+  {% include "components/scripts.html" %}
+  {% block additional_js %}
+  <!-- Bootstrap Validator -->
+  <script src="{% static 'assets/vendors/bootstrap-validator/validator.js' %}"></script>{% endblock %}
+</body>
 
-<div class="text-center">
-  <p class="text-muted"><small>Already have an account?</small></p>
-  <a href="{{ login_url }}" class="btn btn-success">Login</a>
-</div>
-
-{% endblock %}
+</html>

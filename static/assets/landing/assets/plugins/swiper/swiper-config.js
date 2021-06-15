@@ -28,7 +28,7 @@ $(function(){
         },
         // when window width is <= 640px
         768: {
-          slidesPerView: 3,
+          slidesPerView: 5,
           spaceBetween: 20
         }
       }

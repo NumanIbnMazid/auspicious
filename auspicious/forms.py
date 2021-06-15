@@ -21,10 +21,10 @@ class CustomSignupForm(SignupForm):
         (OTHER, 'Other'),
         (UNDEFINED, 'Do not mention'),
     )
-    gender = forms.ChoiceField(
-        choices=GENDER_CHOICES, label="Gender", initial='',
-        widget=forms.Select(), required=True
-    )
+    # gender = forms.ChoiceField(
+    #     choices=GENDER_CHOICES, label="Gender", initial='',
+    #     widget=forms.Select(), required=True
+    # )
 
     def signup(self, request, user):
         user.save()

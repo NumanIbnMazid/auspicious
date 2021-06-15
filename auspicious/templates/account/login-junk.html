@@ -1,0 +1,174 @@
+{% load static %}
+
+{% load i18n %}
+
+{% load widget_tweaks %}
+
+{% url 'home' as home_url %}
+{% url 'account_signup' as signup_url %}
+{% url 'account_login' as login_url %}
+{% url 'account_logout' as logout_url %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Auspicious</title>
+
+    <!-- favicon -->
+    <link rel="apple-touch-icon" href="{% static 'assets/landing/assets/img/favicons/favicon.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/landing/assets/img/favicons/favicon.png' %}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/landing/assets/css/login.css' %}">
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="frame">
+            <div class="nav">
+                <ul class="links">
+                    <li class="signin-active"><a class="authenticationBtn">Sign in</a></li>
+                    <li class="signup-inactive"><a class="authenticationBtn">Sign up </a></li>
+                </ul>
+            </div>
+            <div ng-app ng-init="checked = false">
+                <form method="POST" action="{% url 'account_login' %}" class="form-signin" name="form"
+                    data-toggle="validator">
+                    {% csrf_token %}
+
+                    {% for hidden_field in form.hidden_fields %}
+                    {% if hidden_field.errors %}
+                    <div class="alert alert-warning" role="alert">
+                        {% for error in hidden_field.errors %}
+                        <p class="text-danger font-italic">
+                            <strong>(Hidden field {{ hidden_field.name }}) {{ error }}</strong>
+                        </p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {{ hidden_field }}
+                    {% endfor %}
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-warning" role="alert">
+                        {% for error in form.non_field_errors %}
+                        <p class="text-danger">
+                            <strong>{{ error }}</strong>
+                        </p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    {% if form.errors %}
+                    <ul class="user-msg error">
+                        {% for field in form %}
+                        {% for error in field.errors %}
+                        <li>
+                            {% if field != '__all__' %}
+                            <strong>{{ field.label }}:</strong>
+                            {% endif %}
+                            {{ error }}
+                        </li>
+                        {% endfor %}
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    <label for="user-email">Email</label>
+                    <!-- <input class="form-styling" id="email" type="email" name="email" /> -->
+                    <input type="email" name="login" placeholder="E-mail address" autocomplete="email" required=""
+                        id="id_login" class="form-styling">
+                    <label for="password">Password</label>
+                    <!-- <input class="form-styling" type="password" id="password" name="password" /> -->
+                    <input type="password" name="password" placeholder="Password" autocomplete="current-password"
+                        required="" id="id_password" class="form-styling">
+                    <input type="checkbox" name="remember" id="checkbox" />
+                    <label for="checkbox"><span class="ui"></span>Keep me signed in</label>
+                    <div class="btn-animate">
+                        <button type="submit" class="btn-signin">Sign in</button>
+                    </div>
+                </form>
+
+                <form method="POST" action="{% url 'account_signup' %}" class="form-signup" name="form"
+                    data-toggle="validator">
+                    {% csrf_token %}
+
+                    {% for hidden_field in form.hidden_fields %}
+                    {% if hidden_field.errors %}
+                    <div class="alert alert-warning" role="alert">
+                        {% for error in hidden_field.errors %}
+                        <p class="text-danger font-italic">
+                            <strong>(Hidden field {{ hidden_field.name }}) {{ error }}</strong>
+                        </p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {{ hidden_field }}
+                    {% endfor %}
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-warning" role="alert">
+                        {% for error in form.non_field_errors %}
+                        <p class="text-danger">
+                            <strong>{{ error }}</strong>
+                        </p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    {% if form.errors %}
+                    <ul class="user-msg error">
+                        {% for field in form %}
+                        {% for error in field.errors %}
+                        <li>
+                            {% if field != '__all__' %}
+                            <strong>{{ field.label }}:</strong>
+                            {% endif %}
+                            {{ error }}
+                        </li>
+                        {% endfor %}
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    <label for="username">Username</label>
+                    <input class="form-styling" id="username" type="text" name="username" />
+                    <label for="email">Email</label>
+                    <input class="form-styling" id="email" type="email" name="email" />
+                    <label for="password">Password</label>
+                    <input class="form-styling" type="password" name="password1" />
+                    <label for="confirm_password">Confirm password</label>
+                    <input class="form-styling" type="password" id="confirm_password" name="password2" />
+                    <button type="submit" ng-click="checked = !checked" class="btn-signup">Sign Up</button>
+                </form>
+            </div>
+
+            <div class="forgot">
+                <a href="{% url 'account_reset_password' %}">Forgot your password?</a>
+            </div>
+        </div>
+
+    </div>
+    <!-- partial -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js'></script>
+    <script src="{% static 'assets/landing/assets/js/login.js' %}"></script>
+    <!-- Sweet Alert -->
+    <!-- <script src="{% static 'assets/vendors/sweetalert/sweetalert.min.js' %}"></script> -->
+    <!-- Bootstrap Validator -->
+    <!-- <script src="{% static 'assets/vendors/bootstrap-validator/validator.js' %}"></script> -->
+    
+
+</body>
+
+</html>

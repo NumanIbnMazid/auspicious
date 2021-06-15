@@ -21,7 +21,7 @@
                     items: 3
                 },
                 1000: {
-                    items: 7
+                    items: 6
                 }
             }
         });
@@ -42,24 +42,11 @@
         });
         
     /* ==================================================
-            # init Isotope
+            # init Mixitup
      ===============================================*/
-    var $grid = $('.project-items .row').isotope({
-        // options
-    });
-    // filter items on button click
-    $('.item-menu').on( 'click', 'li', function() {
-        var filterValue = $(this).attr('data-filter');
-        $grid.isotope({ filter: filterValue });
-    });
+     var containerEl = document.querySelector('.project-items');
 
-    $('.item-menu').each( function( i, buttonGroup ) {
-        var $buttonGroup = $( buttonGroup );
-        $buttonGroup.on( 'click', 'li', function() {
-          $buttonGroup.find('.active').removeClass('active');
-          $( this ).addClass('active');
-        });
-      });
+     var mixer = mixitup(containerEl);
 
       /* ==================================================
             # WOW init
