@@ -11,3 +11,4 @@
 # CV File -> Mandatory (Done)
 # Multiple Status Change -> Job Application
 # Pagination
+# Contact -> Mail

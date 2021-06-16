@@ -15,7 +15,8 @@ from django.utils.decorators import method_decorator
 from util.helpers import (
     validate_normal_form, get_simple_context_data, get_simple_object, delete_simple_object, user_has_permission
 )
-
+from django.http import HttpResponse
+from django.core.mail import EmailMultiAlternatives
 from django.views.decorators.clickjacking import xframe_options_exempt
 
 
@@ -624,3 +625,25 @@ class CvDropUpdateView(UpdateView):
 # # -------------------------------------------------------------------
 # #                              Contact
 # # -------------------------------------------------------------------
+
+def post_contact(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+
+        mail_from = email
+        mail_to = settings.RECEIVER_EMAIL
+        mail_text = 'Please do not Reply'
+        html_content = message + "<br><br>" + f"Name: {name} <br>" + f"Email: {email}"
+        msg = EmailMultiAlternatives(
+            subject, mail_text, mail_from, [mail_to]
+        )
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+
+        messages.add_message(request, messages.SUCCESS,
+                             "Message sent successfully!"
+                             )
+    return render(request, "page/contact.html")

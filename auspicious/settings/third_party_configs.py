@@ -3,6 +3,7 @@
 """
 
 MAIL_FROM = "info@rappleslimited.com"
+RECEIVER_EMAIL = "numanibnmazid@gmail.com"
 
 BLOCKED_URL = '/blocked/'
 ACCESS_DENIED_URL = '/access-denied/'

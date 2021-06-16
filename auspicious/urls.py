@@ -7,9 +7,11 @@ from . import views
 # Import Views
 from .views import  (AboutView,
     CivilServicesView, TelecomServicesView,
-     JobApplyCreateView, JobApplyUpdateView,
+    JobApplyCreateView, JobApplyUpdateView,
     CivilServicesView, TelecomServicesView,
-     JobApplyCreateView,CvDropCreateView,CvDropUpdateView)
+    JobApplyCreateView,CvDropCreateView,CvDropUpdateView,
+    post_contact
+)
 
 urlpatterns = [
     # path("", HomeView.as_view(), name="home"),
@@ -36,6 +38,7 @@ urlpatterns = [
     path("news-category/<str:slug>/", views.filtered_news_lists, name="filtered_news_lists"),
     # path("contact/", ContactView.as_view(), name="contact"),
     path("contact/", views.contact, name="contact"),
+    path("contact/post/", views.post_contact, name="post_contact"),
     path("news-details/<str:slug>/", views.news_details, name="news_details"),
     path("comment/<id>/reply/", views.comment_reply, name="comment_reply"),
     path("admin/", admin.site.urls),

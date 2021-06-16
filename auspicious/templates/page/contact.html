@@ -50,7 +50,8 @@
                                 <h3><span>Contact</span>Request A Free Consulting</h3>
                                 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit Aenean commo doligula eget dolor. Aenean massa. Cum sociis natoque penatibus</p>
                             </div>
-                            <form action="#" method="post">
+                            <form action="{% url 'post_contact' %}" method="POST">
+                                {% csrf_token %}
                                 <div class="contact-form">
                                     <div class="row">
                                         <div class="col-lg-6 col-md-12 col-12">
