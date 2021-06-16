@@ -6,9 +6,9 @@
 
 
 # Allignment Fixed -> News
-# Password AGAIN ->   Confirm Pass
+# Password AGAIN ->   Confirm Pass (Done)
 # Action Button -> Collapsable (Done)
 # CV File -> Mandatory (Done)
-# Multiple Status Change -> Job Application
+# Multiple Status Change -> Job Application (Postpond)
 # Pagination
-# Contact -> Mail
+# Contact -> Mail (Done)

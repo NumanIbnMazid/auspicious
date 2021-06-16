@@ -43,13 +43,15 @@
     <div class="blog-area pt-100 pb-100">
         <div class="container">
             <div class="row">
-                {% for news in news_lists %}
+                {% for news in page_obj %}
 
                 <div class="col-lg-4 col-md-6">
                     <div class="blog-wrap mb-50 wow fadeInUp" data-wow-duration="2s">
                         <div class="blog-img-date-wrap mb-25">
                             <div class="blog-img">
-                                <a href="{% url 'news_details' slug=news.slug %}"><img src={{ news.image.url }} alt=""></a>
+                                <a href="{% url 'news_details' slug=news.slug %}">
+                                    <img src={{ news.image.url }} alt="" style="height:250px;width:400px;">
+                                </a>
                             </div>
                             <div class="blog-date">
 
@@ -69,7 +71,7 @@
                             </div>
                                 <a href="{% url 'news_details' slug=news.slug %}">
                                     <h3>
-                                        {{ news.title }}
+                                        {{ news.title|truncatechars_html:100 }}
                                     </h3>
                                  </a>
                                 <p>
@@ -88,13 +90,7 @@
 
             </div>
             <div class="pagination-style-1 wow fadeInUp" data-wow-duration="2s">
-                <ul class="non-bullet-list">
-                    <li><a class="next" href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a class="active" href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a class="next" href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                </ul>
+                {% include 'snippets/paginator.html' %}
             </div>
         </div>
     </div>

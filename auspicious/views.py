@@ -18,6 +18,7 @@ from util.helpers import (
 from django.http import HttpResponse
 from django.core.mail import EmailMultiAlternatives
 from django.views.decorators.clickjacking import xframe_options_exempt
+from django.core.paginator import Paginator
 
 
 # class HomeView(request):
@@ -175,7 +176,24 @@ def client(request):
 
 def news(request):
     news_lists= News.objects.all().order_by('-id')
-    context ={'news_lists':news_lists}
+    
+    # Paginated Object
+    paginator = Paginator(news_lists, 5)  # creating a paginator object
+    # getting the desired page number from url
+    page_number = request.GET.get('page')
+    try:
+        page_obj = paginator.get_page(page_number)  # returns the desired page object
+    except PageNotAnInteger:
+        # if page_number is not an integer then assign the first page
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        # if page is empty then return last page
+        page_obj = paginator.page(paginator.num_pages)
+    except:
+        page_obj = news_lists
+    # Paginated Object
+
+    context = {'page_obj': page_obj}
     return render(request,'page/news.html', context )
 
 # # -------------------------------------------------------------------
