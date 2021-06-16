@@ -12,6 +12,7 @@ from .views import  (AboutView,
     JobApplyCreateView,CvDropCreateView,CvDropUpdateView,
     post_contact
 )
+from django.conf.urls import handler404
 
 urlpatterns = [
     # path("", HomeView.as_view(), name="home"),
@@ -46,6 +47,8 @@ urlpatterns = [
     path("dashboard/", include(("dashboard.urls", "dashboard"), namespace="dashboard")),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
+
+handler404 = 'auspicious.views.get_404_page'
 
 
 if settings.DEBUG:

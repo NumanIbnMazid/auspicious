@@ -5,10 +5,10 @@
 4. '' -> News
 
 
-# Allignment Fixed -> News
+# Allignment Fixed -> News (Done)
 # Password AGAIN ->   Confirm Pass (Done)
 # Action Button -> Collapsable (Done)
 # CV File -> Mandatory (Done)
 # Multiple Status Change -> Job Application (Postpond)
-# Pagination
+# Pagination (Done -> News)
 # Contact -> Mail (Done)

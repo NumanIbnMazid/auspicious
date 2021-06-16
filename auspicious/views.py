@@ -21,6 +21,13 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 from django.core.paginator import Paginator
 
 
+# # -------------------------------------------------------------------
+# #                              404
+# # -------------------------------------------------------------------
+
+def get_404_page(request, exception):
+    return render(request, 'exceptions/error.html')
+
 # class HomeView(request):
 #     project_category_qs = ProjectCategory.objects.all()
 #     project_qs = Project.objects.all()
@@ -35,7 +42,7 @@ from django.core.paginator import Paginator
 # #                              Home
 # # -------------------------------------------------------------------
 
-@xframe_options_exempt
+# @xframe_options_exempt
 def home(request):
     today = timezone.datetime.now()
     datetime_today = datetime.strptime(

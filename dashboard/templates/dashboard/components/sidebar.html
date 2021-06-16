@@ -110,7 +110,7 @@
 
             <!-- manage Gallery  -->
 
-            {% if perms.dashboard.add_project or perms.dashboard.view_gallery %}
+            {% if perms.dashboard.add_gallery or perms.dashboard.view_gallery %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:create_gallery' %}" class="sidebar-link">
                     <i class="fa fa-file-image" aria-hidden="true"></i>
@@ -122,7 +122,7 @@
 
             <!-- Client -->
 
-            {% if perms.dashboard.add_project or perms.dashboard.view_client %}
+            {% if perms.dashboard.add_client or perms.dashboard.view_client %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:create_client' %}" class="sidebar-link">
                     <i class="fa fa-user" aria-hidden="true"></i>
@@ -133,7 +133,7 @@
 
             <!-- Social Account -->
 
-            {% if perms.dashboard.add_project or perms.dashboard.view_social_account %}
+            {% if perms.dashboard.add_social_account or perms.dashboard.view_social_account %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:create_social_account' %}" class="sidebar-link">
                     <i class="fas fa-people-arrows" aria-hidden="true"></i>
@@ -145,7 +145,7 @@
 
             <!-- Job Position -->
 
-            {% if perms.dashboard.add_project or perms.dashboard.view_job_position %}
+            {% if perms.dashboard.add_job_position or perms.dashboard.view_job_position %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:create_job_position' %}" class="sidebar-link">
                     <i class="fas fa-user-md" aria-hidden="true"></i>
@@ -169,7 +169,7 @@
 
             <!-- Contact -->
 
-            {% if perms.dashboard.add_project or perms.dashboard.view_contact %}
+            {% if perms.dashboard.add_contact or perms.dashboard.view_contact %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:create_contact' %}" class="sidebar-link">
                     <i class="fas fa-user-md" aria-hidden="true"></i>
@@ -178,12 +178,6 @@
             </li>
 
             {% endif %}
-
-
-
-
-
-
 
         </ul>
     </div>
