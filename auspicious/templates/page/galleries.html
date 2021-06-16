@@ -42,11 +42,13 @@
         <div class="container">
             <div class="row">
                 {% for gallery in gallery_lists %}
-                <div class="col-md-3 col-2">
-                    <img class="img-thumbnail ez-view m-2" src="{{ gallery.image.url }}" alt="{{ gallery.image.url }}"
-                        style="width: 200px; height: 200px;">
-                    <!-- <img src="{{ gallery.image.url }}" title="Gallery Title" class="img-fluid"
-                        style="width: 200px; height: 200px;" /> -->
+                <div class="col-md-3 col-2 mb-4">
+                    <!-- <img class="img-thumbnail ez-view m-2" src="{{ gallery.image.url }}" alt="{{ gallery.image.url }}"
+                        style="width: 200px; height: 200px;"> -->
+                    <a href="{{ gallery.image.url }}">
+                        <img src="{{ gallery.image.url }}" title="Gallery Title" class="img-fluid"
+                            style="width: 250px; height: 250px;" />
+                    </a>
                 </div>
                 {% endfor %}
             </div>
