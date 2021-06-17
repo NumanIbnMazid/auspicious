@@ -9,8 +9,32 @@
 
     {% include "components/loader.html" %}
     {% include "components/header.html" %}
-    {% include "page/breadcrumbs.html" %}
 
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs" style="background-image:url({% static 'assets/landing/assets/img/breadcrumbs-bg.jpg' %})">
+        <div class="container">
+            <div class="row">
+                <!-- Breadcrumbs-Content -->
+                <div class="col-lg-7 col-md-7 col-12">
+                    <div class="breadcrumbs-content">
+                        <h2>Civil Service</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.</p>
+                    </div>
+                </div>
+                <!-- Breadcrumbs-Menu -->
+                <div class="col-lg-5 col-md-5 col-12">
+                    <div class="breadcrumbs-menu">
+                        <ul>
+                            <li><a href="{% url 'home' %}">Home</a><i class="fa fa-angle-double-right"></i></li>
+                            <li class="active"><a href="civil-service.html">Civil Service</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Breadcrumbs -->
 
     <!-- Design Drawing Start -->
     <div class="design-drawing py-5 section-title-2">
