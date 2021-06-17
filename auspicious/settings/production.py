@@ -4,8 +4,8 @@ from decouple import config, Csv
 
 SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = False
-# DEBUG = True
+# DEBUG = False
+DEBUG = True
 # DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['*']
