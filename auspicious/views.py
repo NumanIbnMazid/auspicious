@@ -26,7 +26,7 @@ from django.core.paginator import Paginator
 # # -------------------------------------------------------------------
 
 def get_404_page(request, exception):
-    return render(request, 'exceptions/error.html')
+    return render(request, 'exceptions/404.html')
 
 # class HomeView(request):
 #     project_category_qs = ProjectCategory.objects.all()
