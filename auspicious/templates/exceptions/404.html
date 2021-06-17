@@ -1,0 +1,42 @@
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>404 - Not Found | Auspicious</title>
+    {% include "components/styles.html" %}
+</head>
+
+<body>
+
+    {% include "components/loader.html" %}
+    {% include "components/header.html" %}
+
+    <!-- Error Area -->
+    <section class="error-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-12">
+                    <div class="error-inner">
+                        <div class="error-top">
+                            <h1>404!</h1>
+                            <i class="fa fa-frown-o"></i>
+                        </div>
+                        <h2>Sorry! The Page Not Found </h2>
+                        <p>Oops! The page you are looking for does not exit. it might been moved or deleted.</p>
+                        <div class="error-button">
+                            <a href="{% url 'home' %}" class="theme-btn">Go to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Error Area -->
+
+    {% include "components/footer.html" %}
+    {% include "components/scripts.html" %}
+</body>
+
+</html>
