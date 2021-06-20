@@ -28,8 +28,8 @@
                 <div class="col-lg-5 col-md-5 col-12">
                     <div class="breadcrumbs-menu">
                         <ul>
-                            <li><a href="index.html">Home</a><i class="fa fa-angle-double-right"></i></li>
-                            <li class="active"><a href="job-page.html">Job Details</a></li>
+                            <li><a href="{% url 'home' %}">Home</a><i class="fa fa-angle-double-right"></i></li>
+                            <li class="active"><a href="{% url 'job_details' job_qs.slug %}">Job Details</a></li>
                         </ul>
                     </div>
                 </div>
