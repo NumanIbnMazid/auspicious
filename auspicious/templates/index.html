@@ -180,8 +180,9 @@
                                 <div class="item">
                                     <img src="{{ news.image.url }}" alt="" style="height: 250px; width: 250px;">
                                     <div class="overlay">
-                                        <p>{{news.description|safe|truncatechars_html:10 }}</p>
                                         <h4>{{ news.title }}</h4>
+                                        <p>{{ news.description|safe|truncatechars_html:10}}</p>
+                                        
                                     </div>
                                 </div>
                             </a>
