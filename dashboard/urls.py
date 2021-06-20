@@ -106,9 +106,9 @@ urlpatterns = [
     # # -------------------------------------------------------------------
     path("create/job_position/", JobPositionCreateView.as_view(),
          name="create_job_position"),
-    path("update/job_position/<id>/",
+    path("update/job_position/<slug>/",
          JobPositionUpdateView.as_view(), name="update_job_position"),
-    path("job_position/<id>/detail/",
+    path("job_position/<slug>/detail/",
          JobPositionDetailView.as_view(), name="job_position_detail"),
     path("news/job_position/", delete_job_position,
          name="delete_job_position"),

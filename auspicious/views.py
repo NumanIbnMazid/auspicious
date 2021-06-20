@@ -185,7 +185,7 @@ def news(request):
     news_lists= News.objects.all().order_by('-id')
     
     # Paginated Object
-    paginator = Paginator(news_lists, 5)  # creating a paginator object
+    paginator = Paginator(news_lists, 6)  # creating a paginator object
     # getting the desired page number from url
     page_number = request.GET.get('page')
     try:
