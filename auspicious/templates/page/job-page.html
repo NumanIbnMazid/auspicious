@@ -13,7 +13,7 @@
 
 
     <!-- Breadcrumbs -->
-    <section class="breadcrumbs" style="background-image:url('assets/img/breadcrumbs-bg.jpg')">
+    <section class="breadcrumbs" style="background-image:url('{% static 'assets/landing/assets/img/breadcrumbs-bg.jpg' %}')">
         <div class="container">
             <div class="row">
                 <!-- Breadcrumbs-Content -->
@@ -75,14 +75,14 @@
 
                         <ul class="non-bullet-list">
                             <li>
-                                <i class="fa fa-map" aria-hidden="true"></i>
+                                <i class="fa fa-map" aria-hidden="true" style="color: #3492d0;"></i>
                                 <div>
                                     <strong>Location:</strong>
                                     <span>{{ contact_qs.address }}</span>
                                 </div>
                             </li>
                             <li>
-                                <i class="fa fa-user-o"></i>
+                                <i class="fa fa-user-o" style="color: #3492d0;"></i>
                                 <div>
                                     <strong>Job Title:</strong>
                                     <span>{{ job_qs.job_position }}</span>
@@ -90,7 +90,7 @@
                             </li>
                             {% if job_qs.hours %}
                             <li>
-                                <i class="fa fa-clock-o"></i>
+                                <i class="fas fa-clock-o" style="color: #3492d0;"></i>
                                 <div>
                                     <strong>Hours:</strong>
                                     <span>{{ job_qs.hours }}</span>
@@ -99,7 +99,7 @@
                             {% endif %}
                             {% if job_qs.salary %}
                             <li>
-                                <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+                                <i class="fa fa-credit-card-alt" aria-hidden="true" style="color: #3492d0;"></i>
                                 <div>
                                     <strong>Salary:</strong>
 
