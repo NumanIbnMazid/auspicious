@@ -26,8 +26,8 @@
                 <div class="col-lg-5 col-md-5 col-12">
                     <div class="breadcrumbs-menu">
                         <ul>
-                            <li><a href="index.html">Home</a><i class="fa fa-angle-double-right"></i></li>
-                            <li class="active"><a href="telecom-project.html">Telecom Project</a></li>
+                            <li><a href="{% url 'home' %}">Home</a><i class="fa fa-angle-double-right"></i></li>
+                            <li class="active"><a href="{% url 'telecom_project' %}">Telecom Project</a></li>
                         </ul>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                                         <a href="{% url 'project_details' slug=project.slug %}">
                                             <button type="button" class="btn btn-outline-primary">
                                                 <i class="fa fa-eye" aria-hidden="true">
-                                                <<button type="button" class="btn btn-outline-primary"><i class="fa fa-eye" aria-hidden="true"></i></button>/i>
+                                                </i>
                                             </button>
                                         </a>
                                     </td>

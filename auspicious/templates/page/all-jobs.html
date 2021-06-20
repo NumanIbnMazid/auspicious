@@ -64,7 +64,7 @@
                         <!-- Listing -->
                         <a href="{% url 'job_details' slug=last_job_qs.slug %}" class="listing full-time">
                             <div class="listing-logo">
-                                <img src="{% static 'assets/landing/assets/img/job-list-logo-04.png' %}" alt="">
+                                <img src="{% static 'assets/landing/assets/img/icon.jpg' %}" alt="">
                            </div>
                             <div class="listing-title">
                                 <h4>{{ last_job_qs.job_position }}<span class="listing-type">{{ last_job_qs.job_type }}</span></h4>
@@ -85,7 +85,7 @@
                         {% for job in job_lists %}
                         <a href="{% url 'job_details' slug=job.slug %}" class="listing full-time">
                             <div class="listing-logo">
-                                <img src="{% static 'assets/landing/assets/img/job-list-logo-04.png' %}" alt="">
+                                <img src="{% static 'assets/landing/assets/img/icon.jpg' %}" alt="">
                             </div>
                             <div class="listing-title">
                                 <h4>{{ job.job_position }}<span class="listing-type">{{ job.job_type }}</span></h4>
