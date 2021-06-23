@@ -73,7 +73,14 @@
                                     </td>
                                     <td>{{ forloop.counter  }}</td>
                                     <td>{{ project.name}}</td>
-                                    <td><img src="{{ project.image.url }}" alt="" style="height: 70px;width: 70px;"></td>
+                                    <td>
+                                        {% if project.image %}
+                                        <img src="{{ project.image.url }}" alt="" style="height: 70px;width: 70px;">
+                                        {% else %}
+                                        <img src="{% static './assets/landing/assets/img/no.jpg' %}" alt="" style="height:70px; width:70px;">
+                                        {% endif %}
+                                    </td>
+
                                     <td>{{ project.client_name }}</td>
                                     <td>{{ project.developement_start_year }} </td>
                                     <td>{{ project.scope|safe|truncatechars_html:50}}</td>
@@ -123,7 +130,13 @@
                                     </td>
                                     <td>{{ forloop.counter }}</td>
                                     <td>{{ project.name}}</td>
-                                    <td><img src="{{ project.image.url }}" alt="" style="height: 70px;width: 70px;"></td>
+                                    <td>
+                                        {% if project.image %}
+                                        <img src="{{ project.image.url }}" alt="" style="height: 70px;width: 70px;">
+                                        {% else %}
+                                        <img src="{% static './assets/landing/assets/img/no.jpg' %}" alt="" style="height:70px; width:70px;">
+                                        {% endif %}
+                                    </td>
                                     <td>{{ project.client_name }}</td>
                                     <td>{{ project.developement_start_year }} - {{ project.developement_end_year }} </td>
                                     <td>{{ project.scope|safe|truncatechars_html:50}}</td>

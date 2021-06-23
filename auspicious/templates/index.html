@@ -113,7 +113,11 @@
                         {% for project in ongoing_project_lists %}
                         <div class="col-md-3 col-sm-6 mix ongoing">
                             <div class="product-item">
+                                {% if project.image %}
                                 <img src="{{ project.image.url }}" alt="" class="img-fluid" style="height:172px;width:350px;">
+                                {% else %}
+                                <img src="{% static './assets/landing/assets/img/no.jpg' %}" alt="" style="height:172px;width:350px;">
+                                {% endif %}
                                 <div class="overlay">
                                     <p>{{ project.name }}</p>
                                 </div>
