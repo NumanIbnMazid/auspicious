@@ -68,12 +68,12 @@
                         {% if enlistment_client.url %}
                         <a href="{{ enlistment_client.url }}" target="_blank">
                             <img src="{{ enlistment_client.logo.url }}" class="img-fluid" alt="">
-                            <p>{{ enlistment_client.title }}</p>
+                            <p>{{ enlistment_client.name }}</p>
                         </a>
                         {% else %}
                         <a href="" >
                             <img src="{{ enlistment_client.logo.url }}" class="img-fluid" alt="">
-                            <p>{{ enlistment_client.title }}</p>
+                            <p>{{ enlistment_client.name }}</p>
                         </a>
                         {% endif %}
                     </div>
@@ -89,12 +89,12 @@
                         {% if local_client_representative.url %}
                         <a href="{{ local_client_representative.url }}" target="_blank">
                             <img src="{{ local_client_representative.logo.url }}" class="img-fluid" alt="">
-                            <p>{{ local_client_representative.title }}</p>
+                            <p>{{ local_client_representative.name }}</p>
                         </a>
                         {% else %}
                         <a href="{{ local_client_representative.url }}">
                             <img src="{{ local_client_representative.logo.url }}" class="img-fluid" alt="">
-                            <p>{{ local_client_representative.title }}</p>
+                            <p>{{ local_client_representative.name }}</p>
                         </a>
                         {% endif %}
 
@@ -111,12 +111,12 @@
                         {% if civil_client.url %}
                         <a href="{{ civil_client.url }}" target="_blank">
                             <img src="{{ civil_client.logo.url }}" class="img-fluid" alt="">
-                            <p>{{ civil_client.title }}</p>
+                            <p>{{ civil_client.name }}</p>
                         </a>
                         {% else %}
                         <a href="">
                             <img src="{{ civil_client.logo.url }}" class="img-fluid" alt="">
-                            <p>{{ civil_client.title }}</p>
+                            <p>{{ civil_client.name }}</p>
                         </a>
                         {% endif %}
                     </div>
@@ -131,12 +131,12 @@
                         {% if telecom_client.url %}
                         <a href="{{ telecom_client.url }}" target="_blank">
                             <img src="{{ telecom_client.logo.url }}" class="img-fluid" alt="">
-                            <p>{{ telecom_client.title }}</p>
+                            <p>{{ telecom_client.name }}</p>
                         </a>
                         {% else %}
                         <a href="">
                             <img src="{{ telecom_client.logo.url }}" class="img-fluid" alt="">
-                            <p>{{ telecom_client.title }}</p>
+                            <p>{{ telecom_client.name }}</p>
                         </a>
                         {% endif %}
                     </div>
