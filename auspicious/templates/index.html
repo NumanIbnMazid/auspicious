@@ -119,7 +119,7 @@
                                 <img src="{% static './assets/landing/assets/img/no.jpg' %}" alt="" style="height:172px;width:350px;">
                                 {% endif %}
                                 <div class="overlay">
-                                    <p>{{ project.name }}</p>
+                                    <p>{{ project.name|safe|truncatechars_html:30 }}</p>
                                 </div>
                                 <div class="explore">
                                     <a href="{% url 'project_details' slug=project.slug %}">Explore</a>
@@ -131,9 +131,13 @@
                         {% for project in latest_project_lists %}
                         <div class="col-md-3 col-sm-6 mix latest">
                             <div class="product-item">
+                                {% if project.image %}
                                 <img src="{{ project.image.url }}" alt="" class="img-fluid" style="height:172px;width:350px;">
+                                {% else %}
+                                <img src="{% static './assets/landing/assets/img/no.jpg' %}" alt="" style="height:172px;width:350px;">
+                                {% endif %}
                                 <div class="overlay">
-                                    <p>{{ project.name }}</p>
+                                    <p>{{ project.name|safe|truncatechars_html:30 }}</p>
                                 </div>
                                 <div class="explore">
                                     <a href="{% url 'project_details' slug=project.slug %}">Explore</a>
@@ -145,9 +149,13 @@
                         {% for project in completed_project_lists %}
                         <div class="col-md-3 col-sm-6 mix completed">
                             <div class="product-item">
+                                {% if project.image %}
                                 <img src="{{ project.image.url }}" alt="" class="img-fluid" style="height:172px;width:350px;">
+                                {% else %}
+                                <img src="{% static './assets/landing/assets/img/no.jpg' %}" alt="" style="height:172px;width:350px;">
+                                {% endif %}
                                 <div class="overlay">
-                                    <p>{{ project.name }}</p>
+                                    <p>{{ project.name|safe|truncatechars_html:30 }}</p>
                                 </div>
                                 <div class="explore">
                                     <a href="{% url 'project_details' slug=project.slug %}">Explore</a>

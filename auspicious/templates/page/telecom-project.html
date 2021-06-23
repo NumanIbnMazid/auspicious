@@ -72,7 +72,7 @@
                                         </a>
                                     </td>
                                     <td>{{ forloop.counter  }}</td>
-                                    <td>{{ project.name}}</td>
+                                    <td>{{ project.name|safe|truncatechars_html:30}}</td>
                                     <td>
                                         {% if project.image %}
                                         <img src="{{ project.image.url }}" alt="" style="height: 70px;width: 70px;">
@@ -129,7 +129,7 @@
                                         </a>
                                     </td>
                                     <td>{{ forloop.counter }}</td>
-                                    <td>{{ project.name}}</td>
+                                    <td>{{ project.name|safe|truncatechars_html:30}}</td>
                                     <td>
                                         {% if project.image %}
                                         <img src="{{ project.image.url }}" alt="" style="height: 70px;width: 70px;">
