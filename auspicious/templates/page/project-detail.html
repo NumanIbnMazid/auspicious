@@ -43,8 +43,8 @@
                     <div class="blog-details-wrapper">
                         <div class="blog-details-img-date-wrap mb-35 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                             <div class="blog-details-img">
-                                {% if project.image %}
-                                <img src="{{ project.image.url }}" alt="" style="height: 400px;width: 850px;">
+                                {% if project_qs.image %}
+                                <img src="{{ project_qs.image.url }}" alt="" style="height: 400px;width: 850px;">
                                 {% else %}
                                 <img src="{% static './assets/landing/assets/img/no.jpg' %}" alt="" style="height:400px; width:850px;">
                                 {% endif %}
