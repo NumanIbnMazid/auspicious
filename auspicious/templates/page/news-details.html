@@ -78,24 +78,21 @@
                                 </div>
                             </div>
                         </div>
+                        {% if request.user.is_authenticated %}
                         <div class="blog-author-wrap-2 aos-init" data-aos="fade-up" data-aos-delay="200">
                             <div class="blog-author-img-2">
                                 <img src="{% static 'assets/landing/assets/img/blog/blog-author-2.png' %}" alt="">
                             </div>
                             <div class="blog-author-content-2">
                                 <h2>{{ news_qs.created_by.user_profile.get_fullname }}</h2>
-<!--                                <p>Lorem ipsum dolor sit amet, consecteg adipisicing elit
-                                    sed do eius tempor incididunt ut lab et dolore magna aliqua.
-                                    Ut enim ad minikl veniam, quis nostrud exercitatio.</p>-->
                                 <div class="social-icon-style-3">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-dribbble"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-glide-g"></i></a>
+                                    <a href=""><i class="fa fa-facebook"></i></a>
+                                    <a href=""><i class="fa fa-twitter"></i></a>
+                                    <a href=""><i class="fa fa-youtube"></i></a>
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
 
 
                         <div class="blog-next-previous-post aos-init" data-aos="fade-up" data-aos-delay="200">
