@@ -40,7 +40,7 @@
                                 <!-- update job applicaiton status -->
                                 <a href="{% url 'dashboard:update_job_application_status' slug=object.slug %}"
                                     class="btn btn-primary btn-sm text-deco-none">
-                                    Update Status
+                                    <i class="fas fa-pen-alt" aria-hidden="true"></i>
                                 </a>
                                 <!-- update url -->
                                 {% if not update_url == None and can_add_change == True %}
@@ -48,14 +48,14 @@
                                 <a href="{% url update_url slug=object.slug %}"
                                     class="btn btn-primary btn-sm text-deco-none">
                                     <span class="">
-                                        Edit
+                                        <i class="fas fa-edit" aria-hidden="true"></i>
                                     </span>
                                 </a>
                                 {% else %}
                                 <a href="{% url update_url id=object.id %}"
                                     class="btn btn-primary btn-sm text-deco-none">
                                     <span class="">
-                                        Edit
+                                        <i class="fas fa-edit" aria-hidden="true"></i>
                                     </span>
                                 </a>
                                 {% endif %}
@@ -66,13 +66,13 @@
                                 <a href="{% url detail_url slug=object.slug %}"
                                     class="btn btn-info btn-sm text-deco-none">
                                     <span class="">
-                                        View
+                                        <i class="fas fa-eye" aria-hidden="true"></i>
                                     </span>
                                 </a>
                                 {% else %}
                                 <a href="{% url detail_url id=object.id %}" class="btn btn-info btn-sm text-deco-none">
                                     <span class="">
-                                        View
+                                        <i class="fas fa-eye" aria-hidden="true"></i>
                                     </span>
                                 </a>
                                 {% endif %}
@@ -84,13 +84,13 @@
                                     class="btn btn-danger btn-sm text-deco-none bg-c-danger m-1 js_delete_{{namespace}}"
                                     value="{{object.slug}}" data-toggle="modal"
                                     data-target="#modal-delete-{{namespace}}">
-                                    Delete
+                                    <i class="fas fa-trash-alt" aria-hidden="true"></i>
                                 </button>
                                 {% else %}
                                 <button type="button"
                                     class="btn btn-danger btn-sm text-deco-none bg-c-danger m-1 js_delete_{{namespace}}"
                                     value="{{object.id}}" data-toggle="modal" data-target="#modal-delete-{{namespace}}">
-                                    Delete
+                                    <i class="fas fa-trash-alt" aria-hidden="true"></i>
                                 </button>
                                 {% endif %}
                                 {% endif %}
