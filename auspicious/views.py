@@ -363,7 +363,7 @@ def filtered_news_lists(request, slug):
         category__slug__iexact=slug
     )
     context = {
-        'news_lists':news_lists,
+        'page_obj':news_lists,
         'filtered_news_title': news_lists.first().category.title if len(news_lists) > 0 else ""
     }
     return render(request, "page/news.html", context)
