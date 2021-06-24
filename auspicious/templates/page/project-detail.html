@@ -12,7 +12,7 @@
 
 
     <!-- Breadcrumbs -->
-    <section class="breadcrumbs" style="background-image:url('assets/img/breadcrumbs-bg.jpg')">
+    <section class="breadcrumbs" style="background-image:url('{% static 'assets/landing/assets/img/breadcrumbs-bg.jpg' %}')">
         <div class="container">
             <div class="row">
                 <!-- Breadcrumbs-Content -->
@@ -43,25 +43,42 @@
                     <div class="blog-details-wrapper">
                         <div class="blog-details-img-date-wrap mb-35 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                             <div class="blog-details-img">
-                                        {% if project.image %}
-                                        <img src="{{ project.image.url }}" alt="" style="height: 400px;width: 850px;">
-                                        {% else %}
-                                        <img src="{% static './assets/landing/assets/img/no.jpg' %}" alt="" style="height:400px; width:850px;">
-                                        {% endif %}
+                                {% if project.image %}
+                                <img src="{{ project.image.url }}" alt="" style="height: 400px;width: 850px;">
+                                {% else %}
+                                <img src="{% static './assets/landing/assets/img/no.jpg' %}" alt="" style="height:400px; width:850px;">
+                                {% endif %}
                             </div>
                             <div class="blog-details-date">
                                 <h5>{{ project_qs.created_at.date.day }}
-                                    <span>{{ project_qs.created_at|date:"M" }}</span></h5>
+                                <span>{{ project_qs.created_at|date:"M" }}</span></h5>
                             </div>
                         </div>
                         <div class="blog-meta-2 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                             <ul class="non-bullet-list">
+                                {% if project_qs.category %}
                                 <li><a href="">{{ project_qs.category }}</a>,</li>
+                                {% else %}
+                                <li><a href="">-</a>,</li>
+                                {% endif %}
+                                {% if project_qs.client_name %}
                                 <li><b>{{ project_qs.client_name }}</b></li>
+                                {% else %}
+                                <li><b>-</b></li>
+                                {% endif %}
                             </ul>
-                        </div>
+                             </div>
+                         {% if project_qs.name %}
                         <h1 data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">{{ project_qs.name }}</h1>
+                        {% else %}
+                        <h1 data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">-</h1>
+                        {% endif %}
+                        {% if project_qs.scope %}
                         <p data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">{{ project_qs.scope|safe }}</p>
+                        {% else %}
+                        <p data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">-</p>
+                        {% endif %}
+
 
                     </div>
                 </div>
@@ -89,14 +106,18 @@
                         </div>
                         <div class="sidebar-widget mb-40 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                             <div class="sidebar-widget-title-2 mb-30">
-                                <h3>Project</h3>
+                                <h3>Latest Post</h3>
                             </div>
                             {% for latest_project in latest_project_lists %}
                             <div class="latest-post-wrap">
                                 <div class="single-latest-post">
                                     <div class="latest-post-img">
                                         <a href="{% url 'project_details' slug=latest_project.slug %}">
+                                            {% if latest_project.image %}
                                             <img src="{{ latest_project.image.url }}" alt=""></a>
+                                            {% else %}
+                                            <img src="{% static './assets/landing/assets/img/no.jpg' %}" alt="" style="height:100px;">
+                                            {% endif %}
                                     </div>
                                     <div class="latest-post-content">
                                         {% if latest_project.developement_end_year %}
@@ -110,24 +131,12 @@
                                         </div>
                                     </div>
                                 </div>
-    
+
                             </div>
                             <hr>
                             {% endfor %}
                         </div>
-                        <!-- <div class="sidebar-widget mb-35 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
-                            <div class="sidebar-widget-title-2 mb-30">
-                                <h3>Tags</h3>
-                            </div>
-                            <div class="sidebar-widget-tag-2">
-                                <a href="#">Furniture</a>
-                                <a href="#">Electronic</a>
-                                <a href="#">Home Decore</a>
-                                <a href="#">Design Home</a>
-                                <a href="#">Furniture</a>
-                            </div>
-                        </div> -->
-                        <div class="sidebar-widget aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                     <div class="sidebar-widget aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                             <div class="sidebar-banner">
                                 <a href="product-details.html"><img src="assets/img/banner/banner-29.png" alt=""></a>
                             </div>

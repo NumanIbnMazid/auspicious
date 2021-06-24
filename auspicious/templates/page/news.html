@@ -71,11 +71,11 @@
                             </div>
                                 <a href="{% url 'news_details' slug=news.slug %}">
                                     <h3>
-                                        {{ news.title|truncatechars_html:100 }}
+                                        {{ news.title|truncatechars_html:20 }}
                                     </h3>
                                  </a>
                                 <p>
-                                {{ news.description|safe|truncatechars_html:100}}
+                                {{ news.description|safe|truncatechars_html:40}}
                                 </p>
                             <div class="blog-btn-2 btn-hover">
                                 <a class="btn hover-border-radius theme-color" href="{% url 'news_details' slug=news.slug %}">Read More</a>
