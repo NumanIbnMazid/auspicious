@@ -14,19 +14,23 @@
                 <div class="col-md-3 col-6">
                     <div class="title">Project & Services</div>
                     <ul class="list-unstyled">
-                        <li><a href="">Completed Project</a></li>
-                        <li><a href="">Ongoing Project</a></li>
-                        <li><a href="">Civil Services</a></li>
-                        <li><a href="">Telecom Project</a></li>
+                        <li><a href="{% url 'civil_project' %}">Civil Project</a></li>
+                        <li><a href="{% url 'telecom_project' %}">Telecom Project</a></li>
+                        <li><a href="{% url 'civil_service' %}">Civil Services</a></li>
+                        <li><a href="{% url 'telecom_service' %}">Telecom Project</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 col-6">
                     <div class="title">Stay With Us</div>
                     <ul class="list-unstyled">
-                        <li><a href="">Login</a></li>
-                        <li><a href="">Career</a></li>
-                        <li><a href="">Contact Us</a></li>
-                        <li><a href="">Feedback</a></li>
+                        {% if not request.user.is_authenticated %}
+                        <li><a href="{{ login_url }}">Login</a></li>
+                        {% else %}
+                        <li><a data-bs-target="#logoutModal">Logout</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'career' %}">Career</a></li>
+                        <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
                     </ul>
                 </div>
             </div>
