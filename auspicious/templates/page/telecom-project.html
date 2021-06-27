@@ -75,7 +75,7 @@
 
                                 <tbody class="list">
                                     {% for project in ongoing_project_lists %}
-                                    <tr>
+                                    <tr class="text-center">
 
                                         <td>
                                             <a href="{% url 'project_details' slug=project.slug %}">
@@ -140,7 +140,7 @@
 
                                 <tbody class="list">
                                     {% for project in completed_project_lists %}
-                                    <tr>
+                                    <tr class="text-center">
 
                                         <td>
                                             <a href="{% url 'project_details' slug=project.slug %}">

@@ -1,9 +1,22 @@
+{% block additional_css %}
+
+<style>
+    /* CKeditor customization */
+    body {
+        --ck-z-default: 100;
+        --ck-z-modal: calc(var(--ck-z-default) + 999);
+    }
+</style>
+
+{% endblock %}
+
 <!-- Create Form Modal -->
-<div class="modal fade bg-opacity-mid" id="modal-create-{{namespace}}" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade bg-opacity-mid" id="modal-create-{{namespace}}" tabindex="-1" role="dialog" aria-hidden="true"
+    data-focus="false">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content bg-c-white-raw">
             <div class="modal-header">
-                <span class="modal-title fw-bold text-dark">{{ page_title }}</span>
+                <span class="modal-title fw-bold test">{{ page_title }}</span>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

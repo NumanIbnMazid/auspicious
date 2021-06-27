@@ -28,8 +28,11 @@ select.form-control[multiple] {
     z-index: 1100 !important;
 }
 
-.font-normal {
-    font-weight: normal !important;
+/* CKeditor customization */
+
+body {
+    --ck-z-default: 100;
+    --ck-z-modal: calc(var(--ck-z-default) + 999);
 }
 
 /* *********************************** Custom Customization *********************************** */
@@ -186,6 +189,9 @@ select.form-control[multiple] {
 }
 
 /* font customization */
+.font-normal {
+    font-weight: normal !important;
+}
 .font-10 {
     font-size: 10px;
 }

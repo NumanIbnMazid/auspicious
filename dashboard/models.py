@@ -85,7 +85,12 @@ class Project(models.Model):
         return self.name
 
     def get_fields(self):
-        return [get_dynamic_fields(field=field, self=self) for field in self.__class__._meta.fields]
+        def get_dynamic_fields(field):
+            if field.name == 'category':
+                return (field.name, self.category.title, field.get_internal_type())
+            else:
+                return (field.name, field.value_from_object(self), field.get_internal_type())
+        return [get_dynamic_fields(field) for field in self.__class__._meta.fields]
 
 
 # # -------------------------------------------------------------------
@@ -166,12 +171,11 @@ class News(models.Model):
         return self.title
 
     def get_fields(self):
-        return [get_dynamic_fields(field=field, self=self) for field in self.__class__._meta.fields]
-
-    def get_fields(self):
         def get_dynamic_fields(field):
             if field.name == 'category':
                 return (field.name, self.category.title, field.get_internal_type())
+            elif field.name == 'created_by':
+                return (field.name, self.created_by.username, field.get_internal_type())
             else:
                 return (field.name, field.value_from_object(self), field.get_internal_type())
         return [get_dynamic_fields(field) for field in self.__class__._meta.fields]
