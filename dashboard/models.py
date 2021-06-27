@@ -8,6 +8,7 @@ from util.utils import (
     time_str_mix_slug, upload_project_image_path
 )
 from django.utils.text import slugify
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class ProjectCategory(models.Model):
@@ -152,9 +153,10 @@ class News(models.Model):
     image = models.ImageField(
         blank=True, null=True, verbose_name="image"
     )
-    description = models.TextField(
-        blank=True, null=True, verbose_name="description"
-    )
+    # description = models.TextField(
+    #     blank=True, null=True, verbose_name="description"
+    # )
+    description = RichTextUploadingField(blank=True, null=True)
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name='created at'
     )
