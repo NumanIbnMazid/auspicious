@@ -856,7 +856,7 @@ def delete_social_account(request):
 
 def get_job_position_common_contexts(request):
     common_contexts = get_simple_context_data(
-        request=request, app_namespace="dashboard", model_namespace="job_position", model=JobPosition, list_template=None, fields_to_hide_in_table=["id","updated_at"]
+        request=request, app_namespace="dashboard", model_namespace="job_position", model=JobPosition, list_template=None, fields_to_hide_in_table=["id","updated_at","slug"]
     )
     return common_contexts
 
