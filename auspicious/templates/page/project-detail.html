@@ -99,7 +99,7 @@
                             <div class="sidebar-list-style-2">
                                 <ul>
                                     {% for project_category in project_category_lists %}
-                                    <li><a href="">{{ project_category }}({{ project_category.get_project_count }})</a></li>
+                                    <li><a href="{% url 'filtered_civil_project_lists' slug=project_category.slug %}">{{ project_category }}({{ project_category.get_project_count }})</a></li>
                                     {% endfor %}
                                 </ul>
                             </div>
