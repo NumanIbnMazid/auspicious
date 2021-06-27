@@ -19,6 +19,7 @@ from django.http import HttpResponse
 from django.core.mail import EmailMultiAlternatives
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.core.paginator import Paginator
+from django.db.models import Count, Min, Q, query_utils
 
 
 # # -------------------------------------------------------------------
@@ -97,13 +98,29 @@ def civilproject(request):
 # # -------------------------------------------------------------------
 
 
-def filtered_civil_project_lists(request, slug):
-    project_lists = Project.objects.filter(
-        category__slug__iexact=slug
+def filtered_project_lists(request, slug):
+    today = timezone.datetime.now()
+    datetime_today = datetime.strptime(
+        str(today.date()) + " 00:00:00", '%Y-%m-%d %H:%M:%S'
     )
+    project_lists = Project.objects.filter(category__slug__iexact=slug)
+
+    completed_projects = project_lists.filter(
+        ~Q(developement_end_year=None)
+    )
+    ongoing_projects = project_lists.filter(
+        developement_end_year=None
+    )
+    # for project in project_lists:
+    #     if project.developement_end_year == None:
+    #         ongoing_project_lists = project
+    #         print('aaaaaaaaaaaaaaaaa',project)
+    #     else:
+    #         completed_project_lists= project
+    #         print('bbbbbbbbbbb', project)
     context = {
-        'ongoing_project_lists':project_lists,
-        'completed_project_lists':project_lists,
+        'ongoing_project_lists':ongoing_projects,
+        'completed_project_lists':completed_projects,
         # 'filtered_news_title': news_lists.first().category.title if len(news_lists) > 0 else ""
     }
     return render(request, "page/civil-project.html", context)
