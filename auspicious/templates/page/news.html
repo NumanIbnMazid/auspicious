@@ -89,9 +89,10 @@
 
 
             </div>
-            <div class="pagination-style-1 wow fadeInUp" data-wow-duration="2s">
-                {% include 'snippets/paginator.html' with page_obj=paginated_news_list %}
-            </div>
+
+            <!-- pagination -->
+            {% include 'snippets/paginator.html' with page_obj=paginated_news_list %}
+            
         </div>
     </div>
 
