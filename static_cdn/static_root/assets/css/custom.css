@@ -28,13 +28,6 @@ select.form-control[multiple] {
     z-index: 1100 !important;
 }
 
-/* CKeditor customization */
-
-body {
-    --ck-z-default: 100;
-    --ck-z-modal: calc(var(--ck-z-default) + 999);
-}
-
 /* *********************************** Custom Customization *********************************** */
 
 .non-bullet-list {

@@ -39,7 +39,15 @@ dashboard_decorators = [login_required, has_dashboard_permission_required]
 
 @method_decorator(dashboard_decorators, name='dispatch')
 class DashboardView(TemplateView):
-    template_name = 'dashboard/base.html'
+    template_name = 'dashboard/pages/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            DashboardView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = 'Dashboard'
+        context['page_short_title'] = 'Dashboard'
+        return context
 
 
 
