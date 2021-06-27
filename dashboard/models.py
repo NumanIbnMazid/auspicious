@@ -14,6 +14,9 @@ class ProjectCategory(models.Model):
     title = models.CharField(
         max_length=100, verbose_name="title"
     )
+    slug = models.SlugField(
+        unique=True, verbose_name='slug'
+    )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name='created at'
     )
@@ -571,6 +574,18 @@ def project_slug_pre_save_receiver(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(project_slug_pre_save_receiver, sender=Project)
+
+
+# # Project Category
+
+def project_category_slug_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        title = slugify(instance.title.lower()[:17])
+        slug_binding = title + '-' + time_str_mix_slug()
+        instance.slug = slug_binding
+
+
+pre_save.connect(project_category_slug_pre_save_receiver, sender=ProjectCategory)
 
 
 # # NewsCategory

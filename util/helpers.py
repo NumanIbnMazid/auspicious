@@ -5,7 +5,35 @@ from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
 from middlewares.middlewares import RequestMiddleware
+from django.core.paginator import Paginator
 
+
+"""
+************************ Paginator Helper Functions ************************
+"""
+
+def get_paginated_object(request, queryset, paginate_by=8):
+    """
+    get_paginated_object() => Paginates object.
+    params => queryset, paginate_by
+    return => paginated queryset object
+    """
+    paginator = Paginator(queryset, paginate_by)  # creating a paginator object
+    # getting the desired page number from url
+    page_number = request.GET.get('page')
+    try:
+        # returns the desired page object
+        page_obj = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        # if page_number is not an integer then assign the first page
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        # if page is empty then return last page
+        page_obj = paginator.page(paginator.num_pages)
+    except:
+        page_obj = queryset
+    # return paginated object
+    return page_obj
 
 """
 ************************ Get Dynamic Fields Helper Functions ************************
@@ -15,7 +43,7 @@ from middlewares.middlewares import RequestMiddleware
 def get_dynamic_fields(field=None, self=None):
     """
     get_dynamic_fields() => Gets model fields dynamically.
-    params => field, self, fk_node
+    params => field, self
     return => (field.name, value, field_type)
     """
     value = "-"

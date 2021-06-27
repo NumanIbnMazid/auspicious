@@ -93,7 +93,7 @@ class ProjectCategoryDetailView(DetailView):
     template_name = "dashboard/snippets/detail-common.html"
 
     def get_object(self):
-        return get_simple_object(key='id', model=ProjectCategory, self=self)
+        return get_simple_object(key='slug', model=ProjectCategory, self=self)
 
     def get_context_data(self, **kwargs):
         context = super(
@@ -112,7 +112,7 @@ class ProjectCategoryUpdateView(UpdateView):
     form_class = ProjectCategoryManageForm
 
     def get_object(self):
-        return get_simple_object(key="id", model=ProjectCategory, self=self)
+        return get_simple_object(key="slug", model=ProjectCategory, self=self)
 
     def get_success_url(self):
         return reverse('dashboard:create_project_category')
@@ -153,7 +153,7 @@ class ProjectCategoryUpdateView(UpdateView):
 @has_dashboard_permission_required
 @login_required
 def delete_project_category(request):
-    return delete_simple_object(request=request, key='id', model=ProjectCategory, redirect_url="dashboard:create_project_category")
+    return delete_simple_object(request=request, key='slug', model=ProjectCategory, redirect_url="dashboard:create_project_category")
 
 
 

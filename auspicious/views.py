@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from util.helpers import (
-    validate_normal_form, get_simple_context_data, get_simple_object, delete_simple_object, user_has_permission
+    validate_normal_form, get_simple_context_data, get_simple_object, delete_simple_object, user_has_permission, get_paginated_object
 )
 from django.http import HttpResponse
 from django.core.mail import EmailMultiAlternatives
@@ -107,8 +107,11 @@ def telecomproject(request):
         str(today.date()) + " 00:00:00", '%Y-%m-%d %H:%M:%S'
     )
     ongoing_project_lists = Project.objects.filter(developement_end_year=None, category__title__icontains = 'Telecom' ).order_by('id')
+
     completed_project_lists = Project.objects.filter(developement_end_year__lte = datetime_today.year, category__title__icontains = 'Telecom' ).order_by('id')
-    context ={'ongoing_project_lists':ongoing_project_lists,'completed_project_lists':completed_project_lists}
+    context ={
+        'ongoing_project_lists':ongoing_project_lists,'completed_project_lists':completed_project_lists
+    }
     return render(request, 'page/telecom-project.html', context)
 
 # # -------------------------------------------------------------------
@@ -183,24 +186,12 @@ def client(request):
 
 def news(request):
     news_lists= News.objects.all().order_by('-id')
-    
-    # Paginated Object
-    paginator = Paginator(news_lists, 6)  # creating a paginator object
-    # getting the desired page number from url
-    page_number = request.GET.get('page')
-    try:
-        page_obj = paginator.get_page(page_number)  # returns the desired page object
-    except PageNotAnInteger:
-        # if page_number is not an integer then assign the first page
-        page_obj = paginator.page(1)
-    except EmptyPage:
-        # if page is empty then return last page
-        page_obj = paginator.page(paginator.num_pages)
-    except:
-        page_obj = news_lists
-    # Paginated Object
+    print(len(news_lists), "*****************")
+    paginated_news = get_paginated_object(
+        request, queryset=news_lists, paginate_by=6
+    )
 
-    context = {'page_obj': page_obj}
+    context = {'paginated_news_list': paginated_news}
     return render(request,'page/news.html', context )
 
 # # -------------------------------------------------------------------

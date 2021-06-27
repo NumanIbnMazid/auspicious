@@ -24,9 +24,9 @@ urlpatterns = [
     # # -------------------------------------------------------------------
     path("create/project_category/", ProjectCategoryCreateView.as_view(),
          name="create_project_category"),
-    path("update/project_category/<id>/",
+    path("update/project_category/<slug>/",
          ProjectCategoryUpdateView.as_view(), name="update_project_category"),
-    path("project_category/<id>/detail/",
+    path("project_category/<slug>/detail/",
          ProjectCategoryDetailView.as_view(), name="project_category_detail"),
     path("delete/project_category/", delete_project_category,
          name="delete_project_category"),
