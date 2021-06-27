@@ -68,7 +68,7 @@
                                         <th>Project Name</th>
                                         <th>Image</th>
                                         <th>Client Name</th>
-                                        <th>Start Year</th>
+                                        <th>Year</th>
                                         <th>Scope</th>
                                     </tr>
                                 </thead>
@@ -97,7 +97,11 @@
                                         </td>
 
                                         <td>{{ project.client_name }}</td>
-                                        <td>{{ project.developement_start_year }} </td>
+                                        {% if project.developement_end_year %}
+                                        <td>{{ project.developement_start_year }} - {{ project.developement_end_year }}</td>
+                                        {% else %}
+                                        <td>{{ project.developement_start_year }}</td>
+                                        {% endif %}
                                         <td>{{ project.scope|safe|truncatechars_html:50}}</td>
                                     </tr>
                                     {% endfor %}
@@ -110,7 +114,7 @@
                                         <th>Project Name</th>
                                         <th>Image</th>
                                         <th>Client Name</th>
-                                        <th>Start Year</th>
+                                        <th>Year</th>
                                         <th>Scope</th>
                                     </tr>
                                 </tfoot>
@@ -133,7 +137,7 @@
                                         <th>Project Name</th>
                                         <th>Image</th>
                                         <th>Client Name</th>
-                                        <th>Start Year</th>
+                                        <th>Year</th>
                                         <th>Scope</th>
                                     </tr>
                                 </thead>
@@ -162,7 +166,12 @@
                                         </td>
 
                                         <td>{{ project.client_name }}</td>
-                                        <td>{{ project.developement_start_year }} </td>
+
+                                        {% if project.developement_end_year %}
+                                        <td>{{ project.developement_start_year }} - {{ project.developement_end_year }}</td>
+                                        {% else %}
+                                        <td>{{ project.developement_start_year }}</td>
+                                        {% endif %}
                                         <td>{{ project.scope|safe|truncatechars_html:50}}</td>
                                     </tr>
                                     {% endfor %}
