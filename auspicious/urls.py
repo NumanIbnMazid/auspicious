@@ -31,6 +31,7 @@ urlpatterns = [
     path("about/", AboutView.as_view(), name="about"),
     path("gallery/", views.gallery, name="gallery"),
     path("project_details/<slug>/", views.project_details, name="project_details"),
+    path("project/<slug>/", views.filtered_civil_project_lists, name="filtered_civil_project_lists"),
     path("civil-project/", views.civilproject, name="civil_project"),
     path("telecom-project/", views.telecomproject, name="telecom_project"),
     path("civil-service/", CivilServicesView.as_view(), name="civil_service"),

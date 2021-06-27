@@ -92,6 +92,21 @@ def civilproject(request):
     completed_project_lists = Project.objects.filter(developement_end_year__lte = datetime_today.year, category__title__icontains = 'Civil' ).order_by('id')
     context ={'ongoing_project_lists':ongoing_project_lists,'completed_project_lists':completed_project_lists}
     return render(request, 'page/civil-project.html', context)
+# # -------------------------------------------------------------------
+# #                               Civil  Project Filter
+# # -------------------------------------------------------------------
+
+
+def filtered_civil_project_lists(request, slug):
+    project_lists = Project.objects.filter(
+        category__slug__iexact=slug
+    )
+    context = {
+        'ongoing_project_lists':project_lists,
+        'completed_project_lists':project_lists,
+        # 'filtered_news_title': news_lists.first().category.title if len(news_lists) > 0 else ""
+    }
+    return render(request, "page/civil-project.html", context)
 
 # class TelecomProjectView(TemplateView):
 #     template_name = 'page/telecom-project.html'
