@@ -94,6 +94,10 @@
                                 </ul>
                             </div>
                         </a>
+                        {% empty %}
+                        <div class="alert alert-warning text-center" role="alert">
+                            No job available!
+                        </div>
                         {% endfor %}
 
                     </div>
