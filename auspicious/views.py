@@ -107,10 +107,18 @@ def telecomproject(request):
         str(today.date()) + " 00:00:00", '%Y-%m-%d %H:%M:%S'
     )
     ongoing_project_lists = Project.objects.filter(developement_end_year=None, category__title__icontains = 'Telecom' ).order_by('id')
+    # paginated_ongoing_project_list = get_paginated_object(
+    #     request, queryset=ongoing_project_lists, paginate_by=2
+    # )
 
     completed_project_lists = Project.objects.filter(developement_end_year__lte = datetime_today.year, category__title__icontains = 'Telecom' ).order_by('id')
+    # paginated_completed_project_list = get_paginated_object(
+    #     request, queryset=completed_project_lists, paginate_by=2
+    # )
+
     context ={
-        'ongoing_project_lists':ongoing_project_lists,'completed_project_lists':completed_project_lists
+        'ongoing_project_lists': ongoing_project_lists,
+        'completed_project_lists': completed_project_lists
     }
     return render(request, 'page/telecom-project.html', context)
 
@@ -186,7 +194,6 @@ def client(request):
 
 def news(request):
     news_lists= News.objects.all().order_by('-id')
-    print(len(news_lists), "*****************")
     paginated_news = get_paginated_object(
         request, queryset=news_lists, paginate_by=6
     )
