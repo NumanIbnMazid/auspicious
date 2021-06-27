@@ -67,9 +67,10 @@ class Project(models.Model):
     image = models.ImageField(
         upload_to=upload_project_image_path, blank=True, null=True, verbose_name="image"
     )
-    scope = models.TextField(
-        blank=True, null=True, verbose_name="scope"
-    )
+    # scope = models.TextField(
+    #     blank=True, null=True, verbose_name="scope"
+    # )
+    scope = RichTextUploadingField(blank=True, null=True)
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name='created at'
     )
@@ -406,9 +407,10 @@ class Job(models.Model):
     salary = models.CharField(
         max_length=255, blank=True, null=True, verbose_name="salary"
     )
-    description = models.TextField(
-        blank=True, null=True, verbose_name="description"
-    )
+    # description = models.TextField(
+    #     blank=True, null=True, verbose_name="description"
+    # )
+    description = RichTextUploadingField(blank=True, null=True)
     is_active = models.BooleanField(
         default=True, verbose_name="is active"
     )
