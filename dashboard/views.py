@@ -55,7 +55,7 @@ class DashboardView(TemplateView):
         context['total_project']= Project.objects.all().count()
         context['total_running_project']= Project.objects.filter(developement_end_year = None).count()
         context['total_completed_project']= Project.objects.exclude(developement_end_year = None).count()
-        context['total_completed_project']= Project.objects.exclude(developement_end_year = None).count()
+        # context['total_completed_project']= Project.objects.exclude(developement_end_year = None).count()
         context['total_user']= User.objects.all().count()
         return context
 

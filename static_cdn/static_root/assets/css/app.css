@@ -1111,6 +1111,13 @@
 .bi.bi-sub:before {
   vertical-align: sub;
 }
+.box{
+    background-image: linear-gradient(to top,#3492d0, #63bcf7);
+    color:#fff;
+    }
+.box:hover{
+    background:#3492d0;
+}
 .stats-icon {
   width: 2.5rem;
   height: 2.5rem;
@@ -1252,12 +1259,14 @@ a {
 }
 .font-semibold {
   font-weight: 600;
+
 }
 .font-bold {
   font-weight: 700;
 }
 .font-extrabold {
   font-weight: 800;
+
 }
 .text-width-md {
   max-width: 450px;
