@@ -29,6 +29,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, UpdateView, TemplateView, DetailView, ListView
 from django.http import HttpResponse
 from django.core.mail import EmailMultiAlternatives
+from django.contrib.auth.models import User
 
 dashboard_decorators = [login_required, has_dashboard_permission_required]
 
@@ -47,6 +48,15 @@ class DashboardView(TemplateView):
         ).get_context_data(**kwargs)
         context['page_title'] = 'Dashboard'
         context['page_short_title'] = 'Dashboard'
+        context['total_active_job']= Job.objects.filter(is_active = True).count()
+        context['total_job']= Job.objects.all().count()
+        context['total_client']= Client.objects.filter().count()
+        context['total_job_applicant']= Career.objects.all().count()
+        context['total_project']= Project.objects.all().count()
+        context['total_running_project']= Project.objects.filter(developement_end_year = None).count()
+        context['total_completed_project']= Project.objects.exclude(developement_end_year = None).count()
+        context['total_completed_project']= Project.objects.exclude(developement_end_year = None).count()
+        context['total_user']= User.objects.all().count()
         return context
 
 
