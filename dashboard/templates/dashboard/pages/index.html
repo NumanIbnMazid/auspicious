@@ -18,144 +18,237 @@
 
 <div class="row">
     <div class="col-6 col-lg-3 col-md-6">
-        <div class="card">
+    <a href="{% url 'dashboard:create_job' %}">
+        <div class="card box">
             <div class="card-body px-3 py-4-5">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="stats-icon purple">
-                            <i class="iconly-boldShow"></i>
+                        <div class="stats-icon">
+                            <i class="fas fa-briefcase"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="text-muted font-semibold">Active Jobs</h6>
-                        <h6 class="font-extrabold mb-0">{{ total_active_job }}</h6>
+                        <h6 class="font-semibold">Jobs Circular</h6>
+                        <h4 class="font-extrabold mb-0">{{ total_job }}</h4>
                     </div>
                 </div>
             </div>
         </div>
+        </a>
     </div>
     <div class="col-6 col-lg-3 col-md-6">
-        <div class="card">
+        <a href="{% url 'dashboard:create_job' %}">
+        <div class="card box">
             <div class="card-body px-3 py-4-5">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="stats-icon green">
+                        <div class="stats-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <h6 class="font-semibold" style="color:#fff;">Active Jobs</h6>
+                        <h4 class="font-extrabold mb-0">{{ total_active_job }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
+    </div>
+    <div class="col-6 col-lg-3 col-md-6">
+        <a href="{% url 'dashboard:job_application_list' %}">
+        <div class="card box">
+            <div class="card-body px-3 py-4-5">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="stats-icon">
                             <i class="iconly-boldAdd-User"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="text-muted font-semibold">Total Applicants</h6>
-                        <h6 class="font-extrabold mb-0">{{ total_job_applicant }}</h6>
+                        <h6 class="font-semibold" style="color:#fff;">Applicants</h6>
+                        <h4 class="font-extrabold mb-0">{{ total_job_applicant }}</h4>
                     </div>
                 </div>
             </div>
         </div>
+        </a>
     </div>
         <div class="col-6 col-lg-3 col-md-6">
-        <div class="card">
+            <a href="{% url 'dashboard:create_client' %}">
+        <div class="card box">
             <div class="card-body px-3 py-4-5">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="stats-icon blue">
+                        <div class="stats-icon">
                             <i class="iconly-boldProfile"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="text-muted font-semibold">Total Client</h6>
-                        <h6 class="font-extrabold mb-0">{{ total_client }}</h6>
+                        <h6 class="font-semibold">Clients</h6>
+                        <h4 class="font-extrabold mb-0">{{ total_client }}</h4>
                     </div>
                 </div>
             </div>
         </div>
+        </a>
     </div>
-    <div class="col-6 col-lg-3 col-md-6">
-        <div class="card">
-            <div class="card-body px-3 py-4-5">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="stats-icon red">
-                            <i class="iconly-boldBookmark"></i>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <h6 class="text-muted font-semibold">Total Project</h6>
-                        <h6 class="font-extrabold mb-0">{{ total_project }}</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </div>
 <div class="row">
     <div class="col-6 col-lg-3 col-md-6">
-        <div class="card">
+        <a href="{% url 'dashboard:create_project' %}">
+        <div class="card box">
             <div class="card-body px-3 py-4-5">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="stats-icon purple">
-                            <i class="iconly-boldShow"></i>
+                        <div class="stats-icon">
+                            <i class="fa fa-project-diagram"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="text-muted font-semibold">Running Projects</h6>
-                        <h6 class="font-extrabold mb-0">{{ total_running_project }}</h6>
+                        <h6 class="font-semibold">Projects</h6>
+                        <h4 class="font-extrabold mb-0">{{ total_project }}</h4>
                     </div>
                 </div>
             </div>
         </div>
+        </a>
     </div>
     <div class="col-6 col-lg-3 col-md-6">
-        <div class="card">
+        <a href="{% url 'dashboard:create_project' %}">
+        <div class="card box">
             <div class="card-body px-3 py-4-5">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="stats-icon green">
-                            <i class="iconly-boldAdd-User"></i>
+                        <div class="stats-icon">
+                            <i class="fa fa-project-diagram"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="text-muted font-semibold">Completed Projects</h6>
-                        <h6 class="font-extrabold mb-0">{{ total_completed_project }}</h6>
+                        <h6 class="font-semibold">Completed Projects</h6>
+                        <h4 class="font-extrabold mb-0">{{ total_completed_project }}</h4>
                     </div>
                 </div>
             </div>
         </div>
+        </a>
     </div>
         <div class="col-6 col-lg-3 col-md-6">
-        <div class="card">
+        <a href="{% url 'dashboard:create_project' %}">
+        <div class="card box">
             <div class="card-body px-3 py-4-5">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="stats-icon blue">
-                            <i class="iconly-boldProfile"></i>
+                        <div class="stats-icon">
+                            <i class="fa fa-project-diagram"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="text-muted font-semibold">Total Jobs</h6>
-                        <h6 class="font-extrabold mb-0">{{ total_job }}</h6>
+                        <h6 class="font-semibold">Running Projects</h6>
+                        <h4 class="font-extrabold mb-0">{{ total_running_project }}</h4>
                     </div>
                 </div>
             </div>
         </div>
+        </a>
     </div>
     <div class="col-6 col-lg-3 col-md-6">
-        <div class="card">
+        <a href="{% url 'create_user' %}">
+        <div class="card box">
             <div class="card-body px-3 py-4-5">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="stats-icon red">
+                        <div class="stats-icon">
                             <i class="fas fa-user" style="color:#fff"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="text-muted font-semibold">Total Users</h6>
-                        <h6 class="font-extrabold mb-0">{{ total_user }}</h6>
+                        <h6 class="font-semibold">Users</h6>
+                        <h4 class="font-extrabold mb-0">{{ total_user }}</h4>
                     </div>
                 </div>
             </div>
         </div>
+        </a>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <div class="headline">
+            <h5>Latest Job Applications</h5>
+        </div>
+
+        <div class="table-responsive">
+            <table class="display table align-items-center table-flush table-hover"
+                style="width:100%">
+                <thead class="thead-dark">
+                    <tr class="text-center">
+                        <th>Name</th>
+                        <th>Contact</th>
+                        <th>Job</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody class="list">
+                <!-- table body -->
+                {% for career in career_qs %}
+                    <tr class="text-center">
+                        <td>{{ career.user }}</td>
+                        <td>{{ career.contact }}</td>
+                        {% if career.job %}
+                        <td>{{ career.job }}</td>
+                        {% else %}
+                        <td> - </td>
+                        {% endif %}
+                        <td>{{ career.status }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="headline">
+            <h5>Latest Ongoing Projects</h5>
+        </div>
+
+        <div class="table-responsive">
+            <table id="list-datatable" class="display table align-items-center table-flush table-hover"
+                style="width:100%">
+                <thead class="thead-dark">
+                    <tr class="text-center">
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Client Name</th>
+                        <th>Year</th>
+                    </tr>
+                </thead>
+
+                <tbody class="list">
+                <!-- table body -->
+                    {% for project in latest_ongoing_projects %}
+                    <tr class="text-center">
+                        <td>{{ project.name }}</td>
+                        <td>{{ project.category }}</td>
+                        {% if project.client_name %}
+                        <td>{{ project.client_name }}</td>
+                        {% else %}
+                        <td>-</td>
+                        {% endif %}
+                        <td>{{ project.developement_start_year }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
 
 
 {% endblock %}

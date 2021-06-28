@@ -1111,11 +1111,25 @@
 .bi.bi-sub:before {
   vertical-align: sub;
 }
+.box{
+    background-image: linear-gradient(to top,#3492d0, #63bcf7);
+    color:#fff;
+    }
+.headline{
+    background:#3492d0;
+    padding:1%;
+    color:#fff;
+    text-align:center;
+}
+.box:hover{
+    background:#3492d0;
+}
 .stats-icon {
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 0.5rem;
-  background-color: #000;
+  background-color: transparent;
+  border:1px solid #fff;
   float: right;
   display: flex;
   align-items: center;
@@ -1123,7 +1137,7 @@
 }
 .stats-icon i {
   color: #fff;
-  font-size: 1.7rem;
+  font-size: 1.0rem;
 }
 .stats-icon.purple {
   background-color: #9694ff;
@@ -1251,12 +1265,14 @@ a {
 }
 .font-semibold {
   font-weight: 600;
+
 }
 .font-bold {
   font-weight: 700;
 }
 .font-extrabold {
   font-weight: 800;
+
 }
 .text-width-md {
   max-width: 450px;
