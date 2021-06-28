@@ -23,7 +23,24 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="stats-icon">
-                            <i class="iconly-boldShow"></i>
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <h6 class="font-semibold">Jobs Circular</h6>
+                        <h4 class="font-extrabold mb-0">{{ total_job }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3 col-md-6">
+        <div class="card box">
+            <div class="card-body px-3 py-4-5">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="stats-icon">
+                            <i class="fas fa-briefcase"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -44,7 +61,7 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="font-semibold" style="color:#fff;">Total Applicants</h6>
+                        <h6 class="font-semibold" style="color:#fff;">Applicants</h6>
                         <h4 class="font-extrabold mb-0">{{ total_job_applicant }}</h4>
                     </div>
                 </div>
@@ -61,30 +78,14 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="font-semibold">Total Client</h6>
+                        <h6 class="font-semibold">Clients</h6>
                         <h4 class="font-extrabold mb-0">{{ total_client }}</h4>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-6 col-lg-3 col-md-6">
-        <div class="card box">
-            <div class="card-body px-3 py-4-5">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="stats-icon">
-                            <i class="iconly-boldBookmark"></i>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <h6 class="font-semibold">Total Project</h6>
-                        <h4 class="font-extrabold mb-0">{{ total_project }}</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </div>
 <div class="row">
     <div class="col-6 col-lg-3 col-md-6">
@@ -93,11 +94,11 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="stats-icon">
-                            <i class="iconly-boldShow"></i>
+                            <i class="fa fa-project-diagram"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="font-semibold">Total Project</h6>
+                        <h6 class="font-semibold">Projects</h6>
                         <h4 class="font-extrabold mb-0">{{ total_project }}</h4>
                     </div>
                 </div>
@@ -110,7 +111,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="stats-icon">
-                            <i class="iconly-boldAdd-User"></i>
+                            <i class="fa fa-project-diagram"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -127,7 +128,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="stats-icon">
-                            <i class="iconly-boldProfile"></i>
+                            <i class="fa fa-project-diagram"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -148,7 +149,7 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="font-semibold">Total Users</h6>
+                        <h6 class="font-semibold">Users</h6>
                         <h4 class="font-extrabold mb-0">{{ total_user }}</h4>
                     </div>
                 </div>
@@ -156,6 +157,44 @@
         </div>
     </div>
 </div>
+
+<!--<div class="row">-->
+<!--    <div class="col-6 col-lg-3 col-md-6">-->
+<!--        <div class="card box">-->
+<!--            <div class="card-body px-3 py-4-5">-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-4">-->
+<!--                        <div class="stats-icon">-->
+<!--                            <i class="fa fa-project-diagram"></i>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-8">-->
+<!--                        <h6 class="font-semibold">Projects</h6>-->
+<!--                        <h4 class="font-extrabold mb-0">{{ total_project }}</h4>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="col-6 col-lg-3 col-md-6">-->
+<!--        <div class="card box">-->
+<!--            <div class="card-body px-3 py-4-5">-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-4">-->
+<!--                        <div class="stats-icon">-->
+<!--                            <i class="fa fa-project-diagram"></i>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-8">-->
+<!--                        <h6 class="font-semibold">Completed Projects</h6>-->
+<!--                        <h4 class="font-extrabold mb-0">{{ total_completed_project }}</h4>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
 
 
 {% endblock %}
