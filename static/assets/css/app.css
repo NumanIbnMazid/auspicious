@@ -1115,6 +1115,12 @@
     background-image: linear-gradient(to top,#3492d0, #63bcf7);
     color:#fff;
     }
+.headline{
+    background:#3492d0;
+    padding:1%;
+    color:#fff;
+    text-align:center;
+}
 .box:hover{
     background:#3492d0;
 }

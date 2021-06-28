@@ -158,42 +158,79 @@
     </div>
 </div>
 
-<!--<div class="row">-->
-<!--    <div class="col-6 col-lg-3 col-md-6">-->
-<!--        <div class="card box">-->
-<!--            <div class="card-body px-3 py-4-5">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-md-4">-->
-<!--                        <div class="stats-icon">-->
-<!--                            <i class="fa fa-project-diagram"></i>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-8">-->
-<!--                        <h6 class="font-semibold">Projects</h6>-->
-<!--                        <h4 class="font-extrabold mb-0">{{ total_project }}</h4>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="col-6 col-lg-3 col-md-6">-->
-<!--        <div class="card box">-->
-<!--            <div class="card-body px-3 py-4-5">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-md-4">-->
-<!--                        <div class="stats-icon">-->
-<!--                            <i class="fa fa-project-diagram"></i>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-8">-->
-<!--                        <h6 class="font-semibold">Completed Projects</h6>-->
-<!--                        <h4 class="font-extrabold mb-0">{{ total_completed_project }}</h4>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+<div class="row">
+    <div class="col-6">
+        <div class="headline">
+            <h5>Latest Job Applications</h5>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <table class="display table align-items-center table-flush table-hover"
+                style="width:100%">
+                <thead class="thead-dark">
+                    <tr class="text-center">
+                        <th>Name</th>
+                        <th>Contact</th>
+                        <th>Job</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody class="list">
+                <!-- table body -->
+                {% for career in career_qs %}
+                    <tr class="text-center">
+                        <td>{{ career.user }}</td>
+                        <td>{{ career.contact }}</td>
+                        {% if career.job %}
+                        <td>{{ career.job }}</td>
+                        {% else %}
+                        <td> - </td>
+                        {% endif %}
+                        <td>{{ career.status }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="headline">
+            <h5>Latest Ongoing Projects</h5>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <table id="list-datatable" class="display table align-items-center table-flush table-hover"
+                style="width:100%">
+                <thead class="thead-dark">
+                    <tr class="text-center">
+                        <th>Name</th>
+                        <th>category</th>
+                        <th>Client Name</th>
+                        <th>Year</th>
+                    </tr>
+                </thead>
+
+                <tbody class="list">
+                <!-- table body -->
+                    {% for project in latest_ongoing_projects %}
+                    <tr class="text-center">
+                        <td>{{ project.name }}</td>
+                        <td>{{ project.category }}</td>
+                        {% if project.client_name %}
+                        <td>{{ project.client_name }}</td>
+                        {% else %}
+                        <td>-</td>
+                        {% endif %}
+                        <td>{{ project.developement_start_year }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 
 
