@@ -17,7 +17,7 @@
 
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:dashboard' %}" class='sidebar-link'>
-                    <i class="bi bi-grid-fill"></i>
+                    <i class="bi bi-grid-fill fa-spin"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
@@ -26,7 +26,7 @@
             {% if perms.dashboard.view_career %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:job_application_list' %}" class='sidebar-link'>
-                    <i class="fa fa-layer-group"></i>
+                    <i class="fas fa-briefcase"></i>
                     <span>Job Applications</span>
                 </a>
             </li>
@@ -36,7 +36,7 @@
             {% if perms.dashboard.view_career %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:cv_list' %}" class='sidebar-link'>
-                    <i class="fa fa-layer-group"></i>
+                    <i class="fa fa-file"></i>
                     <span>CVs</span>
                 </a>
             </li>
@@ -46,7 +46,7 @@
             {% if perms.auth.add_group %}
             <li class="sidebar-item">
                 <a href="{% url 'create_group' %}" class='sidebar-link'>
-                    <i class="fa fa-layer-group"></i>
+                    <i class="fa fa-users"></i>
                     <span>User Group</span>
                 </a>
             </li>
@@ -68,7 +68,7 @@
             {% if perms.dashboard.add_project or perms.dashboard.view_project_category %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:create_project_category' %}" class="sidebar-link">
-                    <i class="fa fa-project-diagram"></i>
+                    <i class="fas fa-bullseye"></i>
                     <span>Project Category</span>
                 </a>
             </li>
@@ -91,7 +91,7 @@
             {% if perms.dashboard.add_project or perms.dashboard.view_news_category %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:create_news_category' %}" class="sidebar-link">
-                    <i class="fa fa-newspaper" aria-hidden="true"></i>
+                    <i class="fa fa-book" aria-hidden="true"></i>
                     <span>News Category</span>
                 </a>
             </li>
@@ -160,7 +160,7 @@
             {% if perms.dashboard.add_job or perms.dashboard.view_job %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:create_job' %}" class="sidebar-link">
-                    <i class="fas fa-user-md" aria-hidden="true"></i>
+                    <i class="fas fa-tasks" aria-hidden="true"></i>
                     <span>Job</span>
                 </a>
             </li>
@@ -172,7 +172,7 @@
             {% if perms.dashboard.add_contact or perms.dashboard.view_contact %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:create_contact' %}" class="sidebar-link">
-                    <i class="fas fa-user-md" aria-hidden="true"></i>
+                    <i class="fas fa-address-book" aria-hidden="true"></i>
                     <span>Contact</span>
                 </a>
             </li>
