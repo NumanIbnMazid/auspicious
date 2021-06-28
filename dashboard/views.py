@@ -78,6 +78,14 @@ class ProjectCategoryCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = ProjectCategoryManageForm
 
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.has_perm("dashboard.add_projectcategory"):
+            messages.add_message(
+                self.request, messages.ERROR, "Not enough permission!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(ProjectCategoryCreateView, self).dispatch(request, *args, **kwargs)
+
     def form_valid(self, form, **kwargs):
         title = form.instance.title
         field_qs = ProjectCategory.objects.filter(
@@ -909,7 +917,7 @@ class JobPositionDetailView(DetailView):
     template_name = "dashboard/snippets/detail-common.html"
 
     def get_object(self):
-        return get_simple_object(key='id', model=JobPosition, self=self)
+        return get_simple_object(key='slug', model=JobPosition, self=self)
 
     def get_context_data(self, **kwargs):
         context = super(
@@ -927,8 +935,16 @@ class JobPositionUpdateView(UpdateView):
     template_name = 'dashboard/snippets/manage.html'
     form_class = JobPositionManageForm
 
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.has_perm("dashboard.change_jobposition"):
+            messages.add_message(
+                self.request, messages.ERROR, "Not enough permission!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(JobPositionUpdateView, self).dispatch(request, *args, **kwargs)
+
     def get_object(self):
-        return get_simple_object(key="id", model=JobPosition, self=self)
+        return get_simple_object(key="slug", model=JobPosition, self=self)
 
     def get_success_url(self):
         return reverse('dashboard:create_job_position')
@@ -969,7 +985,7 @@ class JobPositionUpdateView(UpdateView):
 @has_dashboard_permission_required
 @login_required
 def delete_job_position(request):
-    return delete_simple_object(request=request, key='id', model=JobPosition, redirect_url="dashboard:create_job_position")
+    return delete_simple_object(request=request, key='slug', model=JobPosition, redirect_url="dashboard:create_job_position")
 
 
 
@@ -1185,7 +1201,7 @@ def delete_contact(request):
 
 def get_job_application_common_contexts(request):
     common_contexts = get_simple_context_data(
-        request=request, app_namespace="dashboard", model_namespace="career", model=Career, list_template=None, fields_to_hide_in_table=["id", "slug", "updated_at"]
+        request=request, app_namespace="dashboard", model_namespace="career", display_name="Job Application", model=Career, list_template=None, fields_to_hide_in_table=["id", "slug", "updated_at"]
     )
     return common_contexts
 
@@ -1293,7 +1309,7 @@ def delete_job_application(request):
 
 def get_cv_common_contexts(request):
     common_contexts = get_simple_context_data(
-        request=request, app_namespace="dashboard", model_namespace="career", model=Career, list_template=None, fields_to_hide_in_table=["id", "slug", "updated_at"]
+        request=request, app_namespace="dashboard", model_namespace="career", display_name="CV", model=Career, list_template=None, fields_to_hide_in_table=["id", "slug", "updated_at"]
     )
     return common_contexts
 

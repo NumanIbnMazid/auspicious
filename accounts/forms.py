@@ -6,6 +6,7 @@ import re
 from django.core.exceptions import ValidationError
 from util.helpers import validate_chars, simple_form_widget
 from django.contrib.admin.widgets import FilteredSelectMultiple
+from django.db.models import Q
 
 
 class UserGroupForm(forms.ModelForm):
@@ -21,7 +22,8 @@ class UserGroupForm(forms.ModelForm):
         self.fields['name'].help_text = "Only [_A-z .,'-] these characters are allowed"
 
         self.fields['permissions'] = forms.ModelMultipleChoiceField(
-            label="Permissions", required=False, help_text="Hold down “Control”, or “Command” on a Mac, to select more than one.", queryset=Permission.objects.all()
+            label="Permissions", required=False, help_text="Hold down “Control”, or “Command” on a Mac, to select more than one.",
+            queryset=Permission.objects.filter(Q(content_type__app_label__icontains="dashboard") | Q(content_type__model__in=["user", "group", "profile"]))
         )
 
     class Meta:
@@ -60,8 +62,12 @@ class UserCreateForm(forms.Form):
     confirm_password = forms.CharField(
         label='Confirm Password', max_length=100, help_text="Enter password again", widget=forms.PasswordInput(attrs={'placeholder': 'Enter password again...'})
     )
-    user_group = forms.ModelMultipleChoiceField(
+    user_groups = forms.ModelMultipleChoiceField(
         label="User Group", required=False, help_text='Hold down “Control”, or “Command” on a Mac, to select more than one.', queryset=Group.objects.all()
+    )
+    permissions = forms.ModelMultipleChoiceField(
+        label="Permissions", required=False, help_text="Hold down “Control”, or “Command” on a Mac, to select more than one.",
+        queryset=Permission.objects.filter(Q(content_type__app_label__icontains="dashboard") | Q(content_type__model__in=["user", "group", "profile"]))
     )
 
     def clean_first_name(self):
@@ -126,7 +132,11 @@ class UserUpdateForm(forms.Form):
         label='Username', max_length=255, help_text="Only [_A-z0-9-] these characters are allowed", widget=forms.TextInput(attrs={'placeholder': 'Enter username...'})
     )
     user_group = forms.ModelMultipleChoiceField(
-        label="User Group", required=False, help_text='Select user group.', queryset=Group.objects.all()
+        label="User Group", required=False, help_text='Select user group.', queryset=Group.objects.all().values()
+    )
+    permissions = forms.ModelMultipleChoiceField(
+        label="Permissions", required=False, help_text="Hold down “Control”, or “Command” on a Mac, to select more than one.",
+        queryset=Permission.objects.filter(Q(content_type__app_label__icontains="dashboard") | Q(content_type__model__in=["user", "group", "profile"]))
     )
 
     def clean_first_name(self):
@@ -155,6 +165,10 @@ class UserForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     user_group = forms.ModelMultipleChoiceField(
         label="User Group", required=False, help_text='Select user group.', queryset=Group.objects.all()
+    )
+    permissions = forms.ModelMultipleChoiceField(
+        label="Permissions", required=False, help_text="Hold down “Control”, or “Command” on a Mac, to select more than one.",
+        queryset=Permission.objects.filter(Q(content_type__app_label__icontains="dashboard") | Q(content_type__model__in=["user", "group", "profile"]))
     )
 
     def __init__(self, *args, **kwargs):
@@ -202,7 +216,12 @@ class ProfileForm(forms.ModelForm):
         self.fields["user_group"].initial = (
             self.user.groups.all().values_list(
                 'id', flat=True
-            )
+            ) 
+        )
+        self.fields["permissions"].initial = (
+            Permission.objects.filter(user=self.user).values_list(
+                'id', flat=True
+            ) 
         )
 
     class Meta:

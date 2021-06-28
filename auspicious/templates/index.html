@@ -190,7 +190,9 @@
                             <a href="{% url 'news_details' slug=news.slug %}">
 
                                 <div class="item">
+                                    {% if news.image %}
                                     <img src="{{ news.image.url }}" alt="" style="height: 250px; width: 250px;">
+                                    {% endif %}
                                     <div class="overlay">
                                         <h4>{{ news.title|safe|truncatechars_html:8 }}</h4>
                                         <p>{{ news.description|safe|truncatechars_html:10}}</p>

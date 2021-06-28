@@ -192,20 +192,6 @@
                             <th>
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 text-center">
-                                        User Level
-                                    </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                                        <span class="text-danger font-700 font-15">
-                                            Not Implemented
-                                        </span>
-                                    </div>
-                                </div>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>
-                                <div class="row">
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 text-center">
                                         Is Stuff
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -336,12 +322,12 @@
                         <div class="text-center">
                             <h4>User Permissions</h4>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 text-center mt-4 mb-4">
                             <span class="text-muted font-700 font-15">
                                 {% if object.get_user_permissions == None %}
                                 ---
                                 {% else %}
-                                {{ object.get_user_permissions }}
+                                {{ object.get_user_permissions|safe }}
                                 {% endif %}
                             </span>
                         </div>

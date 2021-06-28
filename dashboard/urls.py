@@ -45,13 +45,13 @@ urlpatterns = [
     # # -------------------------------------------------------------------
     # #                              News Category
     # # -------------------------------------------------------------------
-    path("create/news_category/", NewsCategoryCreateView.as_view(),
+    path("create/news-category/", NewsCategoryCreateView.as_view(),
          name="create_news_category"),
-    path("update/news_category/<slug>/",
+    path("update/news-category/<slug>/",
          NewsCategoryUpdateView.as_view(), name="update_news_category"),
-    path("news_category/<slug>/detail/",
+    path("news-category/<slug>/detail/",
          NewsCategoryDetailView.as_view(), name="news_category_detail"),
-    path("delete/news_category/", delete_news_category,
+    path("delete/news-category/", delete_news_category,
          name="delete_news_category"),
     # # -------------------------------------------------------------------
     # #                              News
@@ -62,7 +62,7 @@ urlpatterns = [
          NewsUpdateView.as_view(), name="update_news"),
     path("news/<slug>/detail/",
          NewsDetailView.as_view(), name="news_detail"),
-    path("news/project/", delete_news,
+    path("delete/project/", delete_news,
          name="delete_news"),
 
     # # -------------------------------------------------------------------
@@ -74,7 +74,7 @@ urlpatterns = [
          GalleryUpdateView.as_view(), name="update_gallery"),
     path("gallery/<slug>/detail/",
          GalleryDetailView.as_view(), name="gallery_detail"),
-    path("news/gallery/", delete_gallery,
+    path("delete/gallery/", delete_gallery,
          name="delete_gallery"),
 
     # # -------------------------------------------------------------------
@@ -86,31 +86,31 @@ urlpatterns = [
          ClientUpdateView.as_view(), name="update_client"),
     path("client/<slug>/detail/",
          ClientDetailView.as_view(), name="client_detail"),
-    path("news/client/", delete_client,
+    path("delete/client/", delete_client,
          name="delete_client"),
 
     # # -------------------------------------------------------------------
     # #                              Social Account
     # # -------------------------------------------------------------------
-    path("create/social_account/", SocialAccountCreateView.as_view(),
+    path("create/social-account/", SocialAccountCreateView.as_view(),
          name="create_social_account"),
-    path("update/social_account/<id>/",
+    path("update/social-account/<id>/",
          SocialAccountUpdateView.as_view(), name="update_social_account"),
-    path("social_account/<id>/detail/",
+    path("social-account/<id>/detail/",
          SocialAccountDetailView.as_view(), name="social_account_detail"),
-    path("news/social_account/", delete_social_account,
+    path("delete/social-account/", delete_social_account,
          name="delete_social_account"),
 
     # # -------------------------------------------------------------------
     # #                              Job Position
     # # -------------------------------------------------------------------
-    path("create/job_position/", JobPositionCreateView.as_view(),
+    path("create/job-position/", JobPositionCreateView.as_view(),
          name="create_job_position"),
-    path("update/job_position/<slug>/",
+    path("update/job-position/<slug>/",
          JobPositionUpdateView.as_view(), name="update_job_position"),
-    path("job_position/<slug>/detail/",
+    path("job-position/<slug>/detail/",
          JobPositionDetailView.as_view(), name="job_position_detail"),
-    path("news/job_position/", delete_job_position,
+    path("delete/job-position/", delete_job_position,
          name="delete_job_position"),
 
     # # -------------------------------------------------------------------
@@ -122,7 +122,7 @@ urlpatterns = [
          JobUpdateView.as_view(), name="update_job"),
     path("job/<slug>/detail/",
          JobDetailView.as_view(), name="job_detail"),
-    path("news/job/", delete_job,
+    path("delete/job/", delete_job,
          name="delete_job"),
 
     # # -------------------------------------------------------------------
@@ -140,15 +140,15 @@ urlpatterns = [
     # # -------------------------------------------------------------------
     # #                       Career / Job Application
     # # -------------------------------------------------------------------
-    path("job/application/list/", JobApplicationListView.as_view(),
+    path("job/job-application/list/", JobApplicationListView.as_view(),
          name="job_application_list"),
-    path("job/application/<slug>/update/", JobApplicationUpdateView.as_view(),
+    path("job/job-application/<slug>/update/", JobApplicationUpdateView.as_view(),
          name="job_application_update"),
-    path("job/application/<slug>/detail/",
+    path("job/job-application/<slug>/detail/",
          JobApplicationDetailView.as_view(), name="job_application_detail"),
     path("delete/job-application/", delete_job_application,
          name="delete_job_application"),
-    path("update/job-application/<slug>/status", update_job_application_status,
+    path("update/job-application/<slug>/status/", update_job_application_status,
          name="update_job_application_status"),
 
     # # -------------------------------------------------------------------

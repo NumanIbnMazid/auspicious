@@ -42,7 +42,7 @@
 
                                 <!-- action -->
                                 <td style="width:14%">
-                                    {% if can_add_change == True %}
+                                    {% if can_change == True %}
                                     {% if not update_url == None %}
                                     {% if not object.user_profile.slug == None %}
                                     <a href="{% url update_url slug=object.user_profile.slug %}"
@@ -62,7 +62,7 @@
                                     {% endif %}
                                     {% endif %}
 
-                                    {% if can_add_change == True %}
+                                    {% if can_change == True %}
                                     {% if not detail_url == None %}
 
                                     {% if not object.user_profile.slug == None %}

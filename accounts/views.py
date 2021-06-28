@@ -60,7 +60,9 @@ class GroupCreateView(CreateView):
         context["detail_url"] = "group_detail"
         context['namespace'] = 'group'
         context['can_add_change'] = True if self.request.user.has_perm(
-            'auth.add_group') and self.request.user.has_perm('auth.change_group') else False
+            'auth.add_group') or self.request.user.has_perm('auth.change_group') else False
+        context['can_add'] = True if self.request.user.has_perm('auth.add_group') else False
+        context['can_change'] = True if self.request.user.has_perm('auth.change_group') else False
         context['can_view'] = self.request.user.has_perm('auth.view_group')
         context['can_delete'] = self.request.user.has_perm('auth.delete_group')
         return context
@@ -83,7 +85,9 @@ class GroupDetailView(DetailView):
         context["delete_url"] = "delete_group"
         context["list_url"] = "create_group"
         context['can_add_change'] = True if self.request.user.has_perm(
-            'auth.add_group') == True and self.request.user.has_perm('auth.change_group') == True else False
+            'auth.add_group') == True or self.request.user.has_perm('auth.change_group') == True else False
+        context['can_add'] = True if self.request.user.has_perm('auth.add_group') else False
+        context['can_change'] = True if self.request.user.has_perm('auth.change_group') else False
         context['can_view'] = self.request.user.has_perm(
             'auth.view_group')
         context['can_delete'] = self.request.user.has_perm(
@@ -138,9 +142,13 @@ class GroupUpdateView(UpdateView):
         context["detail_url"] = "group_detail"
         context['namespace'] = 'group'
         context['can_add_change'] = True if self.request.user.has_perm(
-            'auth.add_group') and self.request.user.has_perm('auth.change_group') else False
-        context['can_view'] = self.request.user.has_perm('auth.view_group')
-        context['can_delete'] = self.request.user.has_perm('auth.delete_group')
+            'auth.add_group') == True or self.request.user.has_perm('auth.change_group') == True else False
+        context['can_add'] = True if self.request.user.has_perm('auth.add_group') else False
+        context['can_change'] = True if self.request.user.has_perm('auth.change_group') else False
+        context['can_view'] = self.request.user.has_perm(
+            'auth.view_group')
+        context['can_delete'] = self.request.user.has_perm(
+            'auth.delete_group')
         return context
 
 
@@ -175,7 +183,9 @@ def create_user(request):
         'namespace': "admin-user",
         'object': User.objects.filter(username=request.user.username).first().user_profile,
         'form': form,
-        'can_add_change': True if request.user.has_perm('auth.add_user') and request.user.has_perm('auth.change_user') else False,
+        'can_add_change': True if request.user.has_perm('auth.add_user') or request.user.has_perm('auth.change_user') else False,
+        'can_add': True if request.user.has_perm('auth.add_user') else False,
+        'can_change': True if request.user.has_perm('auth.change_user') else False,
         'can_view': request.user.has_perm('auth.view_user'),
         'can_delete': request.user.has_perm('auth.delete_user')
     }
@@ -193,7 +203,8 @@ def create_user(request):
         password = request.POST["password"]
         confirmation = request.POST["confirm_password"]
         if form.is_valid():
-            user_groups = form.cleaned_data.get("user_group")
+            user_groups = form.cleaned_data.get("user_groups")
+            permissions = form.cleaned_data.get("permissions")
             try:
                 user_obj = User(
                     username=username,
@@ -214,6 +225,17 @@ def create_user(request):
                     else:
                         messages.error(
                             request, 'Failed to add user to group!'
+                        )
+
+                # assign user permissions
+                for permission in permissions:
+                    permission_qs = Permission.objects.filter(name=permission.name)
+                    if permission_qs.exists():
+                        selected_permission = permission_qs.first()
+                        user_obj.user_permissions.add(selected_permission)
+                    else:
+                        messages.error(
+                            request, 'Failed to assign permission!'
                         )
 
                 messages.success(
@@ -247,11 +269,11 @@ class UserDetailView(DetailView):
         context["update_url"] = "update_user"
         context["delete_url"] = "delete_user"
         context['can_add_change'] = True if self.request.user.has_perm(
-            'auth.add_user') == True and self.request.user.has_perm('auth.change_user') == True else False
-        context['can_view'] = self.request.user.has_perm(
-            'auth.view_user')
-        context['can_delete'] = self.request.user.has_perm(
-            'auth.delete_user')
+            'auth.add_user') or self.request.user.has_perm('auth.change_user') else False
+        context['can_add'] = True if self.request.user.has_perm('auth.add_user') else False
+        context['can_change'] = True if self.request.user.has_perm('auth.change_user') else False
+        context['can_view'] = self.request.user.has_perm('auth.view_user')
+        context['can_delete'] = self.request.user.has_perm('auth.delete_user')
         return context
 
 
@@ -268,7 +290,7 @@ class ProfileUpdateView(UpdateView):
     def form_valid(self, form):
         self.object = self.get_object()
         user_groups = form.cleaned_data.get("user_group")
-
+        permissions = form.cleaned_data.get("permissions")
         # clear user groups
         self.object.user.groups.clear()
         # add user to group
@@ -281,6 +303,19 @@ class ProfileUpdateView(UpdateView):
             else:
                 messages.error(
                     self.request, 'Failed to add user to group!'
+                )
+        
+        # clear user permissions
+        self.object.user.user_permissions.clear()
+        # assign user permissions
+        for permission in permissions:
+            permission_qs = Permission.objects.filter(name=permission.name)
+            if permission_qs.exists():
+                selected_permission = permission_qs.first()
+                self.object.user.user_permissions.add(selected_permission)
+            else:
+                messages.error(
+                    request, 'Failed to assign permission!'
                 )
 
         username = self.request.POST.get("username")
@@ -315,7 +350,9 @@ class ProfileUpdateView(UpdateView):
         context["detail_url"] = "user_detail"
         context['namespace'] = 'user'
         context['can_add_change'] = True if self.request.user.has_perm(
-            'auth.add_user') and self.request.user.has_perm('auth.change_user') else False
+            'auth.add_user') or self.request.user.has_perm('auth.change_user') else False
+        context['can_add'] = True if self.request.user.has_perm('auth.add_user') else False
+        context['can_change'] = True if self.request.user.has_perm('auth.change_user') else False
         context['can_view'] = self.request.user.has_perm('auth.view_user')
         context['can_delete'] = self.request.user.has_perm('auth.delete_user')
         return context

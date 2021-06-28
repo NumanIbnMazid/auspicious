@@ -27,12 +27,9 @@ def user_has_perm(context, permission):
 
 
 @register.filter
-def var_to_title(value):
-    result_arr = []
-    values = value.split("_")
-    for val in values:
-        result_arr.append(val.title())
-    return " ".join(result_arr)
+def to_title(value):
+    result = value.replace("_", " ").title()
+    return result
 
 
 @register.filter

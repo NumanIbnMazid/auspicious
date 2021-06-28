@@ -152,7 +152,7 @@ def delete_simple_object(request, key, model, redirect_url):
 ************************ Context Data Helper Functions ************************
 """
 
-def get_simple_context_data(request=None, app_namespace=None, model_namespace=None, model=None, list_template=None, fields_to_hide_in_table=[], **kwargs):
+def get_simple_context_data(request=None, app_namespace=None, model_namespace=None, display_name=None, model=None, list_template=None, fields_to_hide_in_table=[], **kwargs):
     """
     params: request, app_namespace (string), model_namespace (string), model (class), fields_to_hide_in_table (list), **kwargs
 
@@ -190,10 +190,18 @@ def get_simple_context_data(request=None, app_namespace=None, model_namespace=No
         Fields To Hide in Table:
             => ["slug", "id"]
     """
+    def get_permission_namespace(namespace):
+        whitelist = set('abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+        filtered_permission_namespace = ''.join(filter(whitelist.__contains__, namespace))
+        return filtered_permission_namespace
+
     if request == None or model_namespace == None or model == None:
         raise ValueError(
             "request, model_namespace and model cannot be null! Please pass these arguments properly."
         )
+    
+    permission_namespace = get_permission_namespace(model_namespace)
+
     common_contexts = {}
     if not app_namespace == None:
         # URL Binding
@@ -204,15 +212,15 @@ def get_simple_context_data(request=None, app_namespace=None, model_namespace=No
         common_contexts["list_url"] = f"{app_namespace}:create_{model_namespace}"
         # Permission Binding
         common_contexts["can_add_change"] = True if request.user.has_perm(
-            f'{app_namespace}.add_{model_namespace}') and request.user.has_perm(f'{app_namespace}.change_{model_namespace}') else False
+            f'{app_namespace}.add_{permission_namespace}') or request.user.has_perm(f'{app_namespace}.change_{permission_namespace}') else False
         common_contexts["can_add"] = request.user.has_perm(
-            f'{app_namespace}.add_{model_namespace}')
+            f'{app_namespace}.add_{permission_namespace}')
         common_contexts["can_change"] = request.user.has_perm(
-            f'{app_namespace}.change_{model_namespace}')
+            f'{app_namespace}.change_{permission_namespace}')
         common_contexts["can_view"] = request.user.has_perm(
-            f'{app_namespace}.view_{model_namespace}')
+            f'{app_namespace}.view_{permission_namespace}')
         common_contexts["can_delete"] = request.user.has_perm(
-            f'{app_namespace}.delete_{model_namespace}')
+            f'{app_namespace}.delete_{permission_namespace}')
     else:
         # URL Binding
         common_contexts["create_url"] = f"create_{model_namespace}"
@@ -222,17 +230,18 @@ def get_simple_context_data(request=None, app_namespace=None, model_namespace=No
         common_contexts["list_url"] = f"create_{model_namespace}"
         # Permission Binding
         common_contexts["can_add_change"] = True if request.user.has_perm(
-            'add_{model_namespace}') and request.user.has_perm('change_{model_namespace}') else False
+            'add_{permission_namespace}') or request.user.has_perm('change_{permission_namespace}') else False
         common_contexts["can_add"] = request.user.has_perm(
-            'add_{model_namespace}')
+            'add_{permission_namespace}')
         common_contexts["can_change"] = request.user.has_perm(
-            'change_{model_namespace}')
+            'change_{permission_namespace}')
         common_contexts["can_view"] = request.user.has_perm(
-            'view_{model_namespace}')
+            'view_{permission_namespace}')
         common_contexts["can_delete"] = request.user.has_perm(
-            'delete_{model_namespace}')
+            'delete_{permission_namespace}')
 
     common_contexts["namespace"] = model_namespace
+    common_contexts["display_name"] = display_name
     common_contexts["list_objects"] = model.objects.all().order_by('-id')
     if not list_template == None:
         common_contexts["list_template"] = list_template

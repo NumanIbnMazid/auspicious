@@ -5,7 +5,7 @@ from django.conf import settings
 # Has Permission Checker
 
 user_has_permission = user_passes_test(
-    lambda user: user.has_perm('pnr.can_view_pnr') == True, login_url=settings.ACCESS_DENIED_URL
+    lambda user: user.has_perm('dashboard.can_add_news') == True, login_url=settings.ACCESS_DENIED_URL
 )
 
 

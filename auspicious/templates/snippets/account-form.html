@@ -4,7 +4,7 @@
 {% if hidden_field.errors %}
 <div class="alert alert-danger" role="alert">
     {% for error in hidden_field.errors %}
-    <p class="text-danger font-italic">
+    <p class="text-dark font-italic">
         <strong>(Hidden field {{ hidden_field.name }}) {{ error }}</strong>
     </p>
     {% endfor %}
@@ -16,7 +16,7 @@
 {% if form.non_field_errors %}
 <div class="alert alert-danger" role="alert">
     {% for error in form.non_field_errors %}
-    <p class="text-white">
+    <p class="text-dark">
         <strong>{{ error }}</strong>
     </p>
     {% endfor %}

@@ -58,14 +58,14 @@
             <li class="sidebar-item">
                 <a href="{% url 'create_user' %}" class="sidebar-link">
                     <i class="fa fa-users-cog"></i>
-                    <span>Admin User</span>
+                    <span>User</span>
                 </a>
             </li>
             {% endif %}
 
             <!-- manage Project Category -->
 
-            {% if perms.dashboard.add_project or perms.dashboard.view_project_category %}
+            {% if perms.dashboard.add_projectcategory or perms.dashboard.view_projectcategory %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:create_project_category' %}" class="sidebar-link">
                     <i class="fa fa-project-diagram"></i>
@@ -88,7 +88,7 @@
 
             <!-- manage News Category -->
 
-            {% if perms.dashboard.add_project or perms.dashboard.view_news_category %}
+            {% if perms.dashboard.add_newscategory or perms.dashboard.view_newscategory %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:create_news_category' %}" class="sidebar-link">
                     <i class="fa fa-newspaper" aria-hidden="true"></i>
@@ -99,7 +99,7 @@
 
                         <!-- manage News  -->
 
-            {% if perms.dashboard.add_project or perms.dashboard.view_news %}
+            {% if perms.dashboard.add_news or perms.dashboard.view_news %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:create_news' %}" class="sidebar-link">
                     <i class="fa fa-newspaper" aria-hidden="true"></i>
@@ -133,7 +133,7 @@
 
             <!-- Social Account -->
 
-            {% if perms.dashboard.add_social_account or perms.dashboard.view_social_account %}
+            {% if perms.dashboard.add_socialaccount or perms.dashboard.view_socialaccount %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:create_social_account' %}" class="sidebar-link">
                     <i class="fas fa-people-arrows" aria-hidden="true"></i>
@@ -145,7 +145,7 @@
 
             <!-- Job Position -->
 
-            {% if perms.dashboard.add_job_position or perms.dashboard.view_job_position %}
+            {% if perms.dashboard.add_jobposition or perms.dashboard.view_jobposition %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:create_job_position' %}" class="sidebar-link">
                     <i class="fas fa-user-md" aria-hidden="true"></i>

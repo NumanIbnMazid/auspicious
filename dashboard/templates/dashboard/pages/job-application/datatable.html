@@ -9,7 +9,13 @@
         <div class="card">
             <!-- Card header -->
             <div class="card-header border-0 text-center">
-                <h3 class="mb-0">{{ namespace|title }} List</h3>
+                <h3 class="mb-0">
+                    {% if not display_name == None %}
+                    {{ display_name }} List
+                    {% else %}
+                    {{ namespace|to_title }} List
+                    {% endif %}
+                </h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
@@ -43,7 +49,7 @@
                                     <i class="fas fa-pen-alt" aria-hidden="true"></i>
                                 </a>
                                 <!-- update url -->
-                                {% if not update_url == None and can_add_change == True %}
+                                {% if not update_url == None and can_change == True %}
                                 {% if not object.slug == None %}
                                 <a href="{% url update_url slug=object.slug %}"
                                     class="btn btn-primary btn-sm text-deco-none">

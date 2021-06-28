@@ -131,11 +131,15 @@ class Profile(models.Model):
             return "---"
 
     def get_user_permissions(self):
-        permissions = []
-        for group in self.user.groups.all():
-            for permission in group.permissions.all():
-                permissions.append(permission)
-        return "\n".join(["| " + p.name + " | " for p in permissions])
+        permissions = Permission.objects.filter(
+            user=self.user
+        )
+        print(permissions, "************")
+        # permissions = []
+        # for group in self.user.groups.all():
+        #     for permission in group.permissions.all():
+        #         permissions.append(permission)
+        return "\n".join([f"<span class='badge bg-success text-white font-15 m-1'>{p.name}</span><br>" if i != len(permissions) - 1 else f"<span class='badge bg-success text-white font-15 m-1'>{p.name}</span>" for i, p in enumerate(permissions)])
 
     def __str__(self):
         return self.user.username
