@@ -15,19 +15,28 @@
 
 
 {% block content %}
+<style>
+.box{
+    background-image: linear-gradient(to top,#3492d0, #63bcf7);
+    color:#fff;
+    }
+.box:hover{
+    background:#3492d0;
+}
+</style>
 
 <div class="row">
     <div class="col-6 col-lg-3 col-md-6">
-        <div class="card">
+        <div class="card box">
             <div class="card-body px-3 py-4-5">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="stats-icon purple">
+                        <div class="stats-icon">
                             <i class="iconly-boldShow"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="text-muted font-semibold">Active Jobs</h6>
+                        <h6 class="font-semibold" style="color:#fff;">Active Jobs</h6>
                         <h6 class="font-extrabold mb-0">{{ total_active_job }}</h6>
                     </div>
                 </div>
@@ -35,16 +44,16 @@
         </div>
     </div>
     <div class="col-6 col-lg-3 col-md-6">
-        <div class="card">
+        <div class="card box">
             <div class="card-body px-3 py-4-5">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="stats-icon green">
+                        <div class="stats-icon">
                             <i class="iconly-boldAdd-User"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="text-muted font-semibold">Total Applicants</h6>
+                        <h6 class="font-semibold" style="color:#fff;">Total Applicants</h6>
                         <h6 class="font-extrabold mb-0">{{ total_job_applicant }}</h6>
                     </div>
                 </div>
@@ -52,16 +61,16 @@
         </div>
     </div>
         <div class="col-6 col-lg-3 col-md-6">
-        <div class="card">
+        <div class="card box">
             <div class="card-body px-3 py-4-5">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="stats-icon blue">
+                        <div class="stats-icon">
                             <i class="iconly-boldProfile"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="text-muted font-semibold">Total Client</h6>
+                        <h6 class="font-semibold">Total Client</h6>
                         <h6 class="font-extrabold mb-0">{{ total_client }}</h6>
                     </div>
                 </div>
@@ -69,16 +78,16 @@
         </div>
     </div>
     <div class="col-6 col-lg-3 col-md-6">
-        <div class="card">
+        <div class="card box">
             <div class="card-body px-3 py-4-5">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="stats-icon red">
+                        <div class="stats-icon">
                             <i class="iconly-boldBookmark"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="text-muted font-semibold">Total Project</h6>
+                        <h6 class="font-semibold">Total Project</h6>
                         <h6 class="font-extrabold mb-0">{{ total_project }}</h6>
                     </div>
                 </div>
@@ -88,16 +97,16 @@
 </div>
 <div class="row">
     <div class="col-6 col-lg-3 col-md-6">
-        <div class="card">
+        <div class="card box">
             <div class="card-body px-3 py-4-5">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="stats-icon purple">
+                        <div class="stats-icon">
                             <i class="iconly-boldShow"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="text-muted font-semibold">Running Projects</h6>
+                        <h6 class="font-semibold">Running Projects</h6>
                         <h6 class="font-extrabold mb-0">{{ total_running_project }}</h6>
                     </div>
                 </div>
@@ -105,16 +114,16 @@
         </div>
     </div>
     <div class="col-6 col-lg-3 col-md-6">
-        <div class="card">
+        <div class="card box">
             <div class="card-body px-3 py-4-5">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="stats-icon green">
+                        <div class="stats-icon">
                             <i class="iconly-boldAdd-User"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="text-muted font-semibold">Completed Projects</h6>
+                        <h6 class="font-semibold">Completed Projects</h6>
                         <h6 class="font-extrabold mb-0">{{ total_completed_project }}</h6>
                     </div>
                 </div>
@@ -122,16 +131,16 @@
         </div>
     </div>
         <div class="col-6 col-lg-3 col-md-6">
-        <div class="card">
+        <div class="card box">
             <div class="card-body px-3 py-4-5">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="stats-icon blue">
+                        <div class="stats-icon">
                             <i class="iconly-boldProfile"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="text-muted font-semibold">Total Jobs</h6>
+                        <h6 class="font-semibold">Total Jobs</h6>
                         <h6 class="font-extrabold mb-0">{{ total_job }}</h6>
                     </div>
                 </div>
@@ -139,16 +148,16 @@
         </div>
     </div>
     <div class="col-6 col-lg-3 col-md-6">
-        <div class="card">
+        <div class="card box">
             <div class="card-body px-3 py-4-5">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="stats-icon red">
+                        <div class="stats-icon">
                             <i class="fas fa-user" style="color:#fff"></i>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h6 class="text-muted font-semibold">Total Users</h6>
+                        <h6 class="font-semibold">Total Users</h6>
                         <h6 class="font-extrabold mb-0">{{ total_user }}</h6>
                     </div>
                 </div>

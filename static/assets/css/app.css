@@ -1112,10 +1112,11 @@
   vertical-align: sub;
 }
 .stats-icon {
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 0.5rem;
-  background-color: #000;
+  background-color: transparent;
+  border:1px solid #fff;
   float: right;
   display: flex;
   align-items: center;
@@ -1123,7 +1124,7 @@
 }
 .stats-icon i {
   color: #fff;
-  font-size: 1.7rem;
+  font-size: 1.0rem;
 }
 .stats-icon.purple {
   background-color: #9694ff;
