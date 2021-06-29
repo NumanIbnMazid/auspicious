@@ -1,4 +1,8 @@
+{% load static %}
 {% load custom_tags %}
+
+
+
 
 {% if perms.auth.view_user %}
 
@@ -24,13 +28,15 @@
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Gender</th>
+                                {% if is_admin_list == True %}
                                 <th>Is Stuff</th>
                                 <th>Is Active</th>
                                 <th>Is Superuser</th>
-                                <th>Last Login</th>
-                                <th>Date Joined</th>
                                 <th>Group</th>
                                 <th>Created By</th>
+                                {% endif %}
+                                <th>Last Login</th>
+                                <th>Date Joined</th>
                             </tr>
                         </thead>
 
@@ -118,13 +124,15 @@
                                 <td>{{ object.first_name }}</td>
                                 <td>{{ object.last_name }}</td>
                                 <td>{{ object.user_profile.get_gender }}</td>
+                                {% if is_admin_list == True %}
                                 <td>{{ object.is_staff }}</td>
                                 <td>{{ object.is_active }}</td>
                                 <td>{{ object.is_superuser }}</td>
-                                <td>{{ object.last_login }}</td>
-                                <td>{{ object.date_joined }}</td>
                                 <td>{{ object.get_groups }}</td>
                                 <td>{{ object.user_profile.created_by }}</td>
+                                {% endif %}
+                                <td>{{ object.last_login }}</td>
+                                <td>{{ object.date_joined }}</td>
 
                             </tr>
                             {% empty %}
@@ -148,13 +156,15 @@
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Gender</th>
+                                {% if is_admin_list == True %}
                                 <th>Is Stuff</th>
                                 <th>Is Active</th>
                                 <th>Is Superuser</th>
-                                <th>Last Login</th>
-                                <th>Date Joined</th>
                                 <th>Group</th>
                                 <th>Created By</th>
+                                {% endif %}
+                                <th>Last Login</th>
+                                <th>Date Joined</th>
                             </tr>
                         </tfoot>
                     </table>

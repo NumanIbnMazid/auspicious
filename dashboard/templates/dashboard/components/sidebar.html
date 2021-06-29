@@ -58,6 +58,17 @@
             <li class="sidebar-item">
                 <a href="{% url 'create_user' %}" class="sidebar-link">
                     <i class="fa fa-users-cog"></i>
+                    <span>Admin User</span>
+                </a>
+            </li>
+            {% endif %}
+
+            <!-- create end user -->
+
+            {% if perms.auth.add_user %}
+            <li class="sidebar-item">
+                <a href="{% url 'list_user' %}" class="sidebar-link">
+                    <i class="fa fa-users-cog"></i>
                     <span>User</span>
                 </a>
             </li>

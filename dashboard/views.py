@@ -120,6 +120,14 @@ class ProjectCategoryCreateView(CreateView):
 class ProjectCategoryDetailView(DetailView):
     template_name = "dashboard/snippets/detail-common.html"
 
+    # def dispatch(self, request, *args, **kwargs):
+    #     if not self.request.user.has_perm("dashboard.detail_projectcategory"):
+    #         messages.add_message(
+    #             self.request, messages.ERROR, "Not enough permission!"
+    #         )
+    #         return HttpResponseRedirect(reverse('home'))
+    #     return super(ProjectCategoryDetailView, self).dispatch(request, *args, **kwargs)
+
     def get_object(self):
         return get_simple_object(key='slug', model=ProjectCategory, self=self)
 

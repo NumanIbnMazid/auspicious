@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
-from django.views.generic import CreateView, UpdateView, TemplateView, DetailView
+from django.views.generic import CreateView, UpdateView, TemplateView, DetailView, ListView
 from django.template import Context
 from django.contrib import messages
 from django import forms
@@ -17,7 +17,7 @@ from .forms import UserGroupForm
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-
+from django.db.models import Count, Min, Q, query_utils
 
 # # -------------------------------------------------------------------
 # #                           Group
@@ -172,7 +172,10 @@ def create_user(request):
     context = {
         'page_title': "Create Admin User",
         'page_short_title': "Create Admin User",
-        'list_objects': User.objects.all().order_by('-date_joined'),
+        'list_objects': User.objects.filter(
+            Q(is_superuser = True) | ~Q(user_profile__created_by=None)
+        ).order_by('-date_joined'),
+        # 'list_objects': Profile.objects.filter(Q(user)),
         'list_template': "accounts/user-list.html",
         'fields_count': len(User._meta.get_fields()) + 1,
         'fields': dict([(f.name, f.verbose_name)
@@ -187,7 +190,8 @@ def create_user(request):
         'can_add': True if request.user.has_perm('auth.add_user') else False,
         'can_change': True if request.user.has_perm('auth.change_user') else False,
         'can_view': request.user.has_perm('auth.view_user'),
-        'can_delete': request.user.has_perm('auth.delete_user')
+        'can_delete': request.user.has_perm('auth.delete_user'),
+        'is_admin_list': True
     }
 
     if request.method == "POST":
@@ -287,6 +291,28 @@ class ProfileUpdateView(UpdateView):
             return qs.first()
         return None
 
+    def dispatch(self, request, *args, **kwargs):
+        qs = Profile.objects.filter(slug=self.kwargs['slug'])
+        obj = None
+        if qs.exists():
+            obj = qs.last()
+            if not self.request.user.has_perm("auth.change_user"):
+                messages.add_message(
+                    self.request, messages.ERROR, "Not enough permission!"
+                )
+                return HttpResponseRedirect(reverse('home'))
+            if obj.user.is_superuser == False and obj.created_by == None:
+                messages.add_message(
+                    self.request, messages.ERROR, "Update unavailable!"
+                )
+                return HttpResponseRedirect(reverse('home'))
+        else:
+            messages.add_message(
+                self.request, messages.ERROR, "Profile object not found!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(ProfileUpdateView, self).dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
         self.object = self.get_object()
         user_groups = form.cleaned_data.get("user_group")
@@ -315,7 +341,7 @@ class ProfileUpdateView(UpdateView):
                 self.object.user.user_permissions.add(selected_permission)
             else:
                 messages.error(
-                    request, 'Failed to assign permission!'
+                    self.request, 'Failed to assign permission!'
                 )
 
         username = self.request.POST.get("username")
@@ -381,3 +407,61 @@ def delete_user(request):
             messages.add_message(request, messages.WARNING,
                                  "Not found!")
     return HttpResponseRedirect(url)
+
+
+### End User ###
+
+def user_list(request):
+    # Check Required Permission
+    # if request.user.has_perm("auth.add_user") == False:
+    #     return render(request, 'exceptions/access-denied.html')
+
+    # context = Context()
+    # form = UserCreateForm()
+    context = {
+        'page_title': "User List",
+        'page_short_title': "User List",
+        'list_objects': User.objects.filter
+            (is_superuser = False, user_profile__created_by=None
+        ).order_by('-date_joined'),
+        # 'list_objects': Profile.objects.filter(Q(user)),
+        'list_template': "accounts/user-list.html",
+        'fields_count': len(User._meta.get_fields()) + 1,
+        'fields': dict([(f.name, f.verbose_name)
+                        for f in User._meta.fields + User._meta.many_to_many]),
+        'update_url': None,
+        'delete_url': "delete_user_list",
+        'detail_url': "user_details",
+        'namespace': "user",
+        'object': User.objects.filter(username=request.user.username).first().user_profile,
+        # 'form': form,
+        'can_add_change': False if request.user.has_perm('auth.add_user') or request.user.has_perm('auth.change_user') else False,
+        # 'can_add': True if request.user.has_perm('auth.add_user') else False,
+        'can_change': True if request.user.has_perm('auth.change_user') else False,
+        'can_view': True if request.user.has_perm('auth.view_user') else False,
+
+    }
+    return render(request, 'dashboard/snippets/manage.html', context)
+
+class EndUserDetailView(DetailView):
+    template_name = "accounts/user-detail.html"
+
+    def get_object(self):
+        return get_simple_object(key='slug', model=Profile, self=self)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            EndUserDetailView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'User - {self.get_object().get_dynamic_name()} Detail'
+        context['page_short_title'] = f'User - {self.get_object().get_dynamic_name()} Detail'
+        context["create_url"] = None
+        context["update_url"] = None
+        context["delete_url"] = None
+        context['can_add_change'] = True if self.request.user.has_perm(
+            'auth.add_user') or self.request.user.has_perm('auth.change_user') else False
+        context['can_add'] = True if self.request.user.has_perm('auth.add_user') else False
+        context['can_change'] = True if self.request.user.has_perm('auth.change_user') else False
+        context['can_view'] = self.request.user.has_perm('auth.view_user')
+        context['can_delete'] = self.request.user.has_perm('auth.delete_user')
+        return context
