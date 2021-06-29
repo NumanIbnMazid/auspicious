@@ -13,7 +13,7 @@
   margin-left: 0.4rem;
 }
 .alert-primary {
-  background-color: #435ebe;
+  background-image: linear-gradient(to top,#3492d0, #63bcf7);
   color: #fff;
 }
 .alert-primary a {
