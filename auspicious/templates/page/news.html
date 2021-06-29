@@ -50,7 +50,11 @@
                         <div class="blog-img-date-wrap mb-25">
                             <div class="blog-img">
                                 <a href="{% url 'news_details' slug=news.slug %}">
+                                    {% if news.image %}
                                     <img src={{ news.image.url }} alt="" style="height:250px;width:400px;">
+                                    {% else %}
+                                    <img src="{% static './assets/landing/assets/img/no.jpg' %}" alt="" style="height:172px;width:350px;">
+                                    {% endif %}
                                 </a>
                             </div>
                             <div class="blog-date">
