@@ -20,7 +20,7 @@
 
 {% if can_view == True %}
 
-<div class="card">
+<div class="card" style="text-align:center;">
     <div class="card-header">
         <h4 class="card-title text-center">
             <span class="">{{ page_title }}</span>
@@ -29,7 +29,7 @@
         <div class="text-center">
             {% if not create_url == None and can_add_change == True %}
             <a href="{% url create_url %}" class="btn btn-primary">
-                Create
+                <i class="fas fa-plus" aria-hidden="true"></i>
             </a>
             {% endif %}
 
@@ -38,13 +38,13 @@
             {% if not object.slug == None %}
             <a href="{% url update_url slug=object.slug %}" class="btn btn-primary btn-xs text-deco-none">
                 <span class="">
-                    Edit
+                    <i class="fas fa-eye" aria-hidden="true"></i>
                 </span>
             </a>
             {% else %}
             <a href="{% url update_url id=object.id %}" class="btn btn-primary btn-xs text-deco-none">
                 <span class="">
-                    Edit
+                    <i class="fas fa-eye"></i>
                 </span>
             </a>
             {% endif %}
@@ -62,12 +62,12 @@
             {% if not object.slug == None %}
             <button type="button" class="btn btn-danger btn-xs text-deco-none bg-c-danger m-1 js_delete_{{namespace}}"
                 value="{{object.slug}}" data-toggle="modal" data-target="#modal-delete-{{namespace}}">
-                Delete
+                <i class="fas fa-trash-alt"></i>
             </button>
             {% else %}
             <button type="button" class="btn btn-danger btn-xs text-deco-none bg-c-danger m-1 js_delete_{{namespace}}"
                 value="{{object.id}}" data-toggle="modal" data-target="#modal-delete-{{namespace}}">
-                Delete
+                <i class="fas fa-trash-alt"></i>
             </button>
             {% endif %}
             {% endif %}
@@ -92,7 +92,7 @@
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                         <span class="text-dark font-bold">
-                                            Value
+                                            Information
                                         </span>
                                     </div>
                                 </div>

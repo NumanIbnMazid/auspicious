@@ -81,7 +81,7 @@ class ProjectCategoryCreateView(CreateView):
     form_class = ProjectCategoryManageForm
 
     def dispatch(self, request, *args, **kwargs):
-        if not self.request.user.has_perm("dashboard.add_projectcategory"):
+        if not self.request.user.has_perm("dashboard.add_projectcategory") and not self.request.user.has_perm("dashboard.change_projectcategory") and not self.request.user.has_perm("dashboard.view_projectcategory") and not self.request.user.has_perm("dashboard.delete_projectcategory"):
             messages.add_message(
                 self.request, messages.ERROR, "Not enough permission!"
             )
@@ -211,6 +211,14 @@ class ProjectCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = ProjectManageForm
 
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.has_perm("dashboard.add_project") and not self.request.user.has_perm("dashboard.change_project") and not self.request.user.has_perm("dashboard.view_project") and not self.request.user.has_perm("dashboard.delete_project"):
+            messages.add_message(
+                self.request, messages.ERROR, "Not enough permission!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(ProjectCreateView, self).dispatch(request, *args, **kwargs)
+
     def form_valid(self, form, **kwargs):
         name = form.instance.name
         field_qs = Project.objects.filter(
@@ -326,6 +334,13 @@ def get_news_category_common_contexts(request):
 class NewsCategoryCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = NewsCategoryManageForm
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.has_perm("dashboard.add_newscategory") and not self.request.user.has_perm("dashboard.change_newscategory") and not self.request.user.has_perm("dashboard.view_newscategory") and not self.request.user.has_perm("dashboard.delete_newscategory"):
+            messages.add_message(
+                self.request, messages.ERROR, "Not enough permission!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(NewsCategoryCreateView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form, **kwargs):
         title = form.instance.title
@@ -440,6 +455,14 @@ class NewsCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = NewsManageForm
 
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.has_perm("dashboard.add_news") and not self.request.user.has_perm("dashboard.change_news") and not self.request.user.has_perm("dashboard.view_news") and not self.request.user.has_perm("dashboard.delete_news"):
+            messages.add_message(
+                self.request, messages.ERROR, "Not enough permission!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(NewsCreateView, self).dispatch(request, *args, **kwargs)
+
     def form_valid(self, form, **kwargs):
         title = form.instance.title
         field_qs = News.objects.filter(
@@ -553,6 +576,14 @@ class GalleryCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = GalleryManageForm
 
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.has_perm("dashboard.add_gallery") and not self.request.user.has_perm("dashboard.change_gallery") and not self.request.user.has_perm("dashboard.view_gallery") and not self.request.user.has_perm("dashboard.delete_gallery"):
+            messages.add_message(
+                self.request, messages.ERROR, "Not enough permission!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(GalleryCreateView, self).dispatch(request, *args, **kwargs)
+
     def form_valid(self, form, **kwargs):
         title = form.instance.title
         field_qs = Gallery.objects.filter(
@@ -665,6 +696,14 @@ def get_client_common_contexts(request):
 class ClientCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = ClientManageForm
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.has_perm("dashboard.add_client") and not self.request.user.has_perm("dashboard.change_client") and not self.request.user.has_perm("dashboard.view_client") and not self.request.user.has_perm("dashboard.delete_client"):
+            messages.add_message(
+                self.request, messages.ERROR, "Not enough permission!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(ClientCreateView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form, **kwargs):
         name = form.instance.name
@@ -780,6 +819,14 @@ class SocialAccountCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = SocialAccountManageForm
 
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.has_perm("dashboard.add_socialaccount") and not self.request.user.has_perm("dashboard.change_socialaccount") and not self.request.user.has_perm("dashboard.view_socialaccount") and not self.request.user.has_perm("dashboard.delete_socialaccount"):
+            messages.add_message(
+                self.request, messages.ERROR, "Not enough permission!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(SocialAccountCreateView, self).dispatch(request, *args, **kwargs)
+
     def form_valid(self, form, **kwargs):
         title = form.instance.title
         field_qs = SocialAccount.objects.filter(
@@ -893,6 +940,13 @@ def get_job_position_common_contexts(request):
 class JobPositionCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = JobPositionManageForm
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.has_perm("dashboard.add_jobposition") and not self.request.user.has_perm("dashboard.change_jobposition") and not self.request.user.has_perm("dashboard.view_jobposition") and not self.request.user.has_perm("dashboard.delete_jobposition"):
+            messages.add_message(
+                self.request, messages.ERROR, "Not enough permission!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(JobPositionCreateView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form, **kwargs):
         title = form.instance.title
@@ -1015,6 +1069,15 @@ class JobCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = JobManageForm
 
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.has_perm("dashboard.add_job") and not self.request.user.has_perm("dashboard.change_job") and not self.request.user.has_perm("dashboard.view_job") and not self.request.user.has_perm("dashboard.delete_job"):
+            messages.add_message(
+                self.request, messages.ERROR, "Not enough permission!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(JobCreateView, self).dispatch(request, *args, **kwargs)
+
     def form_valid(self, form, **kwargs):
         messages.add_message(
             self.request, messages.SUCCESS,
@@ -1106,6 +1169,15 @@ def get_contact_common_contexts(request):
 class ContactCreateView(CreateView):
     template_name = "dashboard/snippets/manage.html"
     form_class = ContactManageForm
+
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.has_perm("dashboard.add_contact") and not self.request.user.has_perm("dashboard.change_contact") and not self.request.user.has_perm("dashboard.view_contact") and not self.request.user.has_perm("dashboard.delete_contact"):
+            messages.add_message(
+                self.request, messages.ERROR, "Not enough permission!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(ContactCreateView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form, **kwargs):
         phone1 = form.instance.phone1

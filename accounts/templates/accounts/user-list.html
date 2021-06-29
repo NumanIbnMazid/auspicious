@@ -22,7 +22,7 @@
                         <thead class="thead-dark">
                             <tr class="text-center">
                                 <th>Action</th>
-                                <th>#</th>
+                                <th></th>
                                 <th>Username</th>
                                 <th>Email</th>
                                 <th>First Name</th>
@@ -34,8 +34,8 @@
                                 <th>Is Superuser</th>
                                 <th>Group</th>
                                 <th>Created By</th>
-                                {% endif %}
                                 <th>Last Login</th>
+                                {% endif %}
                                 <th>Date Joined</th>
                             </tr>
                         </thead>
@@ -118,7 +118,6 @@
                                 </td>
 
                                 <th>{{ forloop.counter }}</th>
-
                                 <td>{{ object.username }}</td>
                                 <td>{{ object.email }}</td>
                                 <td>{{ object.first_name }}</td>
@@ -130,9 +129,9 @@
                                 <td>{{ object.is_superuser }}</td>
                                 <td>{{ object.get_groups }}</td>
                                 <td>{{ object.user_profile.created_by }}</td>
+                                <td>{{ object.last_login.date }}</td>
                                 {% endif %}
-                                <td>{{ object.last_login }}</td>
-                                <td>{{ object.date_joined }}</td>
+                                <td>{{ object.date_joined.date }}</td>
 
                             </tr>
                             {% empty %}
@@ -150,7 +149,7 @@
                         <tfoot class="thead-dark">
                             <tr class="text-center">
                                 <th>Action</th>
-                                <th>#</th>
+                                <th></th>
                                 <th>Username</th>
                                 <th>Email</th>
                                 <th>First Name</th>
@@ -162,8 +161,8 @@
                                 <th>Is Superuser</th>
                                 <th>Group</th>
                                 <th>Created By</th>
-                                {% endif %}
                                 <th>Last Login</th>
+                                {% endif %}
                                 <th>Date Joined</th>
                             </tr>
                         </tfoot>
