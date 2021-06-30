@@ -62,7 +62,7 @@ urlpatterns = [
          NewsUpdateView.as_view(), name="update_news"),
     path("news/<slug>/detail/",
          NewsDetailView.as_view(), name="news_detail"),
-    path("delete/project/", delete_news,
+    path("delete/news/", delete_news,
          name="delete_news"),
 
     # # -------------------------------------------------------------------

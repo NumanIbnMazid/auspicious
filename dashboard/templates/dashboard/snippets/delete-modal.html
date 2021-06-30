@@ -36,7 +36,7 @@
     $(".js_delete_{{namespace}}").click(function () {
         let dynamic_identifier_value = this.value;
         $('#{{namespace}}_keeper').val(dynamic_identifier_value);
-        //console.log(dynamic_identifier_value);
+        // console.log(dynamic_identifier_value);
     });
     document.querySelector('#{{namespace}}DeleteForm').addEventListener('submit', function (e) {
         let form = this;
