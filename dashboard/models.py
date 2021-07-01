@@ -464,6 +464,21 @@ class Career(models.Model):
     contact = models.CharField(
         max_length=50, verbose_name="contact number"
     )
+    subject = models.CharField(
+        max_length=250, verbose_name="subject"
+    )
+    university_name = models.CharField(
+        max_length=100, verbose_name="university name"
+    )
+    passing_year = models.CharField(
+        max_length=50, verbose_name="passing year"
+    )
+    expected_salary = models.CharField(
+        max_length=250, verbose_name="expected salary"
+    )
+    year_of_experience = models.CharField(
+        max_length=50, verbose_name="year of experience"
+    )
     status = models.CharField(
         max_length=50, choices=Status.choices, default="Pending", verbose_name="status"
     )
