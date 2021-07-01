@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import (
     DashboardView,
-    ProjectCategoryDetailView,ProjectCreateView, ProjectUpdateView, ProjectDetailView, delete_project, NewsCategoryCreateView,
+    ProjectCategoryDetailView, ProjectCreateView, ProjectUpdateView, ProjectDetailView, delete_project,
+    NewsCategoryCreateView,
     delete_news_category, NewsCategoryUpdateView, NewsCategoryDetailView, NewsCreateView, NewsDetailView,
     NewsUpdateView, delete_news,
     ImageGroupCreateView, ImageGroupUpdateView, ImageGroupDetailView, delete_image_group,
@@ -13,7 +14,8 @@ from .views import (
     JobCreateView, JobUpdateView, JobDetailView, delete_job,
     JobApplicationListView, JobApplicationUpdateView, JobApplicationDetailView, delete_job_application,
     update_job_application_status,
-    CVListView, CVUpdateView, delete_cv, CVDetailView
+    CVListView, CVUpdateView, delete_cv, CVDetailView, BlogCategoryCreateView, BlogCategoryUpdateView,
+    BlogCategoryDetailView, delete_blog_category
 )
 
 
@@ -178,5 +180,17 @@ urlpatterns = [
          name="delete_cv"),
 #     path("update/cv/<slug>/status", update_cv_status,
 #          name="update_cv_status"),
+
+    # # -------------------------------------------------------------------
+    # #                              Blog Category
+    # # -------------------------------------------------------------------
+    path("create/blog-category/", BlogCategoryCreateView.as_view(),
+         name="create_blog_category"),
+    path("update/blog-category/<slug>/",
+         BlogCategoryUpdateView.as_view(), name="update_blog_category"),
+    path("blog-category/<slug>/detail/",
+         BlogCategoryDetailView.as_view(), name="blog_category_detail"),
+    path("delete/blog-category/", delete_blog_category,
+         name="delete_blog_category"),
 ]
 

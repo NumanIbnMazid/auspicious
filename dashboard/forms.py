@@ -480,3 +480,91 @@ class JobStatusManageForm(forms.Form):
         print(career_object, "*** Career Object From View in Form ***")
         super(JobStatusManageForm, self).__init__(*args, **kwargs)
         self.fields['status'].initial = career_object.status
+
+
+
+# # -------------------------------------------------------------------
+# #                               Blog Category
+# # -------------------------------------------------------------------
+
+class BlogCategoryManageForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(BlogCategoryManageForm, self).__init__(*args, **kwargs)
+
+        self.fields['title'].widget.attrs.update({
+            'placeholder': 'Enter Blog Category Title...',
+            'maxlength': 100
+        })
+
+
+    class Meta:
+        model = BlogCategory
+        fields = [
+            "title",  "image"
+        ]
+
+
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if image and isinstance(image, UploadedFile):
+            file_extension = os.path.splitext(image.name)[1]
+            allowed_image_types = settings.ALLOWED_IMAGE_TYPES
+            content_type = image.content_type.split('/')[0]
+            if not file_extension in allowed_image_types:
+                raise forms.ValidationError("Only %s file formats are supported! Current image format is %s" % (
+                    allowed_image_types, file_extension))
+            if image.size > settings.MAX_UPLOAD_SIZE:
+                raise forms.ValidationError("Please keep filesize under %s. Current filesize %s" % (
+                    filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(image.size)))
+            return image
+        return None
+
+
+# # -------------------------------------------------------------------
+# #                               Blog
+# # -------------------------------------------------------------------
+
+class BlogManageForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(BlogManageForm, self).__init__(*args, **kwargs)
+
+        self.fields['title'].widget.attrs.update({
+            'placeholder': 'Enter Blog Title...',
+            'maxlength': 100
+        })
+        self.fields['description'].widget.attrs.update({
+            'id': 'news_description_input',
+            'placeholder': 'Enter Blog Description...',
+            'rows': 10,
+            'cols': 5,
+        })
+
+
+    class Meta:
+        model = Blog
+        fields = [
+            "title",  "image", "category", "description"
+        ]
+        widgets = {
+            'description': CKEditorWidget(),
+        }
+
+
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if image and isinstance(image, UploadedFile):
+            file_extension = os.path.splitext(image.name)[1]
+            allowed_image_types = settings.ALLOWED_IMAGE_TYPES
+            content_type = image.content_type.split('/')[0]
+            if not file_extension in allowed_image_types:
+                raise forms.ValidationError("Only %s file formats are supported! Current image format is %s" % (
+                    allowed_image_types, file_extension))
+            if image.size > settings.MAX_UPLOAD_SIZE:
+                raise forms.ValidationError("Please keep filesize under %s. Current filesize %s" % (
+                    filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(image.size)))
+            return image
+        return None
