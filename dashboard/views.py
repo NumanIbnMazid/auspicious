@@ -1757,7 +1757,7 @@ class BlogCategoryCreateView(CreateView):
         ).get_context_data(**kwargs)
         context['page_title'] = 'Create Blog Category'
         context['page_short_title'] = 'Create Blog Category'
-        for key, value in get_news_category_common_contexts(request=self.request).items():
+        for key, value in get_blog_category_common_contexts(request=self.request).items():
             context[key] = value
         return context
 
@@ -1818,7 +1818,7 @@ class BlogCategoryUpdateView(UpdateView):
         ).get_context_data(**kwargs)
         context['page_title'] = f'Update Blog Category "{self.get_object().title}"'
         context['page_short_title'] = f'Update Blog Category "{self.get_object().title}"'
-        for key, value in get_news_category_common_contexts(request=self.request).items():
+        for key, value in get_blog_category_common_contexts(request=self.request).items():
             context[key] = value
         return context
 
@@ -1828,6 +1828,126 @@ class BlogCategoryUpdateView(UpdateView):
 @login_required
 def delete_blog_category(request):
     return delete_simple_object(request=request, key='slug', model=BlogCategory, redirect_url="dashboard:create_blog_category")
+
+
+# # -------------------------------------------------------------------
+# #                               Blog
+# # -------------------------------------------------------------------
+
+
+def get_blog_common_contexts(request):
+    common_contexts = get_simple_context_data(
+        request=request, app_namespace="dashboard", model_namespace="blog", model=Blog, list_template=None, fields_to_hide_in_table=["id","updated_at","slug"]
+    )
+    return common_contexts
+
+
+@method_decorator(dashboard_decorators, name='dispatch')
+class BlogCreateView(CreateView):
+    template_name = "dashboard/snippets/manage.html"
+    form_class = BlogManageForm
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.has_perm("dashboard.add_blog") and not self.request.user.has_perm("dashboard.change_blog") and not self.request.user.has_perm("dashboard.view_blog") and not self.request.user.has_perm("dashboard.delete_blog"):
+            messages.add_message(
+                self.request, messages.ERROR, "Not enough permission!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(BlogCreateView, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form, **kwargs):
+        title = form.instance.title
+        field_qs = Blog.objects.filter(
+            title__iexact=title
+        )
+        result = validate_normal_form(
+            field='title', field_qs=field_qs,
+            form=form, request=self.request
+        )
+        if result == 1:
+            return super().form_valid(form)
+        else:
+            return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_blog')
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            BlogCreateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = 'Create Blog'
+        context['page_short_title'] = 'Create Blog'
+        for key, value in get_blog_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+@method_decorator(dashboard_decorators, name='dispatch')
+class BlogDetailView(DetailView):
+    template_name = "dashboard/snippets/detail-common.html"
+
+    def get_object(self):
+        return get_simple_object(key='slug', model=Blog, self=self)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            BlogDetailView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'Blog - {self.get_object().title} Detail'
+        context['page_short_title'] = f'Blog - {self.get_object().title} Detail'
+        for key, value in get_blog_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+@method_decorator(dashboard_decorators, name='dispatch')
+class BlogUpdateView(UpdateView):
+    template_name = 'dashboard/snippets/manage.html'
+    form_class = BlogManageForm
+
+    def get_object(self):
+        return get_simple_object(key="slug", model=Blog, self=self)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_blog')
+
+    def form_valid(self, form):
+        self.object = self.get_object()
+        title = form.instance.title
+        if not self.object.title == title:
+            field_qs = Blog.objects.filter(
+                title__iexact=title
+            )
+            result = validate_normal_form(
+                field='title', field_qs=field_qs,
+                form=form, request=self.request
+            )
+            if result == 1:
+                return super().form_valid(form)
+            else:
+                return super().form_invalid(form)
+
+        messages.add_message(
+            self.request, messages.SUCCESS, "Updated Successfully!"
+        )
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            BlogUpdateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'Update Blog"{self.get_object().title}"'
+        context['page_short_title'] = f'Update Blog "{self.get_object().title}"'
+        for key, value in get_blog_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+@csrf_exempt
+@has_dashboard_permission_required
+@login_required
+def delete_blog(request):
+    return delete_simple_object(request=request, key='slug', model=Blog, redirect_url="dashboard:create_blog")
 
 
 # # -------------------------------------------------------------------

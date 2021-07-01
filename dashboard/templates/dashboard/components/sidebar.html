@@ -128,8 +128,27 @@
                     <span>News Comments & Replies</span>
                 </a>
             </li>
+            <!-- manage Blog Category -->
+
+            {% if perms.dashboard.add_blogcategory or perms.dashboard.view_blogcategory %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:create_blog_category' %}" class="sidebar-link">
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                    <span>Blog Category</span>
+                </a>
+            </li>
             {% endif %}
 
+            <!-- manage Blog Category -->
+
+            {% if perms.dashboard.add_blog or perms.dashboard.view_blog %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:create_blog' %}" class="sidebar-link">
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                    <span>Blog</span>
+                </a>
+            </li>
+            {% endif %}
             <!-- manage Image Group  -->
 
             {% if perms.dashboard.add_imagegroup or perms.dashboard.view_imagegroup %}

@@ -16,7 +16,8 @@ from .views import (
     update_job_application_status,
     CVListView, CVUpdateView, delete_cv, CVDetailView, BlogCategoryCreateView, BlogCategoryUpdateView,
     BlogCategoryDetailView, delete_blog_category,
-    NewsCommentListView
+    NewsCommentListView,
+    BlogCategoryDetailView, delete_blog_category, BlogCreateView, BlogUpdateView, BlogDetailView, delete_blog
 )
 
 
@@ -194,9 +195,23 @@ urlpatterns = [
     path("delete/blog-category/", delete_blog_category,
          name="delete_blog_category"),
 
+    
+    # # -------------------------------------------------------------------
+    # #                              Blog
+    # # -------------------------------------------------------------------
+    path("create/blog/", BlogCreateView.as_view(),
+         name="create_blog"),
+    path("update/blog/<slug>/",
+         BlogUpdateView.as_view(), name="update_blog"),
+    path("blog/<slug>/detail/",
+         BlogDetailView.as_view(), name="blog_detail"),
+    path("delete/blog-/", delete_blog,
+         name="delete_blog"),
+
     # # -------------------------------------------------------------------
     # #                    News Comments and Replies
     # # -------------------------------------------------------------------
-    path("news/comment/list/", NewsCommentListView.as_view(), name="news_comment_list"),
+    path("news/comment/list/", NewsCommentListView.as_view(),
+         name="news_comment_list"),
 ]
 
