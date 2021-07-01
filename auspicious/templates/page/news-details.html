@@ -25,7 +25,7 @@
                     <div class="breadcrumbs-menu">
                         <ul>
                             <li><a href="index.html">Home</a><i class="fa fa-angle-double-right"></i></li>
-                            <li class="active"><a href="news.html">News</a></li>
+                            <li class="active"><a href="{% url 'news' %}">News</a></li>
                         </ul>
                     </div>
                 </div>
@@ -54,14 +54,16 @@
                         </div>
                         <div class="blog-meta-2 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                             <ul class="non-bullet-list">
-                                <li><a href="#">{{ news_qs.category }}</a>,</li>
-                                <li>By:<a href="#"> {{ news_qs.created_by }}</a></li>
+                                <li>{{ news_qs.category }},</li>
+                                <li>By: {{ news_qs.created_by }}</li>
                             </ul>
                         </div>
                         <h1 data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">{{ news_qs.title }}</h1>
                         <p data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">
                             {{ news_qs.description|safe }}
                         </p>
+
+                        {% comment %}
                         <div class="tag-social-wrap">
                             <div class="tag-wrap aos-init" data-aos="fade-up" data-aos-delay="200">
                                 <span>Tags:</span>
@@ -82,18 +84,15 @@
                                 </div>
                             </div>
                         </div>
+                        {% endcomment %}
+
                         {% if request.user.is_authenticated %}
-                        <div class="blog-author-wrap-2 aos-init" data-aos="fade-up" data-aos-delay="200">
+                        <div class="blog-author-wrap-2 aos-init m-4" data-aos="fade-up" data-aos-delay="200">
                             <div class="blog-author-img-2">
                                 <img src="{% static 'assets/landing/assets/img/blog/blog-author-2.png' %}" alt="" style="height:100px;width:100px;">
                             </div>
                             <div class="blog-author-content-2">
                                 <h2>{{ news_qs.created_by.user_profile.get_fullname }}</h2>
-                                <div class="social-icon-style-3">
-                                    <a href=""><i class="fa fa-facebook"></i></a>
-                                    <a href=""><i class="fa fa-twitter"></i></a>
-                                    <a href=""><i class="fa fa-youtube"></i></a>
-                                </div>
                             </div>
                         </div>
                         {% endif %}
@@ -231,6 +230,8 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="sidebar-wrapper blog-sidebar-mt">
+
+                        {% comment %}
                         <div class="sidebar-widget mb-50 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                             <div class="search-wrap-3">
                                 <form class="search-3-form" action="#">
@@ -239,6 +240,8 @@
                                 </form>
                             </div>
                         </div>
+                        {% endcomment %}
+
                         <div class="sidebar-widget mb-40 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                             <div class="sidebar-widget-title-2 mb-25">
                                 <h3>Categories</h3>
@@ -278,6 +281,8 @@
 
                             </div>
                         </div>
+
+                        {% comment %}
                         <div class="sidebar-widget mb-35 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                             <div class="sidebar-widget-title-2 mb-30">
                                 <h3>Tags</h3>
@@ -295,6 +300,8 @@
                                 <a href="product-details.html"><img src="{% static 'assets/landing/assets/img/banner/banner-29.png' %}" alt=""></a>
                             </div>
                         </div>
+                        {%  endcomment %}
+
                     </div>
                 </div>
             </div>
