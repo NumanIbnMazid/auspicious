@@ -3,7 +3,9 @@ from .views import (
     DashboardView,
     ProjectCategoryDetailView,ProjectCreateView, ProjectUpdateView, ProjectDetailView, delete_project, NewsCategoryCreateView,
     delete_news_category, NewsCategoryUpdateView, NewsCategoryDetailView, NewsCreateView, NewsDetailView,
-    NewsUpdateView, delete_news, GalleryCreateView, GalleryDetailView, GalleryUpdateView, delete_gallery,
+    NewsUpdateView, delete_news,
+    ImageGroupCreateView, ImageGroupUpdateView, ImageGroupDetailView, delete_image_group,
+    GalleryCreateView, GalleryDetailView, GalleryUpdateView, delete_gallery,
     ClientCreateView, ClientUpdateView, ClientDetailView, delete_client, SocialAccountCreateView,
     SocialAccountUpdateView, SocialAccountDetailView, delete_social_account, delete_job_position, JobPositionCreateView,
     JobPositionUpdateView, JobPositionDetailView, ContactCreateView, ContactUpdateView, ContactDetailView,
@@ -64,6 +66,18 @@ urlpatterns = [
          NewsDetailView.as_view(), name="news_detail"),
     path("delete/news/", delete_news,
          name="delete_news"),
+
+    # # -------------------------------------------------------------------
+    # #                              ImageGroup
+    # # -------------------------------------------------------------------
+    path("create/image-group/", ImageGroupCreateView.as_view(),
+         name="create_image_group"),
+    path("update/image-group/<slug>/",
+         ImageGroupUpdateView.as_view(), name="update_image_group"),
+    path("image-group/<slug>/detail/",
+         ImageGroupDetailView.as_view(), name="image_group_detail"),
+    path("delete/image-group/", delete_image_group,
+         name="delete_image_group"),
 
     # # -------------------------------------------------------------------
     # #                              Gallery

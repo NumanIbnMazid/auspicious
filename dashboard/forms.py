@@ -195,43 +195,25 @@ class NewsManageForm(forms.ModelForm):
 
 
 # # -------------------------------------------------------------------
-# #                               Gallery
+# #                               ImageGroup
 # # -------------------------------------------------------------------
 
-class GalleryManageForm(forms.ModelForm):
+class ImageGroupManageForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
-        super(GalleryManageForm, self).__init__(*args, **kwargs)
+        super(ImageGroupManageForm, self).__init__(*args, **kwargs)
 
         self.fields['title'].widget.attrs.update({
-            'placeholder': 'Enter Image Title...',
+            'placeholder': 'Enter Group Title...',
             'maxlength': 100
         })
 
 
     class Meta:
-        model = Gallery
+        model = ImageGroup
         fields = [
-            "title",  "image"
+            "title"
         ]
-
-
-
-    def clean_image(self):
-        image = self.cleaned_data.get('image')
-        if image and isinstance(image, UploadedFile):
-            file_extension = os.path.splitext(image.name)[1]
-            allowed_image_types = settings.ALLOWED_IMAGE_TYPES
-            content_type = image.content_type.split('/')[0]
-            if not file_extension in allowed_image_types:
-                raise forms.ValidationError("Only %s file formats are supported! Current image format is %s" % (
-                    allowed_image_types, file_extension))
-            if image.size > settings.MAX_UPLOAD_SIZE:
-                raise forms.ValidationError("Please keep filesize under %s. Current filesize %s" % (
-                    filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(image.size)))
-            return image
-        return None
-
 
 
 # # -------------------------------------------------------------------
@@ -247,12 +229,13 @@ class GalleryManageForm(forms.ModelForm):
             'placeholder': 'Enter News Category Title...',
             'maxlength': 100
         })
+        self.fields["image_group"].help_text = "Please select image group"
 
 
     class Meta:
         model = Gallery
         fields = [
-            "title",  "image"
+            "title",  "image", "image_group"
         ]
 
 

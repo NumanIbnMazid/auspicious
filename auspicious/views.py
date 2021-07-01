@@ -94,7 +94,7 @@ def civilproject(request):
     context ={'ongoing_project_lists':ongoing_project_lists,'completed_project_lists':completed_project_lists}
     return render(request, 'page/civil-project.html', context)
 # # -------------------------------------------------------------------
-# #                               Civil  Project Filter
+# #                               Civil Project Filter
 # # -------------------------------------------------------------------
 
 
@@ -111,22 +111,12 @@ def filtered_project_lists(request, slug):
     ongoing_projects = project_lists.filter(
         developement_end_year=None
     )
-    # for project in project_lists:
-    #     if project.developement_end_year == None:
-    #         ongoing_project_lists = project
-    #         print('aaaaaaaaaaaaaaaaa',project)
-    #     else:
-    #         completed_project_lists= project
-    #         print('bbbbbbbbbbb', project)
     context = {
         'ongoing_project_lists':ongoing_projects,
         'completed_project_lists':completed_projects,
-        # 'filtered_news_title': news_lists.first().category.title if len(news_lists) > 0 else ""
     }
     return render(request, "page/civil-project.html", context)
 
-# class TelecomProjectView(TemplateView):
-#     template_name = 'page/telecom-project.html'
 
 # # -------------------------------------------------------------------
 # #                               Telecom Project
@@ -200,12 +190,10 @@ def career(request):
     }
     return render(request, "page/career.html", context)
 
-# # -------News(------------------------------------------------------------
-# #                              Client  Details
+# # -------------------------------------------------------------------
+# #                              Client Details
 # # -------------------------------------------------------------------
 
-# class ClientView(TemplateView):
-#     template_name = 'page/client.html'
 def client(request):
     sister_client_lists = Client.objects.filter(category = 'Sister Concern')
     enlistment_client_lists = Client.objects.filter(category = 'Enlistment')
@@ -217,12 +205,12 @@ def client(request):
                'local_client_representative_lists':local_client_representative_lists,
                'civil_client_lists':civil_client_lists,'telecom_client_lists':telecom_client_lists}
     return render(request, 'page/client.html', context)
+
+
 # # -------------------------------------------------------------------
 # #                              News
 # # -------------------------------------------------------------------
 
-# class NewsView(TemplateView):
-#     template_name = 'page/news.html'
 
 def news(request):
     news_lists= News.objects.all().order_by('-id')
@@ -236,9 +224,6 @@ def news(request):
 # # -------------------------------------------------------------------
 # #                               Contact
 # # -------------------------------------------------------------------
-
-# class ContactView(TemplateView):
-#     template_name = 'page/contact.html'
 
 def contact(request):
     contact_qs = Contact.objects.all().last()
@@ -310,28 +295,10 @@ class CommentCreateView(CreateView):
                     self.request, messages.SUCCESS, "Comment successfully!"
                 )
                 return super().form_valid(form)
-            # else:
-            #     form.add_error(
-            #         None, forms.ValidationError(
-            #             "You already applied for this job! Please update the application if required!"
-            #         )
-            #     )
         messages.add_message(
             self.request, messages.ERROR, "Failed to Comment!"
         )
         return super().form_invalid(form)
-
-    # def dispatch(self, request, *args, **kwargs):
-    #     slug = self.kwargs['slug']
-    #     qs = Comment.objects.filter(
-    #         news__slug=slug, user=self.request.user
-    #     )
-    #     if qs.exists():
-    #         messages.add_message(
-    #             self.request, messages.WARNING, "Already Applied!"
-    #         )
-    #         return HttpResponseRedirect(reverse('home'))
-    #     return super(JobApplyCreateView, self).dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
         return self.request.POST.get('next', reverse('home'))
@@ -439,8 +406,14 @@ def filtered_job_lists(request, slug):
 # #                              Gallery
 # # -------------------------------------------------------------------
 def gallery(request):
-    gallery_lists = Gallery.objects.all()
-    context = {'gallery_lists':gallery_lists}
+    image_groups = ImageGroup.objects.all()
+    other_images = Gallery.objects.filter(
+        image_group=None
+    )
+    context = {
+        "image_groups": image_groups,
+        "other_images": other_images
+    }
     return render(request, 'page/galleries.html', context)
 
 
