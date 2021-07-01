@@ -183,6 +183,95 @@ class News(models.Model):
                 return (field.name, field.value_from_object(self), field.get_internal_type())
         return [get_dynamic_fields(field) for field in self.__class__._meta.fields]
 
+
+
+
+# # -------------------------------------------------------------------
+# #                           BlogCategory
+# # -------------------------------------------------------------------
+
+class BlogCategory(models.Model):
+    title = models.CharField(
+        max_length=100, verbose_name="title"
+    )
+    slug = models.SlugField(
+        unique=True, verbose_name='slug'
+    )
+    image = models.ImageField(
+        blank=True, null=True, verbose_name="image"
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name='created at'
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True, verbose_name='updated at'
+    )
+
+    class Meta:
+        verbose_name = ("Blog Category")
+        verbose_name_plural = ("Blog Categories")
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return self.title
+
+    def get_fields(self):
+        return [get_dynamic_fields(field, self) for field in self.__class__._meta.fields]
+
+    def get_blog_count(self):
+        return len(Blog.objects.filter(
+            category__id=self.id
+        ))
+
+
+# # -------------------------------------------------------------------
+# #                           Blog
+# # -------------------------------------------------------------------
+
+
+class Blog(models.Model):
+    title = models.CharField(
+        max_length=255, verbose_name="title"
+    )
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="blogs_created_by", verbose_name="created by"
+    )
+    slug = models.SlugField(
+        unique=True, verbose_name='slug'
+    )
+    category = models.ForeignKey(
+        BlogCategory, on_delete=models.CASCADE, related_name="blog_categorys", verbose_name="category"
+    )
+    image = models.ImageField(
+        blank=True, null=True, verbose_name="image"
+    )
+    description = RichTextUploadingField(blank=True, null=True)
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name='created at'
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True, verbose_name='updated at'
+    )
+
+    class Meta:
+        verbose_name = ("Blog")
+        verbose_name_plural = ("Blog List")
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return self.title
+
+    def get_fields(self):
+        def get_dynamic_fields(field):
+            if field.name == 'category':
+                return (field.name, self.category.title, field.get_internal_type())
+            elif field.name == 'created_by':
+                return (field.name, self.created_by.username, field.get_internal_type())
+            else:
+                return (field.name, field.value_from_object(self), field.get_internal_type())
+        return [get_dynamic_fields(field) for field in self.__class__._meta.fields]
+
+
 # # -------------------------------------------------------------------
 # #                           Comment
 # # -------------------------------------------------------------------
@@ -682,6 +771,38 @@ def news_slug_pre_save_receiver(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(news_slug_pre_save_receiver, sender=News)
+
+
+# # BlogCategory
+
+def blog_category_slug_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        title = slugify(instance.title.lower()[:17])
+        slug_binding = title + '-' + time_str_mix_slug()
+        instance.slug = slug_binding
+
+
+pre_save.connect(blog_category_slug_pre_save_receiver, sender=BlogCategory)
+
+# # Blog
+
+def blog_slug_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        title = slugify(instance.title.lower()[:17])
+        slug_binding = title + '-' + time_str_mix_slug()
+        instance.slug = slug_binding
+        # save created by
+        try:
+            request = RequestMiddleware(get_response=None)
+            request = request.thread_local.current_request
+            instance.created_by = request.user
+        except Exception as E:
+            raise (
+                f"Failed to save user instance! [{str(E)}]"
+            )
+
+
+pre_save.connect(blog_slug_pre_save_receiver, sender=Blog)
 
 # # Client
 
