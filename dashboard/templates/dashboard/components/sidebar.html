@@ -119,6 +119,17 @@
             </li>
             {% endif %}
 
+            <!-- manage Image Group  -->
+
+            {% if perms.dashboard.add_imagegroup or perms.dashboard.view_imagegroup %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:create_image_group' %}" class="sidebar-link">
+                    <i class="fa fa-file-image" aria-hidden="true"></i>
+                    <span>Image Group</span>
+                </a>
+            </li>
+            {% endif %}
+
             <!-- manage Gallery  -->
 
             {% if perms.dashboard.add_gallery or perms.dashboard.view_gallery %}

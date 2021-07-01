@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from .models import (
-    Project, NewsCategory, News, Gallery, Client, SocialAccount,
+    Project, NewsCategory, News, ImageGroup, Gallery, Client, SocialAccount,
     JobPosition, Job, Contact, ProjectCategory, Career
 )
 from .forms import (
-    ProjectManageForm, NewsCategoryManageForm,NewsManageForm, GalleryManageForm, ClientManageForm, SocialAccountManageForm,
+    ProjectManageForm, NewsCategoryManageForm,NewsManageForm, ImageGroupManageForm, GalleryManageForm, ClientManageForm, SocialAccountManageForm,
     JobPositionManageForm, JobManageForm, ContactManageForm, ProjectCategoryManageForm, JobApplicationManageForm, JobStatusManageForm, CVManageForm
 )
 
@@ -561,12 +561,148 @@ def delete_news(request):
 
 
 # # -------------------------------------------------------------------
+# #                               ImageGroup
+# # -------------------------------------------------------------------
+
+def get_image_group_common_contexts(request):
+    common_contexts = get_simple_context_data(
+        request=request, app_namespace="dashboard", model_namespace="image_group", display_name="Image Group", model=ImageGroup, list_template=None, fields_to_hide_in_table=["id","slug","updated_at"]
+    )
+    return common_contexts
+
+
+@method_decorator(dashboard_decorators, name='dispatch')
+class ImageGroupCreateView(CreateView):
+    template_name = "dashboard/snippets/manage.html"
+    form_class = ImageGroupManageForm
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.has_perm("dashboard.add_imagegroup") and not self.request.user.has_perm("dashboard.change_imagegroup") and not self.request.user.has_perm("dashboard.view_imagegroup") and not self.request.user.has_perm("dashboard.delete_imagegroup"):
+            messages.add_message(
+                self.request, messages.ERROR, "Not enough permission!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(ImageGroupCreateView, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form, **kwargs):
+        title = form.instance.title
+        field_qs = ImageGroup.objects.filter(
+            title__iexact=title
+        )
+        result = validate_normal_form(
+            field='title', field_qs=field_qs,
+            form=form, request=self.request
+        )
+        if result == 1:
+            return super().form_valid(form)
+        else:
+            return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_image_group')
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            ImageGroupCreateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = 'Create Image Group'
+        context['page_short_title'] = 'Create Image Group'
+        for key, value in get_image_group_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+@method_decorator(dashboard_decorators, name='dispatch')
+class ImageGroupDetailView(DetailView):
+    template_name = "dashboard/snippets/detail-common.html"
+
+    def get_object(self):
+        return get_simple_object(key='slug', model=ImageGroup, self=self)
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.has_perm("dashboard.view_imagegroup"):
+            messages.add_message(
+                self.request, messages.ERROR, "Not enough permission!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(ImageGroupDetailView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            ImageGroupDetailView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'Image Group - {self.get_object().title} Detail'
+        context['page_short_title'] = f'Image Group - {self.get_object().title} Detail'
+        for key, value in get_image_group_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+@method_decorator(dashboard_decorators, name='dispatch')
+class ImageGroupUpdateView(UpdateView):
+    template_name = 'dashboard/snippets/manage.html'
+    form_class = ImageGroupManageForm
+
+    def get_object(self):
+        return get_simple_object(key="slug", model=ImageGroup, self=self)
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.has_perm("dashboard.change_imagegroup"):
+            messages.add_message(
+                self.request, messages.ERROR, "Not enough permission!"
+            )
+            return HttpResponseRedirect(reverse('home'))
+        return super(ImageGroupUpdateView, self).dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('dashboard:create_image_group')
+
+    def form_valid(self, form):
+        self.object = self.get_object()
+        title = form.instance.title
+        if not self.object.title == title:
+            field_qs = Gallery.objects.filter(
+                title__iexact=title
+            )
+            result = validate_normal_form(
+                field='title', field_qs=field_qs,
+                form=form, request=self.request
+            )
+            if result == 1:
+                return super().form_valid(form)
+            else:
+                return super().form_invalid(form)
+
+        messages.add_message(
+            self.request, messages.SUCCESS, "Updated Successfully!"
+        )
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            ImageGroupUpdateView, self
+        ).get_context_data(**kwargs)
+        context['page_title'] = f'Update Image Group "{self.get_object().title}"'
+        context['page_short_title'] = f'Update Image Group "{self.get_object().title}"'
+        for key, value in get_image_group_common_contexts(request=self.request).items():
+            context[key] = value
+        return context
+
+
+@csrf_exempt
+@has_dashboard_permission_required
+@login_required
+def delete_image_group(request):
+    return delete_simple_object(request=request, key='slug', model=ImageGroup, redirect_url="dashboard:create_image_group")
+
+
+# # -------------------------------------------------------------------
 # #                               Gallery
 # # -------------------------------------------------------------------
 
 def get_gallery_common_contexts(request):
     common_contexts = get_simple_context_data(
-        request=request, app_namespace="dashboard", model_namespace="gallery", model=Gallery, list_template=None, fields_to_hide_in_table=["id","slug","updated_at"]
+        request=request, app_namespace="dashboard", model_namespace="gallery", model=Gallery, list_template=None, fields_to_hide_in_table=["id", "slug", "updated_at"]
     )
     return common_contexts
 
@@ -590,7 +726,7 @@ class GalleryCreateView(CreateView):
             title__iexact=title
         )
         result = validate_normal_form(
-            field='gallery', field_qs=field_qs,
+            field='title', field_qs=field_qs,
             form=form, request=self.request
         )
         if result == 1:
@@ -649,7 +785,7 @@ class GalleryUpdateView(UpdateView):
                 title__iexact=title
             )
             result = validate_normal_form(
-                field='name', field_qs=field_qs,
+                field='title', field_qs=field_qs,
                 form=form, request=self.request
             )
             if result == 1:

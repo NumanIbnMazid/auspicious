@@ -38,6 +38,8 @@
     <!-- End Breadcrumbs -->
     <br>
     <!-- Galleries Start -->
+
+    {% comment %}
     <div class="galleries">
         <div class="container">
             <div class="row">
@@ -54,6 +56,58 @@
             </div>
         </div>
     </div>
+    {% endcomment %}
+
+    {% for image_group in image_groups %}
+    <div class="m-4">
+        <div class="Container">
+            <div class="text-center m-4">
+                <h2>{{ image_group.title }}</h2>
+            </div>
+
+            <div class="row justify-content-center">
+                {% for gallery in image_group.gallery_image_groups.all %}
+                <div class="col-md-3 col-2 mb-4">
+                    <div class="img-thumbnail">
+                        <a href="{{ gallery.image.url }}">
+                            <img src="{{ gallery.image.url }}" alt="{{ gallery.title }}" class="rounded" style="height:250px;width:100%;">
+                            <div class="caption text-center mt-2">
+                                <p>{{ gallery.title }}</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="m-4">
+        <div class="Container">
+            <div class="text-center m-4">
+                <h2>Others</h2>
+            </div>
+
+            <div class="row justify-content-center">
+                {% for gallery in other_images %}
+                <div class="col-md-3 col-2 mb-4">
+                    <div class="img-thumbnail">
+                        <a href="{{ gallery.image.url }}">
+                            <img src="{{ gallery.image.url }}" alt="{{ gallery.title }}" class="rounded" style="height:250px;width:100%;">
+                            <div class="caption text-center mt-2">
+                                <p>{{ gallery.title }}</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+
     <!-- Galleries End -->
 
     {% include "components/footer.html" %}

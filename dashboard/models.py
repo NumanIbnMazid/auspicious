@@ -512,6 +512,36 @@ class Career(models.Model):
 
 
 # # -------------------------------------------------------------------
+# #                           Image Group
+# # -------------------------------------------------------------------
+
+class ImageGroup(models.Model):
+    title = models.CharField(
+        max_length=100, verbose_name="title"
+    )
+    slug = models.SlugField(
+        unique=True, verbose_name='slug'
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name='created at'
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True, verbose_name='updated at'
+    )
+
+    class Meta:
+        verbose_name = ("Image Group")
+        verbose_name_plural = ("Image Groups")
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return self.title
+
+    def get_fields(self):
+        return [get_dynamic_fields(field, self) for field in self.__class__._meta.fields]
+
+
+# # -------------------------------------------------------------------
 # #                           Gallery
 # # -------------------------------------------------------------------
 
@@ -525,6 +555,9 @@ class Gallery(models.Model):
     )
     image = models.ImageField(
         verbose_name="image"
+    )
+    image_group = models.ForeignKey(
+        ImageGroup, on_delete=models.CASCADE, related_name="gallery_image_groups", verbose_name="image group", blank=True, null=True
     )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name='created at'
@@ -542,7 +575,15 @@ class Gallery(models.Model):
         return self.title
 
     def get_fields(self):
-        return [get_dynamic_fields(field, self) for field in self.__class__._meta.fields]
+        def get_dynamic_fields(field):
+            if field.name == 'image_group':
+                if not self.image_group == None:
+                    return (field.name, self.image_group.title, field.get_internal_type())
+                else:
+                    return (field.name, "-", field.get_internal_type())
+            else:
+                return (field.name, field.value_from_object(self), field.get_internal_type())
+        return [get_dynamic_fields(field) for field in self.__class__._meta.fields]
 
 
 # # -------------------------------------------------------------------
@@ -652,6 +693,17 @@ def client_slug_pre_save_receiver(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(client_slug_pre_save_receiver, sender=Client)
+
+# # ImageGroup
+
+def image_group_slug_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        title = slugify(instance.title.lower()[:17])
+        slug_binding = title + '-' + time_str_mix_slug()
+        instance.slug = slug_binding
+
+
+pre_save.connect(image_group_slug_pre_save_receiver, sender=ImageGroup)
 
 # # Gallery
 
