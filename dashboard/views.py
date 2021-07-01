@@ -1757,7 +1757,7 @@ class BlogCategoryCreateView(CreateView):
         ).get_context_data(**kwargs)
         context['page_title'] = 'Create Blog Category'
         context['page_short_title'] = 'Create Blog Category'
-        for key, value in get_news_category_common_contexts(request=self.request).items():
+        for key, value in get_blog_category_common_contexts(request=self.request).items():
             context[key] = value
         return context
 
@@ -1818,7 +1818,7 @@ class BlogCategoryUpdateView(UpdateView):
         ).get_context_data(**kwargs)
         context['page_title'] = f'Update Blog Category "{self.get_object().title}"'
         context['page_short_title'] = f'Update Blog Category "{self.get_object().title}"'
-        for key, value in get_news_category_common_contexts(request=self.request).items():
+        for key, value in get_blog_category_common_contexts(request=self.request).items():
             context[key] = value
         return context
 

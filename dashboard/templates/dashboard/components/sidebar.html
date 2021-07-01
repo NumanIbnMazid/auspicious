@@ -108,13 +108,24 @@
             </li>
             {% endif %}
 
-                        <!-- manage News  -->
+            <!-- manage News  -->
 
             {% if perms.dashboard.add_news or perms.dashboard.view_news %}
             <li class="sidebar-item">
                 <a href="{% url 'dashboard:create_news' %}" class="sidebar-link">
                     <i class="fa fa-newspaper" aria-hidden="true"></i>
                     <span>News</span>
+                </a>
+            </li>
+            {% endif %}
+
+            <!-- manage Blog Category -->
+
+            {% if perms.dashboard.add_blogcategory or perms.dashboard.view_blogcategory %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:create_blog_category' %}" class="sidebar-link">
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                    <span>Blog Category</span>
                 </a>
             </li>
             {% endif %}
