@@ -128,6 +128,7 @@
                     <span>News Comments & Replies</span>
                 </a>
             </li>
+            {% endif %}
             <!-- manage Blog Category -->
 
             {% if perms.dashboard.add_blogcategory or perms.dashboard.view_blogcategory %}
@@ -139,7 +140,7 @@
             </li>
             {% endif %}
 
-            <!-- manage Blog Category -->
+            <!-- manage Blog -->
 
             {% if perms.dashboard.add_blog or perms.dashboard.view_blog %}
             <li class="sidebar-item">
