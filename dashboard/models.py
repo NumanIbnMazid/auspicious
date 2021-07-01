@@ -240,7 +240,7 @@ class Blog(models.Model):
         unique=True, verbose_name='slug'
     )
     category = models.ForeignKey(
-        BlogCategory, on_delete=models.CASCADE, related_name="blog_categorys", verbose_name="category"
+        BlogCategory, on_delete=models.CASCADE, related_name="blog_categories", verbose_name="category"
     )
     image = models.ImageField(
         blank=True, null=True, verbose_name="image"
