@@ -60,6 +60,7 @@
                     <div class="listings-container">
 
                         {% if last_job_qs %}
+                        {% if paginated_jobs.number <= 1 %}
                         <!-- Listing -->
                         <a href="{% url 'job_details' slug=last_job_qs.slug %}" class="listing full-time">
                             <div class="listing-logo">
@@ -77,11 +78,11 @@
                                 </ul>
                             </div>
                         </a>
-
+                        {% endif %}
                         {% endif %}
 
                         <!-- Listing -->
-                        {% for job in job_lists %}
+                        {% for job in paginated_jobs %}
                         <a href="{% url 'job_details' slug=job.slug %}" class="listing full-time">
                             <div class="listing-logo">
                                 <img src="{% static 'assets/landing/assets/img/icon.jpg' %}" alt="">
@@ -99,6 +100,9 @@
                             No job available!
                         </div>
                         {% endfor %}
+
+                        <!-- pagination -->
+                        {% include 'snippets/paginator.html' with page_obj=paginated_jobs %}
 
                     </div>
                 </div>
