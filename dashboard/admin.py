@@ -1,7 +1,8 @@
 from django.contrib import admin
 from util.mixings import CustomModelAdminMixin
 from .models import (
-    ProjectCategory, Project, NewsCategory, News, Comment, CommentReply, Client, SocialAccount, JobPosition, Job, Career, ImageGroup, Gallery, Contact
+    ProjectCategory, Project, NewsCategory, News, Comment, CommentReply, Client, SocialAccount,
+    JobPosition, Job, Career, ImageGroup, Gallery, Contact, BlogCategory, Blog
 )
 
 admin.site.register(ProjectCategory)
@@ -33,6 +34,25 @@ class NewsAdmin(CustomModelAdminMixin, admin.ModelAdmin):
 
 
 admin.site.register(News, NewsAdmin)
+
+class BlogCategoryAdmin(CustomModelAdminMixin, admin.ModelAdmin):
+    pass
+
+    class Meta:
+        model = BlogCategory
+
+
+admin.site.register(BlogCategory, BlogCategoryAdmin)
+
+
+class BlogAdmin(CustomModelAdminMixin, admin.ModelAdmin):
+    pass
+
+    class Meta:
+        model = Blog
+
+
+admin.site.register(Blog, BlogAdmin)
 
 
 class CommentAdmin(CustomModelAdminMixin, admin.ModelAdmin):
