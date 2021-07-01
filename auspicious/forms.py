@@ -42,13 +42,33 @@ class CareerManageForm(forms.ModelForm):
             'placeholder': 'Enter Contact Number...',
             'maxlength': 50
         })
+        self.fields['subject'].widget.attrs.update({
+            'placeholder': 'Enter Subject...',
+            'maxlength': 100
+        })
+        self.fields['university_name'].widget.attrs.update({
+            'placeholder': 'Enter University Name...',
+            'maxlength': 100
+        })
+        self.fields['passing_year'].widget.attrs.update({
+            'placeholder': 'Enter Passing year...',
+            'maxlength': 50
+        })
+        self.fields['expected_salary'].widget.attrs.update({
+            'placeholder': 'Enter Expected Salary...',
+            'maxlength': 250
+        })
+        self.fields['year_of_experience'].widget.attrs.update({
+            'placeholder': 'Enter Year of Experience...',
+            'maxlength': 50
+        })
 
         self.fields['file'].help_text = "Only .doc, .docx, .pdf file format is supported and maximum file size is 2.5MB."
 
     class Meta:
         model = Career
         fields = [
-            "file", "contact"
+            "file", "contact",'subject', 'university_name','passing_year', 'expected_salary','year_of_experience'
         ]
 
     def clean_file(self):
