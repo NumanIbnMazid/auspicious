@@ -382,9 +382,19 @@ def job_details(request, slug):
 # # -------------------------------------------------------------------
 
 def all_job_lists(request):
-    last_job_qs = Job.objects.all().last()
-    job_lists = Job.objects.filter(is_active = 'True').order_by("id")
-    context = {'last_job_qs':last_job_qs,'job_lists': job_lists}
+    last_job_qs = Job.objects.filter(is_active=True).last()
+    job_lists = Job.objects.filter(is_active=True).order_by("id")
+
+    job_list_qs = Job.objects.filter(is_active=True)
+    paginated_jobs = get_paginated_object(
+        request, queryset=job_list_qs, paginate_by=6
+    )
+
+    context = {
+        'last_job_qs':last_job_qs,
+        'job_lists': job_lists,
+        "paginated_jobs": paginated_jobs
+    }
     return render(request, "page/all-jobs.html", context)
 
 # # -------------------------------------------------------------------
