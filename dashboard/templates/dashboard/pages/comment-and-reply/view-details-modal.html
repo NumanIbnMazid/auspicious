@@ -22,7 +22,7 @@
 <script>
     // view dynamic iytem details
     $(".js_view_btn").click(function () {
-        let dynamic_value = this.value;
+        let dynamic_value = $(this).data("value");
         $('.modal-dynamic-content').html(dynamic_value);
         // console.log(dynamic_value);
     });
