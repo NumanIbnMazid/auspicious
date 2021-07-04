@@ -1,0 +1,31 @@
+<!-- Dynamic View Details Modal -->
+<div class="modal fade bg-opacity-mid" id="modal-view-details" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-c-white-raw">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-eye" aria-hidden="true"></i>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-dynamic-content m-4"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block additional_js %}
+
+<script>
+    // view dynamic iytem details
+    $(".js_view_btn").click(function () {
+        let dynamic_value = this.value;
+        $('.modal-dynamic-content').html(dynamic_value);
+        // console.log(dynamic_value);
+    });
+</script>
+
+{% endblock %}

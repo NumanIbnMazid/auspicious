@@ -1,2 +1,1 @@
-
-# Remove MyProfile from User Drop-down
+# Change User Picture from comment section

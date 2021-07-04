@@ -302,7 +302,7 @@ class Comment(models.Model):
         ordering = ['-updated_at']
 
     def __str__(self):
-        return self.news.title
+        return str(self.comment) if len(str(self.comment)) <= 10 else str(self.comment)[:10] + " ..."
 
     def get_fields(self):
         def get_dynamic_fields(field):
@@ -345,7 +345,7 @@ class CommentReply(models.Model):
         ordering = ['-updated_at']
 
     def __str__(self):
-        return self.comment.commented_by.username
+        return str(self.reply) if len(str(self.reply)) <= 10 else str(self.reply)[:10] + " ..."
 
     def get_fields(self):
         def get_dynamic_fields(field):

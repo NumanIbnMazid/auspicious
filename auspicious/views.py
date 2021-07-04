@@ -237,9 +237,9 @@ def contact(request):
 # @login_required
 def news_details(request, slug):
     news_qs = News.objects.filter(slug = slug).first()
-    comment_qs = Comment.objects.filter(news = news_qs)
+    comment_qs = Comment.objects.filter(news=news_qs, is_approved=True)
     news_category_lists = NewsCategory.objects.all().order_by('-id')
-    reply_qs = CommentReply.objects.filter(comment = comment_qs.first())
+    reply_qs = CommentReply.objects.filter(comment=comment_qs.first(), is_approved=True)
     last_three_job_lists = News.objects.all().exclude(slug = slug).order_by('-id')[0:3]
 
     pre_news = News.objects.filter(
