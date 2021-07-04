@@ -49,7 +49,7 @@
                     <div class="blog-wrap mb-50 wow fadeInUp" data-wow-duration="2s">
                         <div class="blog-img-date-wrap mb-25">
                             <div class="blog-img">
-                                <a href="{% url 'news_details' slug=news.slug %}">
+                                <a href="{% url 'blog_details' slug=news.slug %}">
                                     {% if news.image %}
                                     <img src={{ news.image.url }} alt="" style="height:250px;width:400px;">
                                     {% else %}
@@ -73,7 +73,7 @@
                                     <li>By:<a href="#"> {{ news.created_by }}</a></li>
                                 </ul>
                             </div>
-                                <a href="{% url 'news_details' slug=news.slug %}">
+                                <a href="{% url 'blog_details' slug=news.slug %}">
                                     <h3>
                                         {{ news.title|truncatechars_html:20 }}
                                     </h3>
@@ -82,7 +82,7 @@
                                 {{ news.description|safe|truncatechars_html:40}}
                                 </p>
                             <div class="blog-btn-2 btn-hover">
-                                <a class="btn hover-border-radius theme-color" href="{% url 'news_details' slug=news.slug %}">Read More</a>
+                                <a class="btn hover-border-radius theme-color" href="{% url 'blog_details' slug=news.slug %}">Read More</a>
                             </div>
                         </div>
 

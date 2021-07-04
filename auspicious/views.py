@@ -287,6 +287,47 @@ def news_details(request, slug):
 
 
 # # -------------------------------------------------------------------
+# #                               Blog Details
+# # -------------------------------------------------------------------
+
+# @login_required
+def blog_details(request, slug):
+    blog_qs = Blog.objects.filter(slug = slug).first()
+    # comment_qs = Comment.objects.filter(news = blog_qs)
+    blog_category_lists = BlogCategory.objects.all().order_by('-id')
+    # reply_qs = CommentReply.objects.filter(comment = comment_qs.first())
+    last_three_job_lists = Blog.objects.all().exclude(slug = slug).order_by('-id')[0:4]
+
+    pre_blog = Blog.objects.filter(
+        id__lt=blog_qs.id
+    ).first()
+    next_blog = Blog.objects.filter(
+        id__gt=blog_qs.id
+    ).first()
+
+    context ={'blog_qs':blog_qs,
+                'blog_category_lists':blog_category_lists,
+                'last_three_job_lists':last_three_job_lists,
+                'pre_blog':pre_blog,'next_blog':next_blog,
+                # 'comment_qs':comment_qs,
+                # 'total_comment':comment_qs.count(),
+            }
+
+    # if request.method == 'POST':
+    #     if request.user.is_authenticated:
+    #         comment = request.POST.get("comment")
+    #         Comment.objects.create(
+    #             news=news_qs,
+    #             commented_by=request.user,
+    #             comment=comment
+    #         )
+    #         return HttpResponseRedirect(reverse("news_details", kwargs={"slug": slug}))
+    #     else:
+    #         return HttpResponseRedirect(reverse("account_login"))
+    #
+    return render(request, "page/blog-details.html", context)
+
+# # -------------------------------------------------------------------
 # #                              Comment
 # # -------------------------------------------------------------------
 

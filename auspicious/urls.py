@@ -50,6 +50,7 @@ urlpatterns = [
     path("contact/", views.contact, name="contact"),
     path("contact/post/", views.post_contact, name="post_contact"),
     path("news-details/<str:slug>/", views.news_details, name="news_details"),
+    path("blog-details/<str:slug>/", views.blog_details, name="blog_details"),
     path("comment/<id>/reply/", views.comment_reply, name="comment_reply"),
     path("admin/", admin.site.urls),
     path("account/", include("accounts.urls")),
