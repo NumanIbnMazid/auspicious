@@ -134,6 +134,8 @@
                                 ({{ total_comment }})
                             </h4>
                             {% for comment in news_qs.news_comment.all %}
+
+                            {% if comment.is_approved == True %}
                             
                             <div class="single-comment-wrapper single-comment-border aos-init" data-aos="fade-up" data-aos-delay="400">
                                 <div class="blog-comment-img">
@@ -184,9 +186,11 @@
                             </div>
 
                             
+
+                            
                                 {% for reply in comment.comment_reply.all %}
 
-
+                                {% if reply.is_approved == True %}
                                 <div class="single-comment-wrapper single-comment-ml aos-init" data-aos="fade-up" data-aos-delay="600">
                                     <div class="blog-comment-img">
                                         <img src="{% static 'assets/landing/assets/img/blog/blog-comment-2.png' %}" alt="">
@@ -200,10 +204,12 @@
                                         </div>
                                         <p>{{ reply.reply }} </p>
                                     </div>
-                                </div> <br>
+                                </div> 
+                                <br>
+                                {% endif %}
                                 {% endfor %}
 
-
+                            {% endif %}
                             {% endfor %}
                              </div>
                             
