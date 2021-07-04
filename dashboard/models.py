@@ -577,6 +577,9 @@ class Career(models.Model):
     status = models.CharField(
         max_length=50, choices=Status.choices, default="Pending", verbose_name="status"
     )
+    remarks = models.TextField(
+        blank=True, null=True, verbose_name="remarks"
+    )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name='created at'
     )
