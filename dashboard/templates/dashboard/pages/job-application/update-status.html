@@ -39,6 +39,9 @@
 
             <div class="col-12">
                 <form role="form" method="POST" data-toggle="validator" enctype="multipart/form-data">
+                    <div class="" style="text-align:center">
+                        {{ remarks }}
+                    </div>
                     {% csrf_token %}
                     <div class="card-body">
                         {% include 'dashboard/snippets/form.html' %}

@@ -474,6 +474,7 @@ class JobStatusManageForm(forms.Form):
     mail_body = forms.CharField(
         required=False, widget=CKEditorWidget()
     )
+    remarks = forms.CharField(required=False)
 
     def __init__(self, *args, **kwargs):
         career_object = kwargs.pop('career_object', None)
