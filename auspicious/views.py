@@ -219,7 +219,22 @@ def news(request):
     )
 
     context = {'paginated_news_list': paginated_news}
-    return render(request,'page/news.html', context )
+    return render(request,'page/news.html', context)
+
+# # -------------------------------------------------------------------
+# #                              Blog
+# # -------------------------------------------------------------------
+
+
+def blog(request):
+    blogs_lists= Blog.objects.all().order_by('-id')
+    paginated_news = get_paginated_object(
+        request, queryset=blogs_lists, paginate_by=6
+    )
+
+    context = {'paginated_news_list': paginated_news}
+    return render(request,'page/news.html', context)
+
 
 # # -------------------------------------------------------------------
 # #                               Contact
