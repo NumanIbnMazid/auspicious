@@ -1,0 +1,237 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    {% include "components/styles.html" %}
+</head>
+<body>
+
+
+    {% include "components/loader.html" %}
+    {% include "components/header.html" %}
+  <!-- Breadcrumbs -->
+    <section class="breadcrumbs" style="background-image:url({% static 'assets/landing/assets/img/breadcrumbs-bg.jpg' %})">
+        <div class="container">
+            <div class="row">
+                <!-- Breadcrumbs-Content -->
+                <div class="col-lg-7 col-md-7 col-12">
+                    <div class="breadcrumbs-content">
+                        <h2>Blog</h2>
+
+                    </div>
+                </div>
+                <!-- Breadcrumbs-Menu -->
+                <div class="col-lg-5 col-md-5 col-12">
+                    <div class="breadcrumbs-menu">
+                        <ul>
+                            <li><a href="index.html">Home</a><i class="fa fa-angle-double-right"></i></li>
+                            <li class="active"><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Breadcrumbs -->
+
+    <div class="blog-details-area pt-100 pb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="blog-details-wrapper">
+                        <div class="blog-details-img-date-wrap mb-35 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                            <div class="blog-details-img">
+                                {% if blog_qs.image %}
+                                <img src="{{ blog_qs.image.url }}" alt="" style="height:400px; width:850px;">
+                                {% else %}
+                                <img src="{% static './assets/landing/assets/img/no.jpg' %}" alt="" style="height:400px; width:850px;">
+                                {% endif %}
+                            </div>
+                            <div class="blog-details-date">
+                                <h5>{{ blog_qs.created_at.date.day }}
+                                    <span>{{ blog_qs.created_at|date:"M" }}</span></h5>
+                            </div>
+                        </div>
+                        <div class="blog-meta-2 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                            <ul class="non-bullet-list">
+                                <li>{{ blog_qs.category }},</li>
+                                <li>By: {{ blog_qs.created_by }}</li>
+                            </ul>
+                        </div>
+                        <h1 data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">{{ blog_qs.title }}</h1>
+                        <p data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">
+                            {{ blog_qs.description|safe }}
+                        </p>
+
+<!--                        {% comment %}-->
+<!--                        <div class="tag-social-wrap">-->
+<!--                            <div class="tag-wrap aos-init" data-aos="fade-up" data-aos-delay="200">-->
+<!--                                <span>Tags:</span>-->
+<!--                                <ul>-->
+<!--                                    <li><a href="#">Furniture</a>,</li>-->
+<!--                                    <li><a href="#">Electronic</a>,</li>-->
+<!--                                    <li><a href="#">Fashion</a></li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
+<!--                            <div class="social-comment-digit-wrap aos-init" data-aos="fade-up" data-aos-delay="400">-->
+<!--                                <div class="social-icon-style-2">-->
+<!--                                    <a href="#"><i class="fa fa-facebook"></i></a>-->
+<!--                                    <a href="#"><i class="fa fa-twitter"></i></a>-->
+<!--                                    <a href="#"><i class="fa fa-youtube"></i></a>-->
+<!--                                </div>-->
+<!--                                <div class="comment-digit">-->
+<!--                                    <a href="#">{{ total_comment }}<i class="fa fa-comments"></i></a>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        {% endcomment %}-->
+
+                        {% if request.user.is_authenticated %}
+                        <div class="blog-author-wrap-2 aos-init m-4" data-aos="fade-up" data-aos-delay="200">
+                            <div class="blog-author-img-2">
+                                <img src="{% static 'assets/landing/assets/img/blog/blog-author-2.png' %}" alt="" style="height:100px;width:100px;">
+                            </div>
+                            <div class="blog-author-content-2">
+                                <h2>{{ blog_qs.created_by.user_profile.get_fullname }}</h2>
+                            </div>
+                        </div>
+                        {% endif %}
+
+
+                        <div class="blog-next-previous-post aos-init" data-aos="fade-up" data-aos-delay="200">
+
+                            <div class="blog-prev-post-wrap">
+                                {% if pre_blog %}
+                                <div class="blog-prev-post-icon">
+                                    <a href="{% url 'blog_details' slug=pre_blog.slug %}"><i class="fa fa-angle-left"></i></a>
+                                </div>
+
+                                <div class="blog-prev-post-content">
+                                    <h3><a href="{% url 'blog_details' pre_blog.slug %}">{{ pre_blog.title }}</a></h3>
+                                    <span>{{ pre_blog.created_at.date }}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="blog-next-post-wrap">
+                                {% if next_blog %}
+                                <div class="blog-next-post-icon">
+                                    <a href="{% url 'blog_details' slug=next_blog.slug %}"> <i class="fa fa-angle-right"></i> </a>
+                                </div>
+
+                                <div class="blog-next-post-content">
+                                    <h3><a href="{% url 'blog_details' slug=next_blog.slug %}">{{ next_blog.title }}</a></h3>
+                                    <span>{{ next_blog.created_at.date }}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="sidebar-wrapper blog-sidebar-mt">
+
+                        {% comment %}
+                        <div class="sidebar-widget mb-50 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                            <div class="search-wrap-3">
+                                <form class="search-3-form" action="#">
+                                    <input placeholder="Search*" type="text">
+                                    <button class="button-search"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                        {% endcomment %}
+
+                        <div class="sidebar-widget mb-40 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                            <div class="sidebar-widget-title-2 mb-25">
+                                <h3>Categories</h3>
+                            </div>
+                            <div class="sidebar-list-style-2">
+                                <ul>
+                                    {% for blog_category in blog_category_lists %}
+                                    <li><a href="">{{ blog_category.title }} ({{ blog_category.get_blog_count }})</a></li>
+                                    {% endfor %}
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="sidebar-widget mb-40 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                            <div class="sidebar-widget-title-2 mb-30">
+                                <h3>Latest Post</h3>
+                            </div>
+                            <div class="latest-post-wrap">
+                                {% for blog in last_three_job_lists %}
+                                <div class="single-latest-post">
+                                    <div class="latest-post-img">
+                                        {% if blog.image %}
+                                        <a href="{% url 'blog_details' blog.slug %}"><img src="{{ blog.image.url }}" alt="" style="height:80px; width:100px"></a>
+                                        {% else %}
+                                        <img src="{% static './assets/landing/assets/img/no.jpg' %}" alt="" style="height:80px; width:100px">
+                                        {% endif %}
+                                    </div>
+                                    <div class="latest-post-content">
+                                        <span>{{ blog.created_at.date }}</span>
+                                        <h4><a href="{% url 'blog_details' blog.slug %}">{{ blog.title }}</a></h4>
+                                        <div class="latest-post-btn">
+                                            <a href="{% url 'blog_details' blog.slug %}">Continue Reading...</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+                            </div>
+                        </div>
+
+                        {% comment %}
+                        <div class="sidebar-widget mb-35 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                            <div class="sidebar-widget-title-2 mb-30">
+                                <h3>Tags</h3>
+                            </div>
+                            <div class="sidebar-widget-tag-2">
+                                <a href="#">Furniture</a>
+                                <a href="#">Electronic</a>
+                                <a href="#">Home Decore</a>
+                                <a href="#">Design Home</a>
+                                <a href="#">Furniture</a>
+                            </div>
+                        </div>
+                        <div class="sidebar-widget aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                            <div class="sidebar-banner">
+                                <a href="product-details.html"><img src="{% static 'assets/landing/assets/img/banner/banner-29.png' %}" alt=""></a>
+                            </div>
+                        </div>
+                        {%  endcomment %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    {% include "components/footer.html" %}
+    {% include "components/scripts.html" %}
+    {% block additional_js %}
+
+    <script>
+        let replyBtn = $(".comment_reply")
+        let replyForm = $(".comment-reply-parent")
+
+        // replyBtn.click(function(){
+        //     replyForm.removeClass("hide")
+        // })
+
+
+        function commentReply(commentID) {
+            $("#comment_reply_parent_" + commentID).removeClass("hide")
+            $("#comment_reply_parent_" + commentID).removeClass("comment-reply-parent")
+            $(".comment-reply-parent").html("")
+        }
+    </script>
+
+    {% endblock %}
+
+</body>
+</html>
