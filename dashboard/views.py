@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from .models import (
     Project, NewsCategory, News, ImageGroup, Gallery, Client, SocialAccount,
-    JobPosition, Job, Contact, ProjectCategory, Career, BlogCategory, Blog
+    JobPosition, Job, Contact, ProjectCategory, Career, BlogCategory, Blog, Comment, CommentReply
 )
 from .forms import (
     ProjectManageForm, NewsCategoryManageForm, NewsManageForm, ImageGroupManageForm, GalleryManageForm,
@@ -1829,6 +1829,7 @@ class BlogCategoryUpdateView(UpdateView):
 def delete_blog_category(request):
     return delete_simple_object(request=request, key='slug', model=BlogCategory, redirect_url="dashboard:create_blog_category")
 
+
 # # -------------------------------------------------------------------
 # #                               Blog
 # # -------------------------------------------------------------------
@@ -1948,3 +1949,24 @@ class BlogUpdateView(UpdateView):
 def delete_blog(request):
     return delete_simple_object(request=request, key='slug', model=Blog, redirect_url="dashboard:create_blog")
 
+
+# # -------------------------------------------------------------------
+# #                               Comments and Replies
+# # -------------------------------------------------------------------
+
+@method_decorator(dashboard_decorators, name='dispatch')
+class NewsCommentListView(ListView):
+    template_name = "dashboard/pages/comment-and-reply/comment-list.html"
+
+    def get_queryset(self):
+        qs = Comment.objects.all()
+        print(qs, "*************")
+        if qs.exists():
+            return qs
+        return None
+
+    def get_context_data(self, **kwargs):
+        context = super(NewsCommentListView, self).get_context_data(**kwargs)
+        context['page_title'] = 'News Comments and Replies'
+        context['page_short_title'] = 'News Comments and Replies'
+        return context

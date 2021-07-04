@@ -119,6 +119,16 @@
             </li>
             {% endif %}
 
+            <!-- manage comments and replies  -->
+
+            {% if perms.dashboard.view_comment or perms.dashboard.change_comment or perms.dashboard.delete_comment or perms.dashboard.view_commentreply or perms.dashboard.change_commentreply or perms.dashboard.delete_commentreply %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:news_comment_list' %}" class="sidebar-link">
+                    <i class="fa fa-newspaper" aria-hidden="true"></i>
+                    <span>News Comments & Replies</span>
+                </a>
+            </li>
+            {% endif %}
             <!-- manage Blog Category -->
 
             {% if perms.dashboard.add_blogcategory or perms.dashboard.view_blogcategory %}
@@ -130,7 +140,7 @@
             </li>
             {% endif %}
 
-            <!-- manage Blog Category -->
+            <!-- manage Blog -->
 
             {% if perms.dashboard.add_blog or perms.dashboard.view_blog %}
             <li class="sidebar-item">

@@ -286,6 +286,9 @@ class Comment(models.Model):
     comment = models.TextField(
         blank=True, null=True, verbose_name='comment'
     )
+    is_approved = models.BooleanField(
+        default=False, verbose_name="is approved"
+    )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name='created at'
     )
@@ -325,6 +328,9 @@ class CommentReply(models.Model):
     )
     reply = models.TextField(
         blank=True, null=True, verbose_name='reply'
+    )
+    is_approved = models.BooleanField(
+        default=False, verbose_name="is approved"
     )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name='created at'
