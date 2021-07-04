@@ -70,7 +70,10 @@ def get_file_type(value):
 
 @register.filter
 def truncate_word(value, numWords):
-    return value[:numWords] + " ..."
+    if value:
+        return value[:numWords] + " ..."
+    else:
+        return "--"
 
 
 @register.filter

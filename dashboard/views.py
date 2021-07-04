@@ -1660,6 +1660,7 @@ def update_job_application_status(request, slug):
             )
 
             status = request.POST.get('status')
+            remarks = request.POST.get('remarks')
 
             finalized_status = "Under Review" if status == "Review" else status
 
@@ -1669,8 +1670,10 @@ def update_job_application_status(request, slug):
                 mail_subject = f"Your CV is : {finalized_status}"
             mail_body = request.POST.get('mail_body')
 
-            # Save Status in DB
+            # Save Status and Remarks in DB
             career.status = status
+            if career.status == 'Rejected':
+                career.remarks = remarks
             career.save()
 
             message = mail_body
@@ -1692,6 +1695,10 @@ def update_job_application_status(request, slug):
 
         else:
             form = JobStatusManageForm(career_object=career_qs.last())
+            if career_qs.last().remarks:
+                remarks = career_qs.last().remarks
+            else:
+                remarks = ''
 
         context = {
             "form": form,
@@ -1700,6 +1707,7 @@ def update_job_application_status(request, slug):
             ),
             "page_title": page_title,
             "page_short_title": page_title,
+            "remarks": remarks,
         }
 
     else:
