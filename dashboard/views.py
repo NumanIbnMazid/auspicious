@@ -30,6 +30,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, UpdateView, TemplateView, DetailView, ListView
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.core.mail import EmailMultiAlternatives
 from django.contrib.auth.models import User
 
@@ -1967,8 +1968,8 @@ class NewsCommentListView(ListView):
     template_name = "dashboard/pages/comment-and-reply/comment-list.html"
 
     def get_queryset(self):
-        qs = Comment.objects.all()
-        print(qs, "*************")
+        qs = Comment.objects.all().order_by("-created_at")
+        # print(qs, "*************")
         if qs.exists():
             return qs
         return None
@@ -1978,3 +1979,67 @@ class NewsCommentListView(ListView):
         context['page_title'] = 'News Comments and Replies'
         context['page_short_title'] = 'News Comments and Replies'
         return context
+
+@method_decorator(dashboard_decorators, name='dispatch')
+class NewsCommentReplyListView(ListView):
+    template_name = "dashboard/pages/comment-and-reply/comment-reply-list.html"
+
+    def get_queryset(self):
+        qs = CommentReply.objects.all().order_by("-created_at")
+        # print(qs, "*************")
+        if qs.exists():
+            return qs
+        return None
+
+    def get_context_data(self, **kwargs):
+        context = super(NewsCommentReplyListView,
+                        self).get_context_data(**kwargs)
+        context['page_title'] = 'News Comment Replies'
+        context['page_short_title'] = 'News Comment Replies'
+        return context
+
+@csrf_exempt
+def change_comment_status(request):
+    objID = request.GET.get('objID', None)
+
+    data = {
+        'result': None
+    }
+    qs = Comment.objects.filter(
+        id=objID
+    )
+    if qs.exists():
+        obj = qs.first()
+        obj.is_approved = not obj.is_approved
+        obj.save()
+        data['message'] = "Changed successfully"
+        data['result'] = "Success"
+        data['is_approved'] = obj.is_approved
+    else:
+        data['result'] = "Failed"
+        data["error_message"] = "Comment does not exists!"
+    
+    return JsonResponse(data)
+
+@csrf_exempt
+def change_comment_reply_status(request):
+    objID = request.GET.get('objID', None)
+
+    data = {
+        'result': None
+    }
+    qs = CommentReply.objects.filter(
+        id=objID
+    )
+    if qs.exists():
+        obj = qs.first()
+        obj.is_approved = not obj.is_approved
+        obj.save()
+        data['message'] = "Changed successfully"
+        data['result'] = "Success"
+        data['is_approved'] = obj.is_approved
+    else:
+        data['result'] = "Failed"
+        data["error_message"] = "Reply does not exists!"
+    
+    return JsonResponse(data)

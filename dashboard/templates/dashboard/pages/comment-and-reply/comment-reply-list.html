@@ -31,7 +31,7 @@
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header border-0 text-center">
-                    <h3 class="mb-0">News Comments</h3>
+                    <h3 class="mb-0">News Comment Replies</h3>
                 </div>
                 <!-- Light table -->
                 <div class="table-responsive">
@@ -40,11 +40,11 @@
                             <tr class="text-center">
                                 <th>Action</th>
                                 <th>#</th>
-                                <th>News</th>
-                                <th>Commented By</th>
                                 <th>Comment</th>
+                                <th>Replied By</th>
+                                <th>Reply</th>
                                 <th>Is Approved</th>
-                                <th>Commented At</th>
+                                <th>Replied At</th>
                             </tr>
                         </thead>
 
@@ -53,7 +53,7 @@
                             {% for object in object_list %}
                             <tr class="text-center">
                                 <td style="width: 14%">
-                                    <button class="btn btn-primary btn-sm statusBtn" type="button" value="{{object.id}}" id="statusBtn_{{object.id}}">
+                                    <button class="btn btn-primary btn-sm replyStatusBtn" type="button" value="{{object.id}}" id="replyStatusBtn_{{object.id}}">
                                         {% if object.is_approved == True %}
                                         Reject
                                         {% else %}
@@ -61,7 +61,7 @@
                                         {% endif %}
                                     </button>
 
-                                    <button class="btn btn-info btn-sm js_view_btn" value="{{ object.comment }}" data-toggle="modal" data-target="#modal-view-details">
+                                    <button class="btn btn-info btn-sm js_view_btn" value="{{ object.reply }}" data-toggle="modal" data-target="#modal-view-details">
                                         <span class="">
                                             <i class="fas fa-eye" aria-hidden="true"></i>
                                         </span>
@@ -72,10 +72,10 @@
                                     {{ forloop.counter }}
                                 </th>
 
-                                <td>{{ object.news.title }}</td>
-                                <td>{{ object.commented_by.username }}</td>
-                                <td>{{ object.comment|truncate_word:30|remove_html_tags }}</td>
-                                <td id="isApprovedCol_{{object.id}}" class="{% if object.is_approved == True %}text-success{% else %}text-danger{% endif %}">
+                                <td>{{ object.comment }}</td>
+                                <td>{{ object.replied_by.username }}</td>
+                                <td>{{ object.reply|truncate_word:30|remove_html_tags }}</td>
+                                <td id="replyIsApprovedCol_{{object.id}}" class="{% if object.is_approved == True %}text-success{% else %}text-danger{% endif %}">
                                     {{ object.is_approved }}
                                 </td>
                                 <td>{{ object.created_at }}</td>
@@ -93,11 +93,11 @@
                             <tr class="text-center">
                                 <th>Action</th>
                                 <th>#</th>
-                                <th>News</th>
-                                <th>Commented By</th>
                                 <th>Comment</th>
+                                <th>Replied By</th>
+                                <th>Reply</th>
                                 <th>Is Approved</th>
-                                <th>Commented At</th>
+                                <th>Replied At</th>
                             </tr>
                         </tfoot>
                     </table>
@@ -121,41 +121,6 @@
 {% block additional_js %}
 
 <script>
-    // *** Dynamically change comment approval status with ajax call ***
-    $(".statusBtn").click(function() {
-        let objectID = $(this).val();
-
-        // console.log(objectID, "*** ID ***")
-
-        $.ajax({
-            url: '{% url "dashboard:change_comment_status" %}',
-            data: {
-                objID: objectID,
-            },
-            dataType: "json",
-            success: function(data) {
-                // console.log(data, "*** Data ***")
-                let is_approved = data.is_approved.toString()
-                let status = is_approved.toLowerCase().replace(
-                    /^[\u00C0-\u1FFF\u2C00-\uD7FF\w]|\s[\u00C0-\u1FFF\u2C00-\uD7FF\w]/g,
-                    function(letter) {
-                        return letter.toUpperCase();
-                    });
-
-                $("#isApprovedCol_" + objectID).html(status)
-
-                if (status === "True") {
-                    $("#isApprovedCol_" + objectID).addClass("text-success")
-                    $("#isApprovedCol_" + objectID).removeClass("text-danger")
-                    $("#statusBtn_" + objectID).html("Reject")
-                } else {
-                    $("#isApprovedCol_" + objectID).addClass("text-danger")
-                    $("#isApprovedCol_" + objectID).removeClass("text-success")
-                    $("#statusBtn_" + objectID).html("Approve")
-                }
-            },
-        });
-    });
 
     // *** Dynamically change comment approval status with ajax call ***
     $(".replyStatusBtn").click(function() {
