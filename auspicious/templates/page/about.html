@@ -10,6 +10,14 @@
   .vl-left{
     border-right: 1px solid #787878;
  }
+
+.img-position img{
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+      height: 200px;
+}
 </style>
 </head>
 <body>
@@ -71,7 +79,9 @@
            <h3 class="text-center text-uppercase fw-bold mb-4">Vision & <span>Mission</span></h3>
             <div class="row justify-content-center" style="text-align: justify; color:#fff;">
                 <div class="col-md-6">
-
+                    <div class="img-position">
+                        <img src="{% static 'assets/landing/assets/img/vision.jpg' %}" alt="" >
+                    </div>
                 </div>
                 <div class="col-md-6 vl-right">
                     <div>
@@ -92,7 +102,9 @@
                     </ol>
                 </div>
                 <div class="col-md-6">
-
+                    <div class="img-position">
+                        <img src="{% static 'assets/landing/assets/img/mission.png' %}" alt="">
+                    </div>
                 </div>
             </div>
         </div>
