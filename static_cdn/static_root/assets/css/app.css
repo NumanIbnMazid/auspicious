@@ -13,7 +13,7 @@
   margin-left: 0.4rem;
 }
 .alert-primary {
-  background-image: linear-gradient(to top,#3492d0, #63bcf7);
+  background-color: #435ebe;
   color: #fff;
 }
 .alert-primary a {
@@ -819,7 +819,7 @@
   display: block;
 }
 .sidebar-wrapper .menu .sidebar-item.active .sidebar-link {
-  background-color: #435ebe;
+  background-image: linear-gradient(to top,#3492d0, #63bcf7);
 }
 .sidebar-wrapper .menu .sidebar-item.active .sidebar-link span {
   color: #fff;
