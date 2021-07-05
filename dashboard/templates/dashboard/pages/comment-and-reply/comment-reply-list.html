@@ -40,6 +40,7 @@
                             <tr class="text-center">
                                 <th>Action</th>
                                 <th>#</th>
+                                <th>News</th>
                                 <th>Comment</th>
                                 <th>Replied By</th>
                                 <th>Reply</th>
@@ -61,7 +62,7 @@
                                         {% endif %}
                                     </button>
 
-                                    <button class="btn btn-info btn-sm js_view_btn" value="{{ object.reply }}" data-toggle="modal" data-target="#modal-view-details">
+                                    <button class="btn btn-info btn-sm js_view_btn" data-value="{{ object.reply }}" data-toggle="modal" data-target="#modal-view-details">
                                         <span class="">
                                             <i class="fas fa-eye" aria-hidden="true"></i>
                                         </span>
@@ -72,7 +73,14 @@
                                     {{ forloop.counter }}
                                 </th>
 
-                                <td>{{ object.comment }}</td>
+                                <td>{{ object.comment.news.title|truncate_word:30|remove_html_tags }}</td>
+                                <td>
+                                    <a href="#" class="js_view_btn" data-toggle="modal" data-target="#modal-view-details" data-value="{{ object.comment.comment }}">
+                                        <span class="{% if object.comment.is_approved == True %}text-success{% else %}text-danger{% endif %}">
+                                            {{ object.comment.comment|truncate_word:30|remove_html_tags }}
+                                        </span>
+                                    </a>
+                                </td>
                                 <td>{{ object.replied_by.username }}</td>
                                 <td>{{ object.reply|truncate_word:30|remove_html_tags }}</td>
                                 <td id="replyIsApprovedCol_{{object.id}}" class="{% if object.is_approved == True %}text-success{% else %}text-danger{% endif %}">
@@ -82,7 +90,7 @@
                             </tr>
                             {% empty %}
                             <tr>
-                                <td colspan="7" class="text-center">
+                                <td colspan="8" class="text-center">
                                     <div class="alert alert-warning">No item found!</div>
                                 </td>
                             </tr>
@@ -93,6 +101,7 @@
                             <tr class="text-center">
                                 <th>Action</th>
                                 <th>#</th>
+                                <th>News</th>
                                 <th>Comment</th>
                                 <th>Replied By</th>
                                 <th>Reply</th>
