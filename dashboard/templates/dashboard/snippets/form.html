@@ -56,13 +56,15 @@
                 <div class="row">
                     <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10">
                         <div class="extra_info" id="{{field.name}}_extra_info"></div>
-
-                        <!-- main input -->
+                        <div id="to-show" class="hide">
+                         <!-- main input -->
                         {% if field.field.widget.input_type == "checkbox" %}
                         {{ field|add_class:'checkbox' }}
                         {% else %}
                         {{ field|add_class:'form-control' }}
                         {% endif %}
+                        </div>
+
 
                         <!-- select all button -->
                         {% if field.name == "permissions" or field.name == "user_group" %}
@@ -121,6 +123,20 @@
         $('#id_permissions option').prop('selected', true);
         $('#id_user_group option').prop('selected', true);
     });
+
+
+  document.getElementById('{{field.name}}_extra_info').onclick = function() {
+  var element = document.getElementById('to-show');
+  if (element.className === 'hide') {
+    element.className = 'show';
+    document.getElementsByTagName('body')[0].className = 'on';
+    document.getElementById('{{field.name}}_extra_info').className = 'active';
+  } else {
+    element.className = 'hide';
+    document.getElementsByTagName('body')[0].className = 'off';
+    document.getElementById('{{field.name}}_extra_info').className = '';
+  }
+}
 </script>
 
 {% endblock %}

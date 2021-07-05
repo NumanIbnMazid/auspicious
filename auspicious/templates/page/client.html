@@ -59,27 +59,7 @@
                 {% endfor %}
 
             </div>
-            <h3 class="text-center text-uppercase fw-bold py-4"><span>Auspicious</span> Enlistment at</h3>
-            <div class="row">
-                {% for enlistment_client in enlistment_client_lists %}
-                <div class="col-md-4 col-6">
-                    <div class="sister-item">
-                        {% if enlistment_client.url %}
-                        <a href="{{ enlistment_client.url }}" target="_blank">
-                            <img src="{{ enlistment_client.logo.url }}" class="img-fluid" alt="">
-                            <p>{{ enlistment_client.name }}</p>
-                        </a>
-                        {% else %}
-                        <a href="" >
-                            <img src="{{ enlistment_client.logo.url }}" class="img-fluid" alt="">
-                            <p>{{ enlistment_client.name }}</p>
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
-
-            </div>
+            <!--            Local Representative            -->
             <h3 class="text-center text-uppercase fw-bold py-4">We are <span>Local Representative</span> of</h3>
             <div class="row">
                 {% for local_client_representative in local_client_representative_lists %}
@@ -101,6 +81,28 @@
                 </div>
                 {% endfor %}
             </div>
+            <h3 class="text-center text-uppercase fw-bold py-4"><span>Auspicious</span> Enlistment at</h3>
+            <div class="row">
+                {% for enlistment_client in enlistment_client_lists %}
+                <div class="col-md-4 col-6">
+                    <div class="sister-item">
+                        {% if enlistment_client.url %}
+                        <a href="{{ enlistment_client.url }}" target="_blank">
+                            <img src="{{ enlistment_client.logo.url }}" class="img-fluid" alt="">
+                            <p>{{ enlistment_client.name }}</p>
+                        </a>
+                        {% else %}
+                        <a href="" >
+                            <img src="{{ enlistment_client.logo.url }}" class="img-fluid" alt="">
+                            <p>{{ enlistment_client.name }}</p>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
 
             <h3 class="text-center text-uppercase fw-bold py-4">Our<span> Civil</span> Clients</h3>
             <div class="row">
