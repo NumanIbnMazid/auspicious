@@ -89,8 +89,8 @@ def civilproject(request):
     datetime_today = datetime.strptime(
         str(today.date()) + " 00:00:00", '%Y-%m-%d %H:%M:%S'
     )
-    ongoing_project_lists = Project.objects.filter(developement_end_year=None, category__title__icontains = 'Civil' ).order_by('id')
-    completed_project_lists = Project.objects.filter(developement_end_year__lte = datetime_today.year, category__title__icontains = 'Civil' ).order_by('id')
+    ongoing_project_lists = Project.objects.filter(developement_end_year=None, category__title__icontains = 'Civil' ).order_by('-developement_start_year')
+    completed_project_lists = Project.objects.filter(developement_end_year__lte = datetime_today.year, category__title__icontains = 'Civil' ).order_by('-developement_start_year')
     context ={'ongoing_project_lists':ongoing_project_lists,'completed_project_lists':completed_project_lists}
     return render(request, 'page/civil-project.html', context)
 # # -------------------------------------------------------------------
@@ -128,12 +128,12 @@ def telecomproject(request):
     datetime_today = datetime.strptime(
         str(today.date()) + " 00:00:00", '%Y-%m-%d %H:%M:%S'
     )
-    ongoing_project_lists = Project.objects.filter(developement_end_year=None, category__title__icontains = 'Telecom' ).order_by('id')
+    ongoing_project_lists = Project.objects.filter(developement_end_year=None, category__title__icontains = 'Telecom' ).order_by('-developement_start_year')
     # paginated_ongoing_project_list = get_paginated_object(
     #     request, queryset=ongoing_project_lists, paginate_by=2
     # )
 
-    completed_project_lists = Project.objects.filter(developement_end_year__lte = datetime_today.year, category__title__icontains = 'Telecom' ).order_by('id')
+    completed_project_lists = Project.objects.filter(developement_end_year__lte = datetime_today.year, category__title__icontains = 'Telecom' ).order_by('-developement_start_year')
     # paginated_completed_project_list = get_paginated_object(
     #     request, queryset=completed_project_lists, paginate_by=2
     # )
