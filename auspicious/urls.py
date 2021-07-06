@@ -39,6 +39,7 @@ urlpatterns = [
     path("career/", views.career, name="career"),
     path("all-job-list/", views.all_job_lists, name="all_job_lists"),
     path("jobs/<slug>/", views.filtered_job_lists, name="filtered_job_lists"),
+    path("blogs/<slug>/", views.filtered_blog_lists, name="filtered_blog_lists"),
     path("job-details/<slug>/", views.job_details, name="job_details"),
     # path("sister & client/", ClientView.as_view(), name="client"),
     path("sister-&-client/",views.client, name="client"),

@@ -16,7 +16,7 @@
                 <!-- Breadcrumbs-Content -->
                 <div class="col-lg-7 col-md-7 col-12">
                     <div class="breadcrumbs-content">
-                        <h2>News</h2>
+                        <h2>Blog</h2>
 
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                     <div class="breadcrumbs-menu">
                         <ul>
                             <li><a href="index.html">Home</a><i class="fa fa-angle-double-right"></i></li>
-                            <li class="active"><a href="#">News</a></li>
+                            <li class="active"><a href="#">Blog</a></li>
                         </ul>
                     </div>
                 </div>
@@ -41,26 +41,26 @@
                     <div class="blog-details-wrapper">
                         <div class="blog-details-img-date-wrap mb-35 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                             <div class="blog-details-img">
-                                {% if news_qs.image %}
-                                <img src="{{ news_qs.image.url }}" alt="" style="height:400px; width:850px;">
+                                {% if blog_qs.image %}
+                                <img src="{{ blog_qs.image.url }}" alt="" style="height:400px; width:850px;">
                                 {% else %}
                                 <img src="{% static './assets/landing/assets/img/no.jpg' %}" alt="" style="height:400px; width:850px;">
                                 {% endif %}
                             </div>
                             <div class="blog-details-date">
-                                <h5>{{ news_qs.created_at.date.day }}
-                                    <span>{{ news_qs.created_at|date:"M" }}</span></h5>
+                                <h5>{{ blog_qs.created_at.date.day }}
+                                    <span>{{ blog_qs.created_at|date:"M" }}</span></h5>
                             </div>
                         </div>
                         <div class="blog-meta-2 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                             <ul class="non-bullet-list">
-                                <li>{{ news_qs.category }},</li>
-                                <li>By: {{ news_qs.created_by }}</li>
+                                <li>{{ blog_qs.category }},</li>
+                                <li>By: {{ blog_qs.created_by }}</li>
                             </ul>
                         </div>
-                        <h1 data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">{{ news_qs.title }}</h1>
+                        <h1 data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">{{ blog_qs.title }}</h1>
                         <p data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">
-                            {{ news_qs.description|safe }}
+                            {{ blog_qs.description|safe }}
                         </p>
 
                         {% comment %}
@@ -101,27 +101,27 @@
                         <div class="blog-next-previous-post aos-init" data-aos="fade-up" data-aos-delay="200">
 
                             <div class="blog-prev-post-wrap">
-                                {% if pre_news %}
+                                {% if pre_blog%}
                                 <div class="blog-prev-post-icon">
-                                    <a href="{% url 'news_details' slug=pre_news.slug %}"><i class="fa fa-angle-left"></i></a>
+                                    <a href="{% url 'blog_details' slug=pre_blog.slug %}"><i class="fa fa-angle-left"></i></a>
                                 </div>
 
                                 <div class="blog-prev-post-content">
-                                    <h3><a href="{% url 'news_details' pre_news.slug %}">{{ pre_news.title }}</a></h3>
-                                    <span>{{ pre_news.created_at.date }}</span>
+                                    <h3><a href="{% url 'blog_details' pre_blog.slug %}">{{ pre_blog.title }}</a></h3>
+                                    <span>{{ pre_blog.created_at.date }}</span>
                                 </div>
                                 {% endif %}
                             </div>
 
                             <div class="blog-next-post-wrap">
-                                {% if next_news %}
+                                {% if next_blog %}
                                 <div class="blog-next-post-icon">
-                                    <a href="{% url 'news_details' slug=next_news.slug %}"> <i class="fa fa-angle-right"></i> </a>
+                                    <a href="{% url 'blog_details' slug=next_blog.slug %}"> <i class="fa fa-angle-right"></i> </a>
                                 </div>
 
                                 <div class="blog-next-post-content">
-                                    <h3><a href="{% url 'news_details' slug=next_news.slug %}">{{ next_news.title }}</a></h3>
-                                    <span>{{ next_news.created_at.date }}</span>
+                                    <h3><a href="{% url 'blog_details' slug=next_blog.slug %}">{{ next_blog.title }}</a></h3>
+                                    <span>{{ next_blog.created_at.date }}</span>
                                 </div>
                                 {% endif %}
                             </div>
@@ -133,7 +133,7 @@
                             <h4 class="blog-dec-title aos-init" data-aos="fade-up" data-aos-delay="200">Comments
                                 ({{ total_comment }})
                             </h4>
-                            {% for comment in news_qs.news_comment.all %}
+                            {% for comment in blog_qs.blog_comment.all %}
 
                             {% if comment.is_approved == True %}
 
@@ -219,7 +219,7 @@
                                 <!-- <p data-aos="fade-up" data-aos-delay="400" class="aos-init">Your email address will not be published. please fill out this form.</p> -->
                             </div>
                             <div class="blog-comment-form">
-                                <form action="{% url 'news_details' slug=news_qs.slug %}" method="POST" class="m-b-none" id="comment_form">
+                                <form action="{% url 'blog_details' slug=blog_qs.slug %}" method="POST" class="m-b-none" id="comment_form">
                                     {% csrf_token %}
                                     <div class="">
                                         <textarea class="form-control" name="comment" rows="3" id="comment"></textarea>
@@ -254,8 +254,8 @@
                             </div>
                             <div class="sidebar-list-style-2">
                                 <ul>
-                                    {% for news_category in news_category_lists %}
-                                    <li><a href="{% url 'filtered_news_lists' news_category.slug %}">{{ news_category.title }} ({{ news_category.get_news_count }})</a></li>
+                                    {% for blog_category in blog_category_lists %}
+                                    <li><a href="{% url 'filtered_blog_lists' blog_category.slug %}">{{ blog_category.title }} ({{ blog_category.get_blog_count }})</a></li>
                                     {% endfor %}
 
                                 </ul>
@@ -266,20 +266,20 @@
                                 <h3>Latest Post</h3>
                             </div>
                             <div class="latest-post-wrap">
-                                {% for news in last_three_job_lists %}
+                                {% for blog in last_three_job_lists %}
                                 <div class="single-latest-post">
                                     <div class="latest-post-img">
-                                        {% if news.image %}
-                                        <a href="{% url 'news_details' news.slug %}"><img src="{{ news.image.url }}" alt="" style="height:80px; width:100px"></a>
+                                        {% if blog.image %}
+                                        <a href="{% url 'blog_details' blog.slug %}"><img src="{{ blog.image.url }}" alt="" style="height:80px; width:100px"></a>
                                         {% else %}
                                         <img src="{% static './assets/landing/assets/img/no.jpg' %}" alt="" style="height:80px; width:100px">
                                         {% endif %}
                                     </div>
                                     <div class="latest-post-content">
-                                        <span>{{ news.created_at.date }}</span>
-                                        <h4><a href="{% url 'news_details' news.slug %}">{{ news.title }}</a></h4>
+                                        <span>{{ blog.created_at.date }}</span>
+                                        <h4><a href="{% url 'blog_details' blog.slug %}">{{ blog.title }}</a></h4>
                                         <div class="latest-post-btn">
-                                            <a href="{% url 'news_details' news.slug %}">Continue Reading...</a>
+                                            <a href="{% url 'blog_details' blog.slug %}">Continue Reading...</a>
                                         </div>
                                     </div>
                                 </div>

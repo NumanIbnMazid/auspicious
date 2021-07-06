@@ -426,6 +426,20 @@ def filtered_news_lists(request, slug):
     return render(request, "page/news.html", context)
 
 # # -------------------------------------------------------------------
+# #                              Filtered Blog
+# # -------------------------------------------------------------------
+
+def filtered_blog_lists(request, slug):
+    blog_lists = Blog.objects.filter(
+        category__slug__iexact=slug
+    )
+    context = {
+        'paginated_news_list':blog_lists,
+        'filtered_news_title': blog_lists.first().category.title if len(blog_lists) > 0 else ""
+    }
+    return render(request, "page/news.html", context)
+
+# # -------------------------------------------------------------------
 # #                               Job Details
 # # -------------------------------------------------------------------
 
