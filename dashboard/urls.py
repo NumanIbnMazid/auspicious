@@ -207,7 +207,7 @@ urlpatterns = [
          BlogUpdateView.as_view(), name="update_blog"),
     path("blog/<slug>/detail/",
          BlogDetailView.as_view(), name="blog_detail"),
-    path("delete/blog-/", delete_blog,
+    path("delete/blog/", delete_blog,
          name="delete_blog"),
 
     # # -------------------------------------------------------------------
