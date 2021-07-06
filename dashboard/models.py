@@ -273,7 +273,7 @@ class Blog(models.Model):
 
 
 # # -------------------------------------------------------------------
-# #                           Comment
+# #                           News Comment
 # # -------------------------------------------------------------------
 
 class Comment(models.Model):
@@ -316,7 +316,7 @@ class Comment(models.Model):
 
 
 # # -------------------------------------------------------------------
-# #                           CommentReply
+# #                           News CommentReply
 # # -------------------------------------------------------------------
 
 class CommentReply(models.Model):
@@ -351,6 +351,92 @@ class CommentReply(models.Model):
         def get_dynamic_fields(field):
             if field.name == 'news':
                 return (field.name, self.news.title, field.get_internal_type())
+            elif field.name == 'replied_by':
+                return (field.name, self.replied_by.username, field.get_internal_type())
+            else:
+                return (field.name, field.value_from_object(self), field.get_internal_type())
+        return [get_dynamic_fields(field) for field in self.__class__._meta.fields]
+
+
+# # -------------------------------------------------------------------
+# #                           Blog Comment
+# # -------------------------------------------------------------------
+
+class BlogComment(models.Model):
+    blog = models.ForeignKey(
+        Blog, on_delete=models.CASCADE, related_name='blog_comments', verbose_name='blog'
+    )
+    commented_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_blog_comments', verbose_name='commented by'
+    )
+    comment = models.TextField(
+        blank=True, null=True, verbose_name='comment'
+    )
+    is_approved = models.BooleanField(
+        default=False, verbose_name="is approved"
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name='created at'
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True, verbose_name='updated at'
+    )
+
+    class Meta:
+        verbose_name = 'Blog Comment'
+        verbose_name_plural = 'Blog Comments'
+        ordering = ['-updated_at']
+
+    def __str__(self):
+        return str(self.comment) if len(str(self.comment)) <= 10 else str(self.comment)[:10] + " ..."
+
+    def get_fields(self):
+        def get_dynamic_fields(field):
+            if field.name == 'blog':
+                return (field.name, self.blog.title)
+            elif field.name == 'commented_by':
+                return (field.name, self.commented_by.username, field.get_internal_type())
+            else:
+                return (field.name, field.value_from_object(self), field.get_internal_type())
+        return [get_dynamic_fields(field) for field in self.__class__._meta.fields]
+
+
+# # -------------------------------------------------------------------
+# #                           Blog CommentReply
+# # -------------------------------------------------------------------
+
+class BlogCommentReply(models.Model):
+    blog_comment = models.ForeignKey(
+        BlogComment, on_delete=models.CASCADE, related_name='blog_comment_replays', verbose_name='blog comment'
+    )
+    replied_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_blog_comment_replays', verbose_name='replied by'
+    )
+    reply = models.TextField(
+        blank=True, null=True, verbose_name='reply'
+    )
+    is_approved = models.BooleanField(
+        default=False, verbose_name="is approved"
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name='created at'
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True, verbose_name='updated at'
+    )
+
+    class Meta:
+        verbose_name = 'Blog Comment Reply'
+        verbose_name_plural = 'Blog Comment Replies'
+        ordering = ['-updated_at']
+
+    def __str__(self):
+        return str(self.reply) if len(str(self.reply)) <= 10 else str(self.reply)[:10] + " ..."
+
+    def get_fields(self):
+        def get_dynamic_fields(field):
+            if field.name == 'blog':
+                return (field.name, self.blog.title, field.get_internal_type())
             elif field.name == 'replied_by':
                 return (field.name, self.replied_by.username, field.get_internal_type())
             else:
