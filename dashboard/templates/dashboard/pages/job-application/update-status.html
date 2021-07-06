@@ -39,16 +39,20 @@
 
             <div class="col-12">
                 <form role="form" method="POST" data-toggle="validator" enctype="multipart/form-data">
+                    {% if remarks %}
                     <div class="" style="text-align:center">
+                    <h4 style="color:red">Remarks</h4>
                         {{ remarks }}
                     </div>
+                    <hr>
+                    {% endif %}
                     {% csrf_token %}
                     <div class="card-body">
                         {% include 'dashboard/snippets/form.html' %}
                     </div>
                     <!-- /.card-body -->
 
-                    <div class="card-footer">
+                    <div class="card-footer" style="text-align:right">
                         <button type="submit" class="btn btn-primary">
                             Submit
                         </button>
@@ -66,21 +70,31 @@
 
 {% block additional_js %}
 
-<!--<script type="text/javascript">-->
-<!--document.getElementById('show-element').onclick = function() {-->
-<!--  var element = document.getElementById('to-show');-->
-<!--  if (element.className === 'hide') {-->
-<!--    element.className = 'show';-->
-<!--    document.getElementsByTagName('body')[0].className = 'on';-->
-<!--    document.getElementById('show-element').className = 'active';-->
-<!--  } else {-->
-<!--    element.className = 'hide';-->
-<!--    document.getElementsByTagName('body')[0].className = 'off';-->
-<!--    document.getElementById('show-element').className = '';-->
-<!--  }-->
-<!--}-->
+<script>
+    let statusInput = $("#id_status")
+    let remarksDiv = $("#id_remarks-group")
 
-<!--</script>-->
+    statusInput.change(function () {
+        let value = $(this).val()
+        console.log(value)
+        if (value == 'Rejected'){
+            remarksDiv.removeClass('hide')
+        }
+        else{
+            remarksDiv.addClass('hide')
+        }
+        });
+    $( document ).ready(function() {
+        let value = statusInput.val()
+        if (value == 'Rejected'){
+            remarksDiv.removeClass('hide')
+        }
+        else{
+            remarksDiv.addClass('hide')
+        }
+    });
+
+</script>
 <!-- Bootstrap Validator -->
 <script src="{% static 'assets/vendors/bootstrap-validator/validator.js' %}"></script>
 

@@ -92,7 +92,7 @@
                                 <img src="{% static 'assets/landing/assets/img/blog/blog-author-2.png' %}" alt="" style="height:100px;width:100px;">
                             </div>
                             <div class="blog-author-content-2">
-                                <h2>{{ news_qs.created_by.user_profile.get_fullname }}</h2>
+                                <h2>{{ request.user.get_fullname }}</h2>
                             </div>
                         </div>
                         {% endif %}

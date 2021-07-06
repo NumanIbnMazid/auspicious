@@ -1674,6 +1674,8 @@ def update_job_application_status(request, slug):
             career.status = status
             if career.status == 'Rejected':
                 career.remarks = remarks
+            else:
+                career.remarks = None
             career.save()
 
             message = mail_body

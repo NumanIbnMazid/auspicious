@@ -16,7 +16,7 @@
                 <!-- Breadcrumbs-Content -->
                 <div class="col-lg-7 col-md-7 col-12">
                     <div class="breadcrumbs-content">
-                        <h2>Blog</h2>
+                        <h2>News</h2>
 
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                     <div class="breadcrumbs-menu">
                         <ul>
                             <li><a href="index.html">Home</a><i class="fa fa-angle-double-right"></i></li>
-                            <li class="active"><a href="#">Blog</a></li>
+                            <li class="active"><a href="#">News</a></li>
                         </ul>
                     </div>
                 </div>
@@ -41,50 +41,50 @@
                     <div class="blog-details-wrapper">
                         <div class="blog-details-img-date-wrap mb-35 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                             <div class="blog-details-img">
-                                {% if blog_qs.image %}
-                                <img src="{{ blog_qs.image.url }}" alt="" style="height:400px; width:850px;">
+                                {% if news_qs.image %}
+                                <img src="{{ news_qs.image.url }}" alt="" style="height:400px; width:850px;">
                                 {% else %}
                                 <img src="{% static './assets/landing/assets/img/no.jpg' %}" alt="" style="height:400px; width:850px;">
                                 {% endif %}
                             </div>
                             <div class="blog-details-date">
-                                <h5>{{ blog_qs.created_at.date.day }}
-                                    <span>{{ blog_qs.created_at|date:"M" }}</span></h5>
+                                <h5>{{ news_qs.created_at.date.day }}
+                                    <span>{{ news_qs.created_at|date:"M" }}</span></h5>
                             </div>
                         </div>
                         <div class="blog-meta-2 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                             <ul class="non-bullet-list">
-                                <li>{{ blog_qs.category }},</li>
-                                <li>By: {{ blog_qs.created_by }}</li>
+                                <li>{{ news_qs.category }},</li>
+                                <li>By: {{ news_qs.created_by }}</li>
                             </ul>
                         </div>
-                        <h1 data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">{{ blog_qs.title }}</h1>
+                        <h1 data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">{{ news_qs.title }}</h1>
                         <p data-aos="fade-up" data-aos-delay="200" class="aos-init aos-animate">
-                            {{ blog_qs.description|safe }}
+                            {{ news_qs.description|safe }}
                         </p>
 
-<!--                        {% comment %}-->
-<!--                        <div class="tag-social-wrap">-->
-<!--                            <div class="tag-wrap aos-init" data-aos="fade-up" data-aos-delay="200">-->
-<!--                                <span>Tags:</span>-->
-<!--                                <ul>-->
-<!--                                    <li><a href="#">Furniture</a>,</li>-->
-<!--                                    <li><a href="#">Electronic</a>,</li>-->
-<!--                                    <li><a href="#">Fashion</a></li>-->
-<!--                                </ul>-->
-<!--                            </div>-->
-<!--                            <div class="social-comment-digit-wrap aos-init" data-aos="fade-up" data-aos-delay="400">-->
-<!--                                <div class="social-icon-style-2">-->
-<!--                                    <a href="#"><i class="fa fa-facebook"></i></a>-->
-<!--                                    <a href="#"><i class="fa fa-twitter"></i></a>-->
-<!--                                    <a href="#"><i class="fa fa-youtube"></i></a>-->
-<!--                                </div>-->
-<!--                                <div class="comment-digit">-->
-<!--                                    <a href="#">{{ total_comment }}<i class="fa fa-comments"></i></a>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        {% endcomment %}-->
+                        {% comment %}
+                        <div class="tag-social-wrap">
+                            <div class="tag-wrap aos-init" data-aos="fade-up" data-aos-delay="200">
+                                <span>Tags:</span>
+                                <ul>
+                                    <li><a href="#">Furniture</a>,</li>
+                                    <li><a href="#">Electronic</a>,</li>
+                                    <li><a href="#">Fashion</a></li>
+                                </ul>
+                            </div>
+                            <div class="social-comment-digit-wrap aos-init" data-aos="fade-up" data-aos-delay="400">
+                                <div class="social-icon-style-2">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-youtube"></i></a>
+                                </div>
+                                <div class="comment-digit">
+                                    <a href="#">{{ total_comment }}<i class="fa fa-comments"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endcomment %}
 
                         {% if request.user.is_authenticated %}
                         <div class="blog-author-wrap-2 aos-init m-4" data-aos="fade-up" data-aos-delay="200">
@@ -92,7 +92,7 @@
                                 <img src="{% static 'assets/landing/assets/img/blog/blog-author-2.png' %}" alt="" style="height:100px;width:100px;">
                             </div>
                             <div class="blog-author-content-2">
-                                <h2>{{ blog_qs.created_by.user_profile.get_fullname }}</h2>
+                                <h2>{{ request.user.get_fullname }}</h2>
                             </div>
                         </div>
                         {% endif %}
@@ -101,32 +101,137 @@
                         <div class="blog-next-previous-post aos-init" data-aos="fade-up" data-aos-delay="200">
 
                             <div class="blog-prev-post-wrap">
-                                {% if pre_blog %}
+                                {% if pre_news %}
                                 <div class="blog-prev-post-icon">
-                                    <a href="{% url 'blog_details' slug=pre_blog.slug %}"><i class="fa fa-angle-left"></i></a>
+                                    <a href="{% url 'news_details' slug=pre_news.slug %}"><i class="fa fa-angle-left"></i></a>
                                 </div>
 
                                 <div class="blog-prev-post-content">
-                                    <h3><a href="{% url 'blog_details' pre_blog.slug %}">{{ pre_blog.title }}</a></h3>
-                                    <span>{{ pre_blog.created_at.date }}</span>
+                                    <h3><a href="{% url 'news_details' pre_news.slug %}">{{ pre_news.title }}</a></h3>
+                                    <span>{{ pre_news.created_at.date }}</span>
                                 </div>
                                 {% endif %}
                             </div>
 
                             <div class="blog-next-post-wrap">
-                                {% if next_blog %}
+                                {% if next_news %}
                                 <div class="blog-next-post-icon">
-                                    <a href="{% url 'blog_details' slug=next_blog.slug %}"> <i class="fa fa-angle-right"></i> </a>
+                                    <a href="{% url 'news_details' slug=next_news.slug %}"> <i class="fa fa-angle-right"></i> </a>
                                 </div>
 
                                 <div class="blog-next-post-content">
-                                    <h3><a href="{% url 'blog_details' slug=next_blog.slug %}">{{ next_blog.title }}</a></h3>
-                                    <span>{{ next_blog.created_at.date }}</span>
+                                    <h3><a href="{% url 'news_details' slug=next_news.slug %}">{{ next_news.title }}</a></h3>
+                                    <span>{{ next_news.created_at.date }}</span>
                                 </div>
                                 {% endif %}
                             </div>
                         </div>
 
+
+
+                        <div class="blog-comment-wrapper">
+                            <h4 class="blog-dec-title aos-init" data-aos="fade-up" data-aos-delay="200">Comments
+                                ({{ total_comment }})
+                            </h4>
+                            {% for comment in news_qs.news_comment.all %}
+
+                            {% if comment.is_approved == True %}
+
+                            <div class="single-comment-wrapper single-comment-border aos-init" data-aos="fade-up" data-aos-delay="400">
+                                <div class="blog-comment-img">
+                                    <img src="{% static 'assets/landing/assets/img/blog/blog-comment-1.png' %}" alt="">
+                                </div>
+
+
+                                <div class="blog-comment-content">
+                                    <div class="comment-info-reply-wrap">
+                                        <div class="comment-info">
+                                            <span>{{ comment.created_at }}</span>
+                                            <h4>{{ comment.commented_by }}</h4>
+                                        </div>
+                                        <div class="comment-reply">
+                                            <!-- <button type="button"
+                                                class="btn btn-info btn-sm text-deco-none m-1 comment_reply"
+                                                id="reply-btn-{{comment.id}}"
+                                                value="{{comment.id}}"
+                                                onclick="commentReply(this.value)">
+                                                Reply
+                                            </button> -->
+                                            <button class="btn btn-primary m-l-10" type="button" data-bs-toggle="collapse" data-bs-target="#commentReplyForm_{{comment.id}}"
+                                                aria-expanded="false" aria-controls="commentReplyForm_{{comment.id}}">
+                                                Reply
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <p>{{ comment.comment }}</p>
+
+                                    <div class="collapse multi-collapse" id="commentReplyForm_{{comment.id}}">
+                                        <div class="card card-body">
+                                            <div class="row comment-reply-parent" id="comment_reply_parent_{{comment.id}}">
+                                                <form action="{% url 'comment_reply' id=comment.id %}" method="POST" class="m-b-none" id="">
+                                                    {% csrf_token %}
+                                                    <div class="">
+                                                        <textarea class="form-control" name="reply" rows="3" id="reply"></textarea>
+                                                        <span class="input-group-btn">
+                                                            <button type="submit" class="btn btn-primary btn-raised ripple-effect mt-4" id="comment-btn">
+                                                                Reply
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                                {% for reply in comment.comment_reply.all %}
+
+                                {% if reply.is_approved == True %}
+                                <div class="single-comment-wrapper single-comment-ml aos-init" data-aos="fade-up" data-aos-delay="600">
+                                    <div class="blog-comment-img">
+                                        <img src="{% static 'assets/landing/assets/img/blog/blog-comment-2.png' %}" alt="">
+                                    </div>
+                                    <div class="blog-comment-content">
+                                        <div class="comment-info-reply-wrap">
+                                            <div class="comment-info">
+                                                <span>{{ reply.created_at }}</span>
+                                                <h4>{{ reply.replied_by }}</h4>
+                                            </div>
+                                        </div>
+                                        <p>{{ reply.reply }} </p>
+                                    </div>
+                                </div>
+                                <br>
+                                {% endif %}
+                                {% endfor %}
+
+                            {% endif %}
+                            {% endfor %}
+                             </div>
+
+                        <div class="blog-comment-form-wrap">
+                            <div class="blog-comment-form-title">
+                                <h2 data-aos="fade-up" data-aos-delay="200" class="aos-init">Leave a Reply</h2>
+                                <!-- <p data-aos="fade-up" data-aos-delay="400" class="aos-init">Your email address will not be published. please fill out this form.</p> -->
+                            </div>
+                            <div class="blog-comment-form">
+                                <form action="{% url 'news_details' slug=news_qs.slug %}" method="POST" class="m-b-none" id="comment_form">
+                                    {% csrf_token %}
+                                    <div class="">
+                                        <textarea class="form-control" name="comment" rows="3" id="comment"></textarea>
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-primary btn-raised ripple-effect mt-4" id="comment-btn">
+                                                Comment
+                                            </button>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -149,8 +254,8 @@
                             </div>
                             <div class="sidebar-list-style-2">
                                 <ul>
-                                    {% for blog_category in blog_category_lists %}
-                                    <li><a href="">{{ blog_category.title }} ({{ blog_category.get_blog_count }})</a></li>
+                                    {% for news_category in news_category_lists %}
+                                    <li><a href="{% url 'filtered_news_lists' news_category.slug %}">{{ news_category.title }} ({{ news_category.get_news_count }})</a></li>
                                     {% endfor %}
 
                                 </ul>
@@ -161,20 +266,20 @@
                                 <h3>Latest Post</h3>
                             </div>
                             <div class="latest-post-wrap">
-                                {% for blog in last_three_job_lists %}
+                                {% for news in last_three_job_lists %}
                                 <div class="single-latest-post">
                                     <div class="latest-post-img">
-                                        {% if blog.image %}
-                                        <a href="{% url 'blog_details' blog.slug %}"><img src="{{ blog.image.url }}" alt="" style="height:80px; width:100px"></a>
+                                        {% if news.image %}
+                                        <a href="{% url 'news_details' news.slug %}"><img src="{{ news.image.url }}" alt="" style="height:80px; width:100px"></a>
                                         {% else %}
                                         <img src="{% static './assets/landing/assets/img/no.jpg' %}" alt="" style="height:80px; width:100px">
                                         {% endif %}
                                     </div>
                                     <div class="latest-post-content">
-                                        <span>{{ blog.created_at.date }}</span>
-                                        <h4><a href="{% url 'blog_details' blog.slug %}">{{ blog.title }}</a></h4>
+                                        <span>{{ news.created_at.date }}</span>
+                                        <h4><a href="{% url 'news_details' news.slug %}">{{ news.title }}</a></h4>
                                         <div class="latest-post-btn">
-                                            <a href="{% url 'blog_details' blog.slug %}">Continue Reading...</a>
+                                            <a href="{% url 'news_details' news.slug %}">Continue Reading...</a>
                                         </div>
                                     </div>
                                 </div>

@@ -298,12 +298,16 @@ def blog_details(request, slug):
     # reply_qs = CommentReply.objects.filter(comment = comment_qs.first())
     last_three_job_lists = Blog.objects.all().exclude(slug = slug).order_by('-id')[0:4]
 
-    pre_blog = Blog.objects.filter(
-        id__lt=blog_qs.id
-    ).first()
-    next_blog = Blog.objects.filter(
-        id__gt=blog_qs.id
-    ).first()
+    if blog_qs:
+        pre_blog = Blog.objects.filter(
+            id__lt=blog_qs.id
+        ).first()
+        next_blog = Blog.objects.filter(
+            id__gt=blog_qs.id
+        ).first()
+    else:
+        pre_blog = ''
+        next_blog = ''
 
     context ={'blog_qs':blog_qs,
                 'blog_category_lists':blog_category_lists,
