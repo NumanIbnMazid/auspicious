@@ -72,7 +72,7 @@
                                     {{ forloop.counter }}
                                 </th>
 
-                                <td>{{ object.news.title }}</td>
+                                <td>{{ object.blog.title }}</td>
                                 <td>{{ object.commented_by.username }}</td>
                                 <td>{{ object.comment|truncate_word:30|remove_html_tags }}</td>
                                 <td id="isApprovedCol_{{object.id}}" class="{% if object.is_approved == True %}text-success{% else %}text-danger{% endif %}">
@@ -93,7 +93,7 @@
                             <tr class="text-center">
                                 <th>Action</th>
                                 <th>#</th>
-                                <th>News</th>
+                                <th>Blog</th>
                                 <th>Commented By</th>
                                 <th>Comment</th>
                                 <th>Is Approved</th>
@@ -110,7 +110,7 @@
     </div>
 </div>
 
-{% include "dashboard/pages/comment-and-reply/view-details-modal.html" %}
+{% include "dashboard/pages/blog-comment-and-reply/view-details-modal.html" %}
 
 {% if not delete_url == None %}
 {% include 'dashboard/snippets/delete-modal.html' %}
@@ -128,7 +128,7 @@
         // console.log(objectID, "*** ID ***")
 
         $.ajax({
-            url: '{% url "dashboard:change_comment_status" %}',
+            url: '{% url "dashboard:change_blog_comment_status" %}',
             data: {
                 objID: objectID,
             },

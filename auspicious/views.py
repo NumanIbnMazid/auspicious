@@ -293,9 +293,9 @@ def news_details(request, slug):
 # @login_required
 def blog_details(request, slug):
     blog_qs = Blog.objects.filter(slug = slug).first()
-    # comment_qs = Comment.objects.filter(news = blog_qs)
+    comment_qs = BlogComment.objects.filter(blog = blog_qs)
     blog_category_lists = BlogCategory.objects.all().order_by('-id')
-    # reply_qs = CommentReply.objects.filter(comment = comment_qs.first())
+    reply_qs = BlogCommentReply.objects.filter(blog_comment = comment_qs.first())
     last_three_job_lists = Blog.objects.all().exclude(slug = slug).order_by('-id')[0:4]
 
     if blog_qs:
@@ -313,22 +313,22 @@ def blog_details(request, slug):
                 'blog_category_lists':blog_category_lists,
                 'last_three_job_lists':last_three_job_lists,
                 'pre_blog':pre_blog,'next_blog':next_blog,
-                # 'comment_qs':comment_qs,
-                # 'total_comment':comment_qs.count(),
+                'comment_qs':comment_qs,
+                'total_comment':comment_qs.count(),
             }
 
-    # if request.method == 'POST':
-    #     if request.user.is_authenticated:
-    #         comment = request.POST.get("comment")
-    #         Comment.objects.create(
-    #             news=news_qs,
-    #             commented_by=request.user,
-    #             comment=comment
-    #         )
-    #         return HttpResponseRedirect(reverse("news_details", kwargs={"slug": slug}))
-    #     else:
-    #         return HttpResponseRedirect(reverse("account_login"))
-    #
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            comment = request.POST.get("comment")
+            BlogComment.objects.create(
+                blog=blog_qs,
+                commented_by=request.user,
+                comment=comment
+            )
+            return HttpResponseRedirect(reverse("blog_details", kwargs={"slug": slug}))
+        else:
+            return HttpResponseRedirect(reverse("account_login"))
+
     return render(request, "page/blog-details.html", context)
 
 # # -------------------------------------------------------------------
@@ -375,6 +375,11 @@ class CommentCreateView(CreateView):
         return context
 
 
+# # -------------------------------------------------------------------
+# #                              News Comment Reply
+# # -------------------------------------------------------------------
+
+
 @login_required
 def comment_reply(request, id):
     comment_qs = Comment.objects.filter(id=id)
@@ -410,6 +415,48 @@ def comment_reply(request, id):
             )
         return HttpResponseRedirect(reverse("news_details", kwargs={"slug": slug}))
     return render(request, "page/news-details.html")
+
+# # -------------------------------------------------------------------
+# #                              Blog Comment Reply
+# # -------------------------------------------------------------------
+
+
+@login_required
+def comment_reply(request, id):
+    comment_qs = BlogComment.objects.filter(id=id)
+    if comment_qs.exists():
+        comment_object = comment_qs.last()
+        slug = comment_object.blog.slug
+        blog_qs = Blog.objects.filter(slug=slug).first()
+        comment_qs = BlogComment.objects.filter(blog=blog_qs)
+        blog_category_lists = BlogCategory.objects.all().order_by('-id')
+        reply_qs = BlogCommentReply.objects.filter(blog_comment=comment_qs.first())
+        last_three_blog_lists = Blog.objects.all().exclude(
+            slug=slug).order_by('-id')[0:4]
+
+        pre_blog = Blog.objects.filter(
+            id__lt=blog_qs.id
+        ).first()
+        next_blog = Blog.objects.filter(
+            id__gt=blog_qs.id
+        ).first()
+
+        context = {'blog_qs': blog_qs, 'comment_qs': comment_qs,
+                'total_comment': comment_qs.count(),
+                'reply_qs': reply_qs, 'blog_category_lists': blog_category_lists,
+                'last_three_bloglists': last_three_blog_lists,
+                'pre_blog': pre_blog, 'next_blog': next_blog
+                }
+        if request.method == "POST":
+            reply = request.POST.get("reply")
+            BlogCommentReply.objects.create(
+                blog_comment=comment_object,
+                replied_by=request.user,
+                reply=reply
+            )
+        return HttpResponseRedirect(reverse("blog_details", kwargs={"slug": slug}))
+    return render(request, "page/blog-details.html")
+
 
 # # -------------------------------------------------------------------
 # #                              Filtered News

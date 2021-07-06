@@ -159,6 +159,26 @@
                 </a>
             </li>
             {% endif %}
+            <!-- manage blog comments and replies  -->
+
+            {% if perms.dashboard.view_comment or perms.dashboard.change_comment or perms.dashboard.delete_comment %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:blog_comment_list' %}" class="sidebar-link">
+                    <i class="fa fa-newspaper" aria-hidden="true"></i>
+                    <span>Blog Comments</span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% if perms.dashboard.view_commentreply or perms.dashboard.change_commentreply or perms.dashboard.delete_commentreply %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:blog_comment_reply_list' %}" class="sidebar-link">
+                    <i class="fa fa-newspaper" aria-hidden="true"></i>
+                    <span>Blog Comment Replies</span>
+                </a>
+            </li>
+            {% endif %}
+
             <!-- manage Image Group  -->
 
             {% if perms.dashboard.add_imagegroup or perms.dashboard.view_imagegroup %}

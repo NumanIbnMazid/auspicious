@@ -133,7 +133,7 @@
                             <h4 class="blog-dec-title aos-init" data-aos="fade-up" data-aos-delay="200">Comments
                                 ({{ total_comment }})
                             </h4>
-                            {% for comment in blog_qs.blog_comment.all %}
+                            {% for comment in blog_qs.blog_comments.all %}
 
                             {% if comment.is_approved == True %}
 
@@ -188,7 +188,7 @@
 
 
 
-                                {% for reply in comment.comment_reply.all %}
+                                {% for reply in comment.blog_comment_replays.all %}
 
                                 {% if reply.is_approved == True %}
                                 <div class="single-comment-wrapper single-comment-ml aos-init" data-aos="fade-up" data-aos-delay="600">

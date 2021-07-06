@@ -110,7 +110,7 @@
     </div>
 </div>
 
-{% include "dashboard/pages/comment-and-reply/view-details-modal.html" %}
+{% include "dashboard/pages/blog-comment-and-reply/view-details-modal.html" %}
 
 {% if not delete_url == None %}
 {% include 'dashboard/snippets/delete-modal.html' %}
@@ -128,7 +128,7 @@
         // console.log(objectID, "*** ID ***")
 
         $.ajax({
-            url: '{% url "dashboard:change_comment_status" %}',
+            url: '{% url "dashboard:change_blog_comment_status" %}',
             data: {
                 objID: objectID,
             },
@@ -164,7 +164,7 @@
         // console.log(objectID, "*** ID ***")
 
         $.ajax({
-            url: '{% url "dashboard:change_comment_reply_status" %}',
+            url: '{% url "dashboard:change_blog_comment_reply_status" %}',
             data: {
                 objID: objectID,
             },

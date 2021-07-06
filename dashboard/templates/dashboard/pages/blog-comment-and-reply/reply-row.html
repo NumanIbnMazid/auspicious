@@ -20,7 +20,7 @@
 
         <th>{{ forloop.counter }}</th>
 
-        <td>{{ reply.comment.news.title }}</td>
+        <td>{{ reply.comment.blog.title }}</td>
         <td>{{ reply.replied_by.username }}</td>
         <td>{{ reply.reply|truncate_word:30|remove_html_tags }}</td>
         <td id="replyIsApprovedCol_{{reply.id}}" class="{% if reply.is_approved == True %}text-success{% else %}text-danger{% endif %}">
