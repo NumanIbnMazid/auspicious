@@ -18,7 +18,8 @@ from .views import (
     BlogCategoryDetailView, delete_blog_category,
     NewsCommentListView,
     BlogCategoryDetailView, delete_blog_category, BlogCreateView, BlogUpdateView, BlogDetailView, delete_blog,
-    change_comment_status, change_comment_reply_status, NewsCommentReplyListView
+    change_comment_status, change_comment_reply_status, NewsCommentReplyListView, BlogCommentListView,
+    BlogCommentReplyListView, change_blog_comment_status, change_blog_comment_reply_status
 )
 
 
@@ -216,5 +217,13 @@ urlpatterns = [
     path("news/comment/reply/list/", NewsCommentReplyListView.as_view(), name="news_comment_reply_list"),
     path("change/comment-status/", change_comment_status, name="change_comment_status"),
     path("change/comment-reply-status/", change_comment_reply_status, name="change_comment_reply_status"),
+
+    # # -------------------------------------------------------------------
+    # #                    Blog Comments and Replies
+    # # -------------------------------------------------------------------
+    path("blog/comment/list/", BlogCommentListView.as_view(), name="blog_comment_list"),
+    path("blog/comment/reply/list/", BlogCommentReplyListView.as_view(), name="blog_comment_reply_list"),
+    path("change/blog-comment-status/", change_blog_comment_status, name="change_blog_comment_status"),
+    path("change/blog/comment-reply-status/", change_blog_comment_reply_status, name="change_blog_comment_reply_status"),
 ]
 

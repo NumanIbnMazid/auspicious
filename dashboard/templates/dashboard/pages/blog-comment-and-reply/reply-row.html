@@ -1,0 +1,31 @@
+{% load custom_tags %}
+
+<tbody class="collapse" id="collapsableActions_{{object.id}}">
+    <tr class="text-center bg-c-sky">
+        <td style=" width: 14%">
+            <button class="btn btn-primary btn-sm m-4 replyStatusBtn" type="button" value="{{reply.id}}" id="replyStatusBtn_{{reply.id}}">
+                {% if reply.is_approved == True %}
+                Reject
+                {% else %}
+                Approve
+                {% endif %}
+            </button>
+
+            <button class="btn btn-info btn-sm js_view_btn" value="{{ reply.reply }}" data-toggle="modal" data-target="#modal-view-details">
+                <span class="">
+                    <i class="fas fa-eye" aria-hidden="true"></i>
+                </span>
+            </button>
+        </td>
+
+        <th>{{ forloop.counter }}</th>
+
+        <td>{{ reply.comment.news.title }}</td>
+        <td>{{ reply.replied_by.username }}</td>
+        <td>{{ reply.reply|truncate_word:30|remove_html_tags }}</td>
+        <td id="replyIsApprovedCol_{{reply.id}}" class="{% if reply.is_approved == True %}text-success{% else %}text-danger{% endif %}">
+            {{ reply.is_approved }}
+        </td>
+        <td>{{ reply.created_at }}</td>
+    </tr>
+</tbody>

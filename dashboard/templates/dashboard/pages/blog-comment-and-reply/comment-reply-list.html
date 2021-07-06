@@ -1,0 +1,218 @@
+{% extends 'dashboard/base.html' %}
+
+{% load static %}
+{% load custom_tags %}
+
+{% block additional_css %}
+<!-- JQuery DataTable CSS -->
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/jquery.dataTables.min.css' %}" /> -->
+<link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/dataTables.bootstrap4.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/buttons.dataTables.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-datatable/datatable-custom.css' %}" />
+{% endblock %}
+
+{% block head_title %}
+{% block page_short_title %}
+{% block breadcrumb %}
+{{ page_short_title }}
+{% endblock %}
+{% endblock %}
+{% endblock %}
+{% block page_title %}
+{{ page_title }}
+{% endblock %}
+
+{% block content %}
+
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0 text-center">
+                    <h3 class="mb-0">News Comment Replies</h3>
+                </div>
+                <!-- Light table -->
+                <div class="table-responsive">
+                    <table id="list-datatable" class="display table align-items-center table-flush table-hover" style="width: 100%">
+                        <thead class="thead-dark">
+                            <tr class="text-center">
+                                <th>Action</th>
+                                <th>#</th>
+                                <th>News</th>
+                                <th>Comment</th>
+                                <th>Replied By</th>
+                                <th>Reply</th>
+                                <th>Is Approved</th>
+                                <th>Replied At</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="list">
+                            <!-- table body -->
+                            {% for object in object_list %}
+                            <tr class="text-center">
+                                <td style="width: 14%">
+                                    <button class="btn btn-primary btn-sm replyStatusBtn" type="button" value="{{object.id}}" id="replyStatusBtn_{{object.id}}">
+                                        {% if object.is_approved == True %}
+                                        Reject
+                                        {% else %}
+                                        Approve
+                                        {% endif %}
+                                    </button>
+
+                                    <button class="btn btn-info btn-sm js_view_btn" data-value="{{ object.reply }}" data-toggle="modal" data-target="#modal-view-details">
+                                        <span class="">
+                                            <i class="fas fa-eye" aria-hidden="true"></i>
+                                        </span>
+                                    </button>
+                                </td>
+
+                                <th>
+                                    {{ forloop.counter }}
+                                </th>
+
+                                <td>{{ object.comment.news.title|truncate_word:30|remove_html_tags }}</td>
+                                <td>
+                                    <a href="#" class="js_view_btn" data-toggle="modal" data-target="#modal-view-details" data-value="{{ object.comment.comment }}">
+                                        <span class="{% if object.comment.is_approved == True %}text-success{% else %}text-danger{% endif %}">
+                                            {{ object.comment.comment|truncate_word:30|remove_html_tags }}
+                                        </span>
+                                    </a>
+                                </td>
+                                <td>{{ object.replied_by.username }}</td>
+                                <td>{{ object.reply|truncate_word:30|remove_html_tags }}</td>
+                                <td id="replyIsApprovedCol_{{object.id}}" class="{% if object.is_approved == True %}text-success{% else %}text-danger{% endif %}">
+                                    {{ object.is_approved }}
+                                </td>
+                                <td>{{ object.created_at }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="8" class="text-center">
+                                    <div class="alert alert-warning">No item found!</div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                        <tfoot class="thead-dark">
+                            <tr class="text-center">
+                                <th>Action</th>
+                                <th>#</th>
+                                <th>News</th>
+                                <th>Comment</th>
+                                <th>Replied By</th>
+                                <th>Reply</th>
+                                <th>Is Approved</th>
+                                <th>Replied At</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- Card footer -->
+                <!-- <div class="card-footer py-4 text-center">
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "dashboard/pages/comment-and-reply/view-details-modal.html" %}
+
+{% if not delete_url == None %}
+{% include 'dashboard/snippets/delete-modal.html' %}
+{% endif %}
+
+{% endblock %}
+
+{% block additional_js %}
+
+<script>
+
+    // *** Dynamically change comment approval status with ajax call ***
+    $(".replyStatusBtn").click(function() {
+        let objectID = $(this).val();
+
+        // console.log(objectID, "*** ID ***")
+
+        $.ajax({
+            url: '{% url "dashboard:change_comment_reply_status" %}',
+            data: {
+                objID: objectID,
+            },
+            dataType: "json",
+            success: function(data) {
+                // console.log(data, "*** Data ***")
+                let is_approved = data.is_approved.toString()
+                let status = is_approved.toLowerCase().replace(
+                    /^[\u00C0-\u1FFF\u2C00-\uD7FF\w]|\s[\u00C0-\u1FFF\u2C00-\uD7FF\w]/g,
+                    function(letter) {
+                        return letter.toUpperCase();
+                    });
+
+                $("#replyIsApprovedCol_" + objectID).html(status)
+
+                if (status === "True") {
+                    $("#replyIsApprovedCol_" + objectID).addClass("text-success")
+                    $("#replyIsApprovedCol_" + objectID).removeClass("text-danger")
+                    $("#replyStatusBtn_" + objectID).html("Reject")
+                } else {
+                    $("#replyIsApprovedCol_" + objectID).addClass("text-danger")
+                    $("#replyIsApprovedCol_" + objectID).removeClass("text-success")
+                    $("#replyStatusBtn_" + objectID).html("Approve")
+                }
+            },
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("#list-datatable").DataTable({
+            pagingType: "full_numbers",
+            dom: "Bfrtip",
+            stateSave: true,
+            scrollCollapse: true,
+            buttons: [
+                //'copy', 'csv', 'excel', 'pdf', 'print'
+                "colvis",
+                "copy",
+                "csv",
+                "excel",
+                "print",
+            ],
+        });
+    });
+</script>
+
+<!-- JQuery DataTable JS -->
+<script src="{% static 'assets/vendors/jquery-datatable/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/buttons.flash.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/jszip.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/pdfmake.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/vfs_fonts.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/buttons.html5.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/buttons.print.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-datatable/buttons.colVis.min.js' %}"></script>
+
+<!-- EZ View JS -->
+<script src="{% static 'assets/vendors/ez-view/EZView.js' %}"></script>
+<script src="{% static 'assets/vendors/ez-view/draggable.js' %}"></script>
+<script src="{% static 'assets/vendors/ez-view/ez-conf.js' %}"></script>
+
+{% if not detail_url == None %}
+<script>
+    $(document).ready(function() {
+        $(".point-tr").click(function() {
+            window.location = $(this).attr("href");
+            return false;
+        });
+    });
+</script>
+{% endif %}
+
+{% endblock %}
