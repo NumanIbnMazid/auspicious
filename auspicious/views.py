@@ -527,7 +527,7 @@ def filtered_job_lists(request, slug):
         job_position__slug__iexact=slug
     )
     context = {
-        'job_lists':job_qs,
+        'paginated_jobs':job_qs,
         'filtered_job_title': job_qs.first().job_position.title if len(job_qs) > 0 else ""
     }
     return render(request, "page/all-jobs.html", context)
