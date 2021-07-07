@@ -1,3 +1,7 @@
+.hide{
+    display: none !important;
+}
+
 /* Overwrite Logo Style */
 .sidebar-wrapper .sidebar-header img {
     height: 4.2rem !important;
