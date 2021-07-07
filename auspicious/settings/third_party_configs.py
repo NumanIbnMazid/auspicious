@@ -2,8 +2,8 @@
 ----------------------- * Dynamic Content Configuration * -----------------------
 """
 
-MAIL_FROM = "info@rappleslimited.com"
-RECEIVER_EMAIL = "numanibnmazid@gmail.com"
+MAIL_FROM = "web@auspiciousbd.com"
+RECEIVER_EMAIL = "web@auspiciousbd.com"
 
 BLOCKED_URL = '/blocked/'
 ACCESS_DENIED_URL = '/access-denied/'

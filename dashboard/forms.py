@@ -478,7 +478,7 @@ class JobStatusManageForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         career_object = kwargs.pop('career_object', None)
-        print(career_object, "*** Career Object From View in Form ***")
+        # print(career_object, "*** Career Object From View in Form ***")
         super(JobStatusManageForm, self).__init__(*args, **kwargs)
         self.fields['status'].initial = career_object.status
 

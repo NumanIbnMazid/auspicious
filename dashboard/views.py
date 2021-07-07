@@ -1963,7 +1963,7 @@ def delete_blog(request):
 
 
 # # -------------------------------------------------------------------
-# #                               Comments and Replies
+# #                      Comments and Replies
 # # -------------------------------------------------------------------
 
 @method_decorator(dashboard_decorators, name='dispatch')
@@ -2049,7 +2049,7 @@ def change_comment_reply_status(request):
 
 
 # # -------------------------------------------------------------------
-# #                               Blog Comments and Replies
+# #                      Blog Comments and Replies
 # # -------------------------------------------------------------------
 
 @method_decorator(dashboard_decorators, name='dispatch')
