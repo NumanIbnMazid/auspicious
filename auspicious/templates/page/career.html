@@ -68,21 +68,27 @@
                     {% endif %}
                 </div>
             </div>
-
-            <div class="row">
-                {% for job_position in job_position_qs %}
-                <div class="col-md-3 col-sm-2">
-                    <div class="category-item text-center">
-                        <a href="{% url 'filtered_job_lists' slug=job_position.slug %}">
-                            <i class="fa fa-bar-chart"></i>
-                            <h4>{{ job_position.title }}</h4>
-                            <span>{{ job_position.get_job_count }}</span>
-                        </a>
+            {% if job_position_qs %}
+                <div class="row">
+                    {% for job_position in job_position_qs %}
+                    <div class="col-md-3 col-sm-2">
+                        <div class="category-item text-center">
+                            <a href="{% url 'filtered_job_lists' slug=job_position.slug %}">
+                                <i class="fa fa-bar-chart"></i>
+                                <h4>{{ job_position.title }}</h4>
+                                <span>{{ job_position.get_job_count }}</span>
+                            </a>
+                        </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-
-            </div>
+            {% else %}
+                <div class="text-center">
+                    <div class="alert alert-info">
+                        No Job Found!
+                    </div>
+                </div >
+            {% endif %}
         </div>
     </div>
 
